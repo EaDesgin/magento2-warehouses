@@ -31,7 +31,8 @@
     "magento/module-ui": "100.1.*",
     "magento/module-catalog-inventory": "100.1.*",
     "magento/module-store": "100.1.*",
-    "magento/module-catalog": "101.0.*"
+    "magento/module-catalog": "101.0.*",
+    "eadesignro/module-eacore": "^0.0.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.5"

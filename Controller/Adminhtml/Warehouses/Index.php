@@ -40,7 +40,8 @@ class Index extends \Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory
-    ) {
+    )
+    {
         $this->resultPageFactory = $resultPageFactory;
         parent::__construct($context, $coreRegistry);
     }
@@ -55,6 +56,12 @@ class Index extends \Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Warehouses'));
+
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $model = $objectManager->create('Magento\CatalogInventory\Model\Indexer\Stock\Processor');
+
+        $model->reindexAll();;
+
         return $resultPage;
     }
 }

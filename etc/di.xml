@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * EaDesgin
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_pdfgenerator
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!--<type name="Magento\CatalogInventory\Model\Indexer\Stock\AbstractAction">-->
+    <!--<plugin name="change_index_tables"-->
+    <!--type="Eadesigndev\Warehouses\Model\Indexer\Stock\AbstractAction"-->
+    <!--sortOrder="10"-->
+    <!--disabled="false"/>-->
+    <!--</type>-->
+
+    <type name="Magento\CatalogInventory\Model\Indexer\Stock">
+        <arguments>
+            <argument name="productStockIndexerRow" xsi:type="object">
+                Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Row
+            </argument>
+            <argument name="productStockIndexerRows" xsi:type="object">
+                Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Rows
+            </argument>
+            <argument name="productStockIndexerFull" xsi:type="object">
+                Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Full
+            </argument>
+            <!--<argument name="_productStockIndexerRow" xsi:type="object">-->
+            <!--<item name="_productStockIndexerRow" xsi:type="object">Magento\CatalogInventory\Model\Indexer\Stock\Action\Row</item>-->
+            <!--</argument>-->
+        </arguments>
+    </type>
+
+    <preference type="Eadesigndev\Warehouses\Model\Stock"
+                for="Magento\CatalogInventory\Model\Stock"/>
+    <preference type="Eadesigndev\Warehouses\Model\StockIndex"
+                for="Magento\CatalogInventory\Model\StockIndex"/>
+    <preference type="Eadesigndev\Warehouses\Model\Stock\Status"
+                for="Magento\CatalogInventory\Model\Stock\Status"/>
+    <preference type="Eadesigndev\Warehouses\Model\Stock\Item"
+                for="Magento\CatalogInventory\Model\Stock\Item"/>
+    <preference type="Eadesigndev\Warehouses\Model\ResourceModel\Stock"
+                for="Magento\CatalogInventory\Model\ResourceModel\Stock"/>
+    <preference type="Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item"
+                for="Magento\CatalogInventory\Model\ResourceModel\Stock\Item"/>
+    <preference type="Eadesigndev\Warehouses\Model\ResourceModel\Stock\Status"
+                for="Magento\CatalogInventory\Model\ResourceModel\Stock\Status"/>
+
+    <preference type="Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item\StockItemCriteria"
+                for="Magento\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteria"/>
+    <preference type="Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item\StockItemCriteriaMapper"
+                for="Magento\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteriaMapper"/>
+
+    <preference type="Eadesigndev\Warehouses\Model\ResourceModel\Stock\Status\StockStatusCriteria"
+                for="Magento\CatalogInventory\Model\ResourceModel\Stock\Status\StockStatusCriteria"/>
+    <preference type="Eadesigndev\Warehouses\Model\ResourceModel\Stock\Status\StockStatusCriteriaMapper"
+                for="Magento\CatalogInventory\Model\ResourceModel\Stock\Status\StockStatusCriteriaMapper"/>
+
+    <preference type="Eadesigndev\Warehouses\Model\ResourceModel\Indexer\Stock\DefaultStock"
+                for="Magento\CatalogInventory\Model\ResourceModel\Indexer\Stock\DefaultStock"/>
+
+    <preference type="Eadesigndev\Warehouses\Model\Indexer\Stock"
+                for="Magento\CatalogInventory\Model\Indexer\Stock"/>
+
+    <!--<preference type="Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Full"-->
+    <!--for="Magento\CatalogInventory\Model\Indexer\Stock\Action\Full" />-->
+    <!--<preference type="Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Row"-->
+    <!--for="Magento\CatalogInventory\Model\Indexer\Stock\Action\Row" />-->
+    <!--<preference type="Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Rows"-->
+    <!--for="Magento\CatalogInventory\Model\Indexer\Stock\Action\Rows" />-->
+
+</config>
