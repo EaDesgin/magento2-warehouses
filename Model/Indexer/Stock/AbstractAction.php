@@ -8,6 +8,8 @@
 
 namespace Eadesigndev\Warehouses\Model\Indexer\Stock;
 
+use Magento\Catalog\Model\Product;
+
 abstract class AbstractAction
 {
     /**

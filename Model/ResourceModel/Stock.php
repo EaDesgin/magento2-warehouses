@@ -201,7 +201,7 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
             $select->assemble()
         );
 
-        $connection->update($this->getTable('cataloginventory_stock_item'), $value, $where);
+        $connection->update($this->getTable('warehouseinventory_stock_item'), $value, $where);
     }
 
     /**

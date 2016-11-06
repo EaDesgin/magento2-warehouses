@@ -29,22 +29,22 @@
     <!--disabled="false"/>-->
     <!--</type>-->
 
-    <type name="Magento\CatalogInventory\Model\Indexer\Stock">
-        <arguments>
-            <argument name="productStockIndexerRow" xsi:type="object">
-                Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Row
-            </argument>
-            <argument name="productStockIndexerRows" xsi:type="object">
-                Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Rows
-            </argument>
-            <argument name="productStockIndexerFull" xsi:type="object">
-                Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Full
-            </argument>
-            <!--<argument name="_productStockIndexerRow" xsi:type="object">-->
-            <!--<item name="_productStockIndexerRow" xsi:type="object">Magento\CatalogInventory\Model\Indexer\Stock\Action\Row</item>-->
+    <!--<type name="Magento\CatalogInventory\Model\Indexer\Stock">-->
+        <!--<arguments>-->
+            <!--<argument name="productStockIndexerRow" xsi:type="object">-->
+                <!--Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Row-->
             <!--</argument>-->
-        </arguments>
-    </type>
+            <!--<argument name="productStockIndexerRows" xsi:type="object">-->
+                <!--Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Rows-->
+            <!--</argument>-->
+            <!--<argument name="productStockIndexerFull" xsi:type="object">-->
+                <!--Eadesigndev\Warehouses\Model\Indexer\Stock\Action\Full-->
+            <!--</argument>-->
+            <!--&lt;!&ndash;<argument name="_productStockIndexerRow" xsi:type="object">&ndash;&gt;-->
+            <!--&lt;!&ndash;<item name="_productStockIndexerRow" xsi:type="object">Magento\CatalogInventory\Model\Indexer\Stock\Action\Row</item>&ndash;&gt;-->
+            <!--&lt;!&ndash;</argument>&ndash;&gt;-->
+        <!--</arguments>-->
+    <!--</type>-->
 
     <preference type="Eadesigndev\Warehouses\Model\Stock"
                 for="Magento\CatalogInventory\Model\Stock"/>
