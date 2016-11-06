@@ -292,7 +292,7 @@ class DefaultStock extends AbstractIndexer implements \Magento\CatalogInventory\
      */
     public function getIdxTable($table = null)
     {
-        return $this->tableStrategy->getTableName('cataloginventory_stock_status');
+        return $this->tableStrategy->getTableName('warehouseinventory_stock_status');
     }
 
     /**
