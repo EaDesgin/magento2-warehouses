@@ -18,12 +18,11 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
-    <default>
-        <warehouses>
-            <general>
-                <enable_frontend>1</enable_frontend>
-            </general>
-        </warehouses>
-    </default>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference type="Eadesigndev\Warehouses\Model\Adminhtml\Stock\Item"
+                for="Magento\CatalogInventory\Model\Adminhtml\Stock\Item"/>
+
 </config>
