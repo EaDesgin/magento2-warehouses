@@ -12,7 +12,7 @@ namespace Eadesigndev\Warehouses\Model;
 class Stock extends \Magento\CatalogInventory\Model\Stock
 {
 
-    const WEBSITE_ID = 'store_id';
+    const WEBSITE_ID = 'website_id';
 
     /**
      * @return void

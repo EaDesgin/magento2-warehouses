@@ -7,6 +7,14 @@
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock\Status;
 
 use Magento\Framework\DB\GenericMapper;
+use Magento\Framework\DB\MapperFactory;
+use Magento\Framework\DB\Select;
+use Magento\Framework\Data\ObjectFactory;
+use Magento\Store\Model\StoreManagerInterface;
+use Psr\Log\LoggerInterface as Logger;
+use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
+use Magento\CatalogInventory\Api\StockConfigurationInterface;
+
 
 /**
  * Class StockStatusCriteriaMapper
@@ -15,11 +23,31 @@ use Magento\Framework\DB\GenericMapper;
 class StockStatusCriteriaMapper extends GenericMapper
 {
     /**
+     * @var StoreManagerInterface
+     * @deprecated
+     */
+    private $storeManager;
+
+    public function __construct(
+        Logger $logger,
+        FetchStrategyInterface $fetchStrategy,
+        ObjectFactory $objectFactory,
+        MapperFactory $mapperFactory,
+        StoreManagerInterface $storeManager,
+        Select $select = null
+    )
+    {
+        $this->storeManager = $storeManager;
+        parent::__construct($logger, $fetchStrategy, $objectFactory, $mapperFactory, $select);
+    }
+
+    /**
      * @inheritdoc
      */
     protected function init()
     {
         $this->initResource('Eadesigndev\Warehouses\Model\ResourceModel\Stock\Status');
+        $this->mapStockFilter();
     }
 
     /**
@@ -37,17 +65,32 @@ class StockStatusCriteriaMapper extends GenericMapper
     }
 
     /**
+     * @inheritdoc
+     */
+    public function mapStockFilter()
+    {
+        $storeId = $this->storeManager->getStore()->getId();
+
+        if ($storeId == 0) {
+            $storeId = 1;
+        }
+
+        $stock = $storeId;
+        $this->addFieldToFilter('main_table.stock_id', $stock);
+    }
+
+    /**
      * Apply website filter
      *
      * @param int|\Magento\Store\Model\Website $website
      * @return void
      */
-    public function mapWebsiteFilter($store)
+    public function mapWebsiteFilter($website)
     {
-        if ($store instanceof \Magento\Store\Model\Store) {
-            $store = $store->getId();
+        if ($website instanceof \Magento\Store\Model\Website) {
+            $website = $store->getId();
         }
-        $this->addFieldToFilter('main_table.store_id', $store);
+        $this->addFieldToFilter('main_table.website_id', $website);
     }
 
     /**

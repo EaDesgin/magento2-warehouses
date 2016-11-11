@@ -38,7 +38,7 @@ class InstallSchema implements InstallSchemaInterface
                 'Warehouse Id'
             )
             ->addColumn(
-                'store_id',
+                'website_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
                 5,
                 ['unsigned' => true, 'nullable' => false],
@@ -54,10 +54,10 @@ class InstallSchema implements InstallSchemaInterface
             ->addIndex(
                 $setup->getIdxName(
                     $installer->getTable('warehouseinventory_stock'),
-                    ['store_id'],
+                    ['website_id'],
                     \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
                 ),
-                ['store_id'],
+                ['website_id'],
                 \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
             )
             ->setComment('Cataloginventory Stock');
@@ -245,7 +245,7 @@ class InstallSchema implements InstallSchemaInterface
                 'Is Divided into Multiple Boxes for Shipping'
             )
             ->addColumn(
-                'store_id',
+                'website_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
                 5,
                 ['unsigned' => true, 'nullable' => false, 'default' => 0],
@@ -264,10 +264,10 @@ class InstallSchema implements InstallSchemaInterface
             ->addIndex(
                 $installer->getIdxName(
                     'warehouseinventory_stock_item',
-                    ['store_id'],
+                    ['website_id'],
                     \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
                 ),
-                ['store_id'],
+                ['website_id'],
                 ['type' => \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX]
             )
             ->addIndex(
@@ -310,7 +310,7 @@ class InstallSchema implements InstallSchemaInterface
                 'Product Id'
             )
             ->addColumn(
-                'store_id',
+                'website_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
                 null,
                 ['unsigned' => true, 'nullable' => false, 'primary' => true],
@@ -342,8 +342,8 @@ class InstallSchema implements InstallSchemaInterface
                 ['stock_id']
             )
             ->addIndex(
-                $installer->getIdxName('warehouseinventory_stock_status', ['store_id']),
-                ['store_id']
+                $installer->getIdxName('warehouseinventory_stock_status', ['website_id']),
+                ['website_id']
             )
             ->setComment('Cataloginventory Stock Status');
         $installer->getConnection()
@@ -362,7 +362,7 @@ class InstallSchema implements InstallSchemaInterface
                 'Product Id'
             )
             ->addColumn(
-                'store_id',
+                'website_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
                 null,
                 ['unsigned' => true, 'nullable' => false, 'primary' => true],
@@ -394,8 +394,8 @@ class InstallSchema implements InstallSchemaInterface
                 ['stock_id']
             )
             ->addIndex(
-                $installer->getIdxName('warehouseinventory_stock_status_idx', ['store_id']),
-                ['store_id']
+                $installer->getIdxName('warehouseinventory_stock_status_idx', ['website_id']),
+                ['website_id']
             )
             ->setComment('Cataloginventory Stock Status Indexer Idx');
         $installer->getConnection()
@@ -414,7 +414,7 @@ class InstallSchema implements InstallSchemaInterface
                 'Product Id'
             )
             ->addColumn(
-                'store_id',
+                'website_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
                 null,
                 ['unsigned' => true, 'nullable' => false, 'primary' => true],
@@ -446,8 +446,8 @@ class InstallSchema implements InstallSchemaInterface
                 ['stock_id']
             )
             ->addIndex(
-                $installer->getIdxName('warehouseinventory_stock_status_tmp', ['store_id']),
-                ['store_id']
+                $installer->getIdxName('warehouseinventory_stock_status_tmp', ['website_id']),
+                ['website_id']
             )
             ->setOption(
                 'type',

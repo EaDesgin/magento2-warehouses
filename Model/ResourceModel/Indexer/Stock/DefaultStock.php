@@ -191,7 +191,7 @@ class DefaultStock extends AbstractIndexer implements \Magento\CatalogInventory\
         $select->join(
             ['cis' => $this->getTable('warehouseinventory_stock')],
             '',
-            ['store_id', 'stock_id']
+            ['website_id', 'stock_id']
         )->joinInner(
             ['cisi' => $this->getTable('warehouseinventory_stock_item')],
             'cisi.stock_id = cis.stock_id AND cisi.product_id = e.entity_id',
@@ -199,10 +199,10 @@ class DefaultStock extends AbstractIndexer implements \Magento\CatalogInventory\
         )->columns(
             ['qty' => $qtyExpr]
         )->where(
-            'cis.store_id = ?',
+            'cis.website_id = ?',
             $this->getStockConfiguration()->getDefaultScopeId()
         )->where('e.type_id = ?', $this->getTypeId())
-            ->group(['e.entity_id', 'cis.store_id', 'cis.stock_id']);
+            ->group(['e.entity_id', 'cis.website_id', 'cis.stock_id']);
 
         $select->columns(['status' => $this->getStatusExpression($connection, true)]);
         if ($entityIds !== null) {
@@ -250,7 +250,7 @@ class DefaultStock extends AbstractIndexer implements \Magento\CatalogInventory\
             $i++;
             $data[] = [
                 'product_id' => (int)$row['entity_id'],
-                'store_id' => (int)$row['store_id'],
+                'website_id' => (int)$row['website_id'],
                 'stock_id' => Stock::DEFAULT_STOCK_ID,
                 'qty' => (double)$row['qty'],
                 'stock_status' => (int)$row['status'],

@@ -41,7 +41,7 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
         $productTable = $this->getTable('catalog_product_entity');
         $select = $this->getConnection()->select()->from(['si' => $itemTable])
             ->join(['p' => $productTable], 'p.entity_id=si.product_id', ['type_id'])
-            ->where('store_id=?', $websiteId)
+            ->where('website_id=?', $websiteId)
             ->where('product_id IN(?)', $productIds)
             ->forUpdate(true);
         return $this->getConnection()->fetchAll($select);
@@ -65,7 +65,7 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
         }
 
         $value = $connection->getCaseSql('product_id', $conditions, 'qty');
-        $where = ['product_id IN (?)' => array_keys($items), 'store_id = ?' => $websiteId];
+        $where = ['product_id IN (?)' => array_keys($items), 'website_id = ?' => $websiteId];
 
         $connection->beginTransaction();
         $connection->update($this->getTable('warehouseinventory_stock_item'), ['qty' => $value], $where);
@@ -117,7 +117,7 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
             ->where('type_id IN(?)', $this->_configTypeIds);
 
         $where = sprintf(
-            'store_id = %1$d' .
+            'website_id = %1$d' .
             ' AND is_in_stock = 1' .
             ' AND ((use_config_manage_stock = 1 AND 1 = %2$d) OR (use_config_manage_stock = 0 AND manage_stock = 1))' .
             ' AND ((use_config_backorders = 1 AND %3$d = %4$d) OR (use_config_backorders = 0 AND backorders = %3$d))' .
@@ -152,7 +152,7 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
             ->where('type_id IN(?)', $this->_configTypeIds);
 
         $where = sprintf(
-            'store_id = %1$d' .
+            'website_id = %1$d' .
             ' AND is_in_stock = 0' .
             ' AND stock_status_changed_auto = 1' .
             ' AND ((use_config_manage_stock = 1 AND 1 = %2$d) OR (use_config_manage_stock = 0 AND manage_stock = 1))' .

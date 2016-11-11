@@ -29,7 +29,7 @@ class Status extends AbstractExtensibleModel implements StockStatusInterface
      * Field name
      */
     const KEY_PRODUCT_ID = 'product_id';
-    const KEY_WEBSITE_ID = 'store_id';
+    const KEY_WEBSITE_ID = 'website_id';
     const KEY_STOCK_ID = 'stock_id';
     const KEY_QTY = 'qty';
     const KEY_STOCK_STATUS = 'stock_status';

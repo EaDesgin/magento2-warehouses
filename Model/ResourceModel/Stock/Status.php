@@ -51,21 +51,21 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
         $connection = $this->getConnection();
         $select = $connection->select()->from($this->getMainTable())
             ->where('product_id = :product_id')
-            ->where('store_id = :store_id')
+            ->where('website_id = :website_id')
             ->where('stock_id = :stock_id');
-        $bind = [':product_id' => $productId, ':store_id' => $websiteId, ':stock_id' => $stockId];
+        $bind = [':product_id' => $productId, ':website_id' => $websiteId, ':stock_id' => $stockId];
         $row = $connection->fetchRow($select, $bind);
         if ($row) {
             $bind = ['qty' => $qty, 'stock_status' => $status];
             $where = [
                 $connection->quoteInto('product_id=?', (int)$row['product_id']),
-                $connection->quoteInto('store_id=?', (int)$row['store_id']),
+                $connection->quoteInto('website_id=?', (int)$row['website_id']),
             ];
             $connection->update($this->getMainTable(), $bind, $where);
         } else {
             $bind = [
                 'product_id' => $productId,
-                'store_id' => $websiteId,
+                'website_id' => $websiteId,
                 'stock_id' => $stockId,
                 'qty' => $qty,
                 'stock_status' => $status,
@@ -95,13 +95,13 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
             ->from($this->getMainTable(), ['product_id', 'stock_status'])
             ->where('product_id IN(?)', $productIds)
             ->where('stock_id=?', (int) $stockId)
-            ->where('store_id=?', (int) $websiteId);
+            ->where('website_id=?', (int) $websiteId);
         return $this->getConnection()->fetchPairs($select);
     }
 
     /**
      * Retrieve websites and default stores
-     * Return array as key store_id, value store_id
+     * Return array as key website_id, value website_id
      *
      * @return array
      */
@@ -167,7 +167,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
         $websiteId = $this->getStockConfiguration()->getDefaultScopeId();
         $select->joinLeft(
             ['stock_status' => $this->getMainTable()],
-            'e.entity_id = stock_status.product_id AND stock_status.store_id=' . $websiteId,
+            'e.entity_id = stock_status.product_id AND stock_status.website_id=' . $websiteId,
             ['is_salable' => 'stock_status.stock_status']
         );
 
@@ -183,7 +183,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
     {
         $websiteId = $this->getStockConfiguration()->getDefaultScopeId();
         $joinCondition = $this->getConnection()->quoteInto(
-            'e.entity_id = stock_status_index.product_id' . ' AND stock_status_index.store_id = ?',
+            'e.entity_id = stock_status_index.product_id' . ' AND stock_status_index.website_id = ?',
             $websiteId
         );
 
@@ -217,7 +217,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
     {
         $websiteId = $this->getStockConfiguration()->getDefaultScopeId();
         $joinCondition = $this->getConnection()->quoteInto(
-            'e.entity_id = stock_status_index.product_id' . ' AND stock_status_index.store_id = ?',
+            'e.entity_id = stock_status_index.product_id' . ' AND stock_status_index.website_id = ?',
             $websiteId
         );
 
@@ -257,11 +257,11 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
 
         $connection = $this->getConnection();
 
-        if ($storeId === null || $storeId == \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
+        if ($storeId === null || $storeId == \Magento\Store\Model\Store::DEFAULT_WEBSITE_ID) {
             $select = $connection->select()->from($attributeTable, [$linkField, 'value'])
                 ->where("{$linkField} IN (?)", $productIds)
                 ->where('attribute_id = ?', $attribute->getAttributeId())
-                ->where('store_id = ?', \Magento\Store\Model\Store::DEFAULT_STORE_ID);
+                ->where('website_id = ?', \Magento\Store\Model\Store::DEFAULT_WEBSITE_ID);
 
             $rows = $connection->fetchPairs($select);
         } else {
@@ -270,9 +270,9 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
                 [$linkField => "t1.{$linkField}", 'value' => $connection->getIfNullSql('t2.value', 't1.value')]
             )->joinLeft(
                 ['t2' => $attributeTable],
-                "t1.{$linkField} = t2.{$linkField} AND t1.attribute_id = t2.attribute_id AND t2.store_id = {$storeId}"
+                "t1.{$linkField} = t2.{$linkField} AND t1.attribute_id = t2.attribute_id AND t2.website_id = {$storeId}"
             )->where(
-                't1.store_id = ?',
+                't1.website_id = ?',
                 \Magento\Store\Model\Store::DEFAULT_STORE_ID
             )->where(
                 't1.attribute_id = ?',

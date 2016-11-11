@@ -34,7 +34,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     protected $eventPrefix = 'cataloginventory_stock_item';
 
-    const WEBSITE_ID = 'store_id';
+    const WEBSITE_ID = 'website_id';
 
     /**
      * Parameter name in event
@@ -119,7 +119,8 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    ) {
+    )
+    {
         parent::__construct(
             $context,
             $registry,
@@ -143,7 +144,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     protected function _construct()
     {
-        $this->_init('Magento\CatalogInventory\Model\ResourceModel\Stock\Item');
+        $this->_init('Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item');
     }
 
     /**
@@ -165,7 +166,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         if ($websiteId === null) {
             $websiteId = $this->stockConfiguration->getDefaultScopeId();
         }
-        return (int) $websiteId;
+        return (int)$websiteId;
     }
 
     /**
@@ -179,7 +180,14 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         if ($stockId === null) {
             $stockId = $this->stockRegistry->getStock($this->getWebsiteId())->getStockId();
         }
-        return (int) $stockId;
+
+        $stockId = $this->getStoreId();
+
+        if (!$this->getStoreId() == 0) {
+            $stockId = 1;
+        }
+
+        return (int)$stockId;
     }
 
     /**
@@ -189,7 +197,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getProductId()
     {
-        return (int) $this->_getData(static::PRODUCT_ID);
+        return (int)$this->_getData(static::PRODUCT_ID);
     }
 
     /**
@@ -198,7 +206,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getStockStatusChangedAuto()
     {
-        return (bool) $this->_getData(static::STOCK_STATUS_CHANGED_AUTO);
+        return (bool)$this->_getData(static::STOCK_STATUS_CHANGED_AUTO);
     }
 
     /**
@@ -219,7 +227,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         if (!$this->getManageStock()) {
             return true;
         }
-        return (bool) $this->_getData(static::IS_IN_STOCK);
+        return (bool)$this->_getData(static::IS_IN_STOCK);
     }
 
     /**
@@ -228,7 +236,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getIsQtyDecimal()
     {
-        return (bool) $this->_getData(static::IS_QTY_DECIMAL);
+        return (bool)$this->_getData(static::IS_QTY_DECIMAL);
     }
 
     /**
@@ -237,7 +245,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getIsDecimalDivided()
     {
-        return (bool) $this->_getData(static::IS_DECIMAL_DIVIDED);
+        return (bool)$this->_getData(static::IS_DECIMAL_DIVIDED);
     }
 
     /**
@@ -265,7 +273,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getUseConfigMinQty()
     {
-        return (bool) $this->_getData(static::USE_CONFIG_MIN_QTY);
+        return (bool)$this->_getData(static::USE_CONFIG_MIN_QTY);
     }
 
     /**
@@ -289,8 +297,9 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getUseConfigMinSaleQty()
     {
-        return (bool) $this->_getData(static::USE_CONFIG_MIN_SALE_QTY);
+        return (bool)$this->_getData(static::USE_CONFIG_MIN_SALE_QTY);
     }
+
     /**
      * Retrieve Minimum Qty Allowed in Shopping Cart or NULL when there is no limitation
      *
@@ -302,7 +311,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
             $customerGroupId = $this->getCustomerGroupId();
             $minSaleQty = $this->stockConfiguration->getMinSaleQty($this->getStoreId(), $customerGroupId);
         } else {
-            $minSaleQty = (float) $this->getData(static::MIN_SALE_QTY);
+            $minSaleQty = (float)$this->getData(static::MIN_SALE_QTY);
         }
         return $minSaleQty;
     }
@@ -313,7 +322,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getUseConfigMaxSaleQty()
     {
-        return (bool) $this->_getData(static::USE_CONFIG_MAX_SALE_QTY);
+        return (bool)$this->_getData(static::USE_CONFIG_MAX_SALE_QTY);
     }
 
     /**
@@ -327,7 +336,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
             $customerGroupId = $this->getCustomerGroupId();
             $maxSaleQty = $this->stockConfiguration->getMaxSaleQty($this->getStoreId(), $customerGroupId);
         } else {
-            $maxSaleQty = (float) $this->getData(static::MAX_SALE_QTY);
+            $maxSaleQty = (float)$this->getData(static::MAX_SALE_QTY);
         }
         return $maxSaleQty;
     }
@@ -338,7 +347,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getUseConfigNotifyStockQty()
     {
-        return (bool) $this->_getData(static::USE_CONFIG_NOTIFY_STOCK_QTY);
+        return (bool)$this->_getData(static::USE_CONFIG_NOTIFY_STOCK_QTY);
     }
 
     /**
@@ -351,7 +360,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         if ($this->getUseConfigNotifyStockQty()) {
             return $this->stockConfiguration->getNotifyStockQty($this->getStoreId());
         }
-        return (float) $this->getData(static::NOTIFY_STOCK_QTY);
+        return (float)$this->getData(static::NOTIFY_STOCK_QTY);
     }
 
     /**
@@ -360,7 +369,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getUseConfigEnableQtyInc()
     {
-        return (bool) $this->_getData(static::USE_CONFIG_ENABLE_QTY_INC);
+        return (bool)$this->_getData(static::USE_CONFIG_ENABLE_QTY_INC);
     }
 
     /**
@@ -374,7 +383,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         if ($this->getUseConfigEnableQtyInc()) {
             return $this->stockConfiguration->getEnableQtyIncrements($this->getStoreId());
         }
-        return (bool) $this->getData(static::ENABLE_QTY_INCREMENTS);
+        return (bool)$this->getData(static::ENABLE_QTY_INCREMENTS);
     }
 
     /**
@@ -385,7 +394,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getUseConfigQtyIncrements()
     {
-        return (bool) $this->_getData(static::USE_CONFIG_QTY_INCREMENTS);
+        return (bool)$this->_getData(static::USE_CONFIG_QTY_INCREMENTS);
     }
 
     /**
@@ -400,7 +409,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
                 if ($this->getUseConfigQtyIncrements()) {
                     $this->qtyIncrements = $this->stockConfiguration->getQtyIncrements($this->getStoreId());
                 } else {
-                    $this->qtyIncrements = (int) $this->getData(static::QTY_INCREMENTS);
+                    $this->qtyIncrements = (int)$this->getData(static::QTY_INCREMENTS);
                 }
             }
             if ($this->qtyIncrements <= 0) {
@@ -416,7 +425,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getUseConfigBackorders()
     {
-        return (bool) $this->_getData(static::USE_CONFIG_BACKORDERS);
+        return (bool)$this->_getData(static::USE_CONFIG_BACKORDERS);
     }
 
     /**
@@ -429,7 +438,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         if ($this->getUseConfigBackorders()) {
             return $this->stockConfiguration->getBackorders($this->getStoreId());
         }
-        return (int) $this->getData(static::BACKORDERS);
+        return (int)$this->getData(static::BACKORDERS);
     }
 
     /**
@@ -438,7 +447,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getUseConfigManageStock()
     {
-        return (bool) $this->_getData(static::USE_CONFIG_MANAGE_STOCK);
+        return (bool)$this->_getData(static::USE_CONFIG_MANAGE_STOCK);
     }
 
     /**
@@ -451,7 +460,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         if ($this->getUseConfigManageStock()) {
             return $this->stockConfiguration->getManageStock($this->getStoreId());
         }
-        return (int) $this->getData(static::MANAGE_STOCK);
+        return (int)$this->getData(static::MANAGE_STOCK);
     }
 
     /**
@@ -468,7 +477,8 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         $itemError,
         $quoteError,
         $errorIndex = 'error'
-    ) {
+    )
+    {
         $item->setHasError(true);
         $item->setMessage($itemError);
         $item->setQuoteMessage($quoteError);
@@ -527,6 +537,7 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         if ($this->storeId === null) {
             $this->storeId = $this->storeManager->getStore()->getId();
         }
+//        exit($this->storeId);
         return $this->storeId;
     }
 
@@ -593,6 +604,12 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function setStockId($stockId)
     {
+        $stockId = $this->getStoreId();
+
+        if ($this->getStoreId() == 0) {
+            $stockId = 1;
+        }
+
         return $this->setData(self::STOCK_ID, $stockId);
     }
 
@@ -828,7 +845,8 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function setExtensionAttributes(
         \Magento\CatalogInventory\Api\Data\StockItemExtensionInterface $extensionAttributes
-    ) {
+    )
+    {
         return $this->_setExtensionAttributes($extensionAttributes);
     }
     //@codeCoverageIgnoreEnd

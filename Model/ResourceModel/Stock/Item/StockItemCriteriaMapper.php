@@ -47,7 +47,8 @@ class StockItemCriteriaMapper extends GenericMapper
         MapperFactory $mapperFactory,
         StoreManagerInterface $storeManager,
         Select $select = null
-    ) {
+    )
+    {
         $this->storeManager = $storeManager;
         parent::__construct($logger, $fetchStrategy, $objectFactory, $mapperFactory, $select);
     }
@@ -59,6 +60,7 @@ class StockItemCriteriaMapper extends GenericMapper
     {
         $this->initResource('Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item');
         $this->map['qty'] = ['main_table', 'qty', 'qty'];
+        $this->mapStockFilter();
     }
 
     /**
@@ -71,31 +73,32 @@ class StockItemCriteriaMapper extends GenericMapper
             'main_table.product_id = cp_table.entity_id',
             ['type_id']
         );
-//
-//        echo '<pre>';
-//        print_r()
     }
 
     /**
      * @inheritdoc
      */
-    public function mapStockFilter($stock)
+    public function mapStockFilter()
     {
-        if ($stock instanceof \Magento\CatalogInventory\Api\Data\StockInterface) {
-            $stock = $stock->getId();
+        $storeId = $this->storeManager->getStore()->getId();
+
+        if ($storeId == 0) {
+            $storeId = 1;
         }
+
+        $stock = $storeId;
         $this->addFieldToFilter('main_table.stock_id', $stock);
     }
 
     /**
      * @inheritdoc
      */
-    public function mapWebsiteFilter($store)
+    public function mapWebsiteFilter($website)
     {
-        if ($store instanceof \Magento\Store\Model\Store) {
-            $store = $store->getId();
+        if ($website instanceof \Magento\Store\Model\Website) {
+            $website = $website->getId();
         }
-        $this->addFieldToFilter('main_table.store_id', $store);
+        $this->addFieldToFilter('main_table.website_id', $website);
     }
 
     /**

@@ -199,7 +199,7 @@ abstract class AbstractAction
             ->from(['s' => $tableName])
             ->joinLeft(
                 ['w' => $this->_getTable('catalog_product_website')],
-                's.product_id = w.product_id AND s.store_id = w.website_id',
+                's.product_id = w.product_id AND s.website_id = w.website_id',
                 []
             )
             ->where('w.product_id IS NULL');
