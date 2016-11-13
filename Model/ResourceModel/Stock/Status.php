@@ -3,7 +3,7 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace  Eadesigndev\Warehouses\Model\ResourceModel\Stock;
+namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock;
 
 use Magento\CatalogInventory\Model\Stock;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
@@ -15,6 +15,7 @@ use Magento\CatalogInventory\Api\StockConfigurationInterface;
 class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
 {
 
+    private $stockId = Stock::DEFAULT_STOCK_ID;
 
     /**
      * @var StockConfigurationInterface
@@ -47,7 +48,13 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
         $qty,
         $websiteId,
         $stockId = Stock::DEFAULT_STOCK_ID
-    ) {
+    )
+    {
+
+        $stockId = $this->stockId();
+
+        //todo add the stock status if needed. Check for the status in the system. Stock::DEFAULT_STOCK_ID
+
         $connection = $this->getConnection();
         $select = $connection->select()->from($this->getMainTable())
             ->where('product_id = :product_id')
@@ -94,8 +101,8 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
         $select = $this->getConnection()->select()
             ->from($this->getMainTable(), ['product_id', 'stock_status'])
             ->where('product_id IN(?)', $productIds)
-            ->where('stock_id=?', (int) $stockId)
-            ->where('website_id=?', (int) $websiteId);
+            ->where('stock_id=?', (int)$this->stockId())
+            ->where('website_id=?', (int)$websiteId);
         return $this->getConnection()->fetchPairs($select);
     }
 
@@ -189,7 +196,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
 
         $joinCondition .= $this->getConnection()->quoteInto(
             ' AND stock_status_index.stock_id = ?',
-            Stock::DEFAULT_STOCK_ID
+            $this->stockId()
         );
         $method = $isFilterInStock ? 'join' : 'joinLeft';
         $collection->getSelect()->$method(
@@ -223,7 +230,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
 
         $joinCondition .= $this->getConnection()->quoteInto(
             ' AND stock_status_index.stock_id = ?',
-            Stock::DEFAULT_STOCK_ID
+            $this->stockId()
         );
 
         $collection->getSelect()->join(
@@ -257,11 +264,11 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
 
         $connection = $this->getConnection();
 
-        if ($storeId === null || $storeId == \Magento\Store\Model\Store::DEFAULT_WEBSITE_ID) {
+        if ($storeId === null || $storeId == \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
             $select = $connection->select()->from($attributeTable, [$linkField, 'value'])
                 ->where("{$linkField} IN (?)", $productIds)
                 ->where('attribute_id = ?', $attribute->getAttributeId())
-                ->where('website_id = ?', \Magento\Store\Model\Store::DEFAULT_WEBSITE_ID);
+                ->where('store_id = ?', \Magento\Store\Model\Store::DEFAULT_STORE_ID);
 
             $rows = $connection->fetchPairs($select);
         } else {
@@ -270,9 +277,9 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
                 [$linkField => "t1.{$linkField}", 'value' => $connection->getIfNullSql('t2.value', 't1.value')]
             )->joinLeft(
                 ['t2' => $attributeTable],
-                "t1.{$linkField} = t2.{$linkField} AND t1.attribute_id = t2.attribute_id AND t2.website_id = {$storeId}"
+                "t1.{$linkField} = t2.{$linkField} AND t1.attribute_id = t2.attribute_id AND t2.store_id = {$storeId}"
             )->where(
-                't1.website_id = ?',
+                't1.store_id = ?',
                 \Magento\Store\Model\Store::DEFAULT_STORE_ID
             )->where(
                 't1.attribute_id = ?',
@@ -308,5 +315,20 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
                 ->get('Magento\CatalogInventory\Api\StockConfigurationInterface');
         }
         return $this->stockConfiguration;
+    }
+
+    //todo move this ti another helper for generalization
+    /**
+     * @return int|void
+     */
+    private function stockId()
+    {
+        $storeId = $this->_storeManager->getStore()->getId();
+
+        if ($storeId === null) {
+            return Stock::DEFAULT_STOCK_ID;
+        }
+
+        return $this->stockId = $storeId;
     }
 }

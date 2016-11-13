@@ -176,14 +176,16 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
      */
     public function getStockId()
     {
-        $stockId = $this->getData(static::STOCK_ID);
-        if ($stockId === null) {
-            $stockId = $this->stockRegistry->getStock($this->getWebsiteId())->getStockId();
-        }
+//        $stockId = $this->getData(static::STOCK_ID);
+//        if ($stockId === null) {
+//            $stockId = $this->stockRegistry->getStock($this->getWebsiteId())->getStockId();
+//        }
+
+        //todo ned to validate here for store 0
 
         $stockId = $this->getStoreId();
 
-        if (!$this->getStoreId() == 0) {
+        if ($this->getStoreId() == 0) {
             $stockId = 1;
         }
 
@@ -537,7 +539,6 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
         if ($this->storeId === null) {
             $this->storeId = $this->storeManager->getStore()->getId();
         }
-//        exit($this->storeId);
         return $this->storeId;
     }
 
@@ -605,6 +606,8 @@ class Item extends AbstractExtensibleModel implements StockItemInterface
     public function setStockId($stockId)
     {
         $stockId = $this->getStoreId();
+
+        //todo validate here with the same system as get
 
         if ($this->getStoreId() == 0) {
             $stockId = 1;
