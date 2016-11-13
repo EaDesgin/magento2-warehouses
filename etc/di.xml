@@ -56,5 +56,11 @@
     <preference type="Eadesigndev\Warehouses\Model\Indexer\Stock"
                 for="Magento\CatalogInventory\Model\Indexer\Stock"/>
 
+    <type name="Magento\CatalogSearch\Model\Search\IndexBuilder">
+        <plugin name="change_list_filter_table"
+                type="Eadesigndev\Warehouses\Model\Plugin\CatalogSearch\IndexBuilder"
+                sortOrder="10"
+                disabled="false"/>
+    </type>
 
 </config>
