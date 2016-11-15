@@ -1,7 +1,20 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * EaDesign
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_warehouses
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock;
 
@@ -102,85 +115,9 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
             ->from($this->getMainTable(), ['product_id', 'stock_status'])
             ->where('product_id IN(?)', $productIds)
             ->where('stock_id=?', (int)$this->stockId())
-            ->where('website_id=?', (int)$websiteId);
+            ->where('website_id=?', (int) $websiteId);
         return $this->getConnection()->fetchPairs($select);
     }
-
-    /**
-     * Retrieve websites and default stores
-     * Return array as key website_id, value website_id
-     *
-     * @return array
-     */
-    public function getWebsiteStores()
-    {
-        /** @var \Magento\Store\Model\Website $website */
-        $website = $this->_websiteFactory->create();
-        return $this->getConnection()->fetchPairs($website->getDefaultStoresSelect(false));
-    }
-
-    /**
-     * Retrieve Product Type
-     *
-     * @param array|int $productIds
-     * @return array
-     */
-    public function getProductsType($productIds)
-    {
-        if (!is_array($productIds)) {
-            $productIds = [$productIds];
-        }
-
-        $select = $this->getConnection()->select()->from(
-            ['e' => $this->getTable('catalog_product_entity')],
-            ['entity_id', 'type_id']
-        )->where(
-            'entity_id IN(?)',
-            $productIds
-        );
-        return $this->getConnection()->fetchPairs($select);
-    }
-
-    /**
-     * Retrieve Product part Collection array
-     * Return array as key product id, value product type
-     *
-     * @param int $lastEntityId
-     * @param int $limit
-     * @return array
-     */
-    public function getProductCollection($lastEntityId = 0, $limit = 1000)
-    {
-        $select = $this->getConnection()->select()->from(
-            ['e' => $this->getTable('catalog_product_entity')],
-            ['entity_id', 'type_id']
-        )
-            ->order('entity_id ASC')
-            ->where('entity_id > :entity_id')
-            ->limit($limit);
-        return $this->getConnection()->fetchPairs($select, [':entity_id' => $lastEntityId]);
-    }
-
-    /**
-     * Add stock status to prepare index select
-     *
-     * @param \Magento\Framework\DB\Select $select
-     * @param \Magento\Store\Model\Website $website
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @return Status
-     */
-    public function addStockStatusToSelect(\Magento\Framework\DB\Select $select, \Magento\Store\Model\Website $website)
-    {
-        $websiteId = $this->getStockConfiguration()->getDefaultScopeId();
-        $select->joinLeft(
-            ['stock_status' => $this->getMainTable()],
-            'e.entity_id = stock_status.product_id AND stock_status.website_id=' . $websiteId,
-            ['is_salable' => 'stock_status.stock_status']
-        );
-
-        return $this;
-    }
-
     /**
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
      * @param bool $isFilterInStock
@@ -243,66 +180,6 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
         );
         return $this;
     }
-
-    /**
-     * Retrieve Product(s) status for store
-     * Return array where key is a product_id, value - status
-     *
-     * @param int[] $productIds
-     * @param int $storeId
-     * @return array
-     */
-    public function getProductStatus($productIds, $storeId = null)
-    {
-        if (!is_array($productIds)) {
-            $productIds = [$productIds];
-        }
-
-        $attribute = $this->eavConfig->getAttribute(\Magento\Catalog\Model\Product::ENTITY, 'status');
-        $attributeTable = $attribute->getBackend()->getTable();
-        $linkField = $attribute->getEntity()->getLinkField();
-
-        $connection = $this->getConnection();
-
-        if ($storeId === null || $storeId == \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
-            $select = $connection->select()->from($attributeTable, [$linkField, 'value'])
-                ->where("{$linkField} IN (?)", $productIds)
-                ->where('attribute_id = ?', $attribute->getAttributeId())
-                ->where('store_id = ?', \Magento\Store\Model\Store::DEFAULT_STORE_ID);
-
-            $rows = $connection->fetchPairs($select);
-        } else {
-            $select = $connection->select()->from(
-                ['t1' => $attributeTable],
-                [$linkField => "t1.{$linkField}", 'value' => $connection->getIfNullSql('t2.value', 't1.value')]
-            )->joinLeft(
-                ['t2' => $attributeTable],
-                "t1.{$linkField} = t2.{$linkField} AND t1.attribute_id = t2.attribute_id AND t2.store_id = {$storeId}"
-            )->where(
-                't1.store_id = ?',
-                \Magento\Store\Model\Store::DEFAULT_STORE_ID
-            )->where(
-                't1.attribute_id = ?',
-                $attribute->getAttributeId()
-            )->where(
-                "t1.{$linkField} IN(?)",
-                $productIds
-            );
-
-            $rows = $connection->fetchPairs($select);
-        }
-
-        $statuses = [];
-        foreach ($productIds as $productId) {
-            if (isset($rows[$productId])) {
-                $statuses[$productId] = $rows[$productId];
-            } else {
-                $statuses[$productId] = -1;
-            }
-        }
-        return $statuses;
-    }
-
     /**
      * @return StockConfigurationInterface
      *

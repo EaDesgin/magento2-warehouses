@@ -1,6 +1,6 @@
 <?php
 /**
- * EaDesgin
+ * EaDesign
  *
  * NOTICE OF LICENSE
  *
@@ -12,7 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@eadesign.ro so we can send you a copy immediately.
  *
- * @category    eadesigndev_pdfgenerator
+ * @category    eadesigndev_warehouses
  * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
@@ -32,7 +32,7 @@ use Magento\Framework\Search\RequestInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
 use Magento\CatalogInventory\Model\Stock;
-use Magento\Store\Model\StoreManagerInterface as StoreTheFuckUp;
+use Magento\Store\Model\StoreManagerInterface as StoreInterfaceManager;
 
 class IndexBuilder
 {
@@ -57,7 +57,7 @@ class IndexBuilder
         TableMapper $tableMapperData,
         ScopeConfigInterface $configData,
         ConditionManager $conditionManager,
-        StoreTheFuckUp $storeManager
+        StoreInterfaceManager $storeManager
     )
     {
         $this->resourceConnection = $resourceConnection;

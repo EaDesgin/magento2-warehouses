@@ -1,12 +1,24 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * EaDesign
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_warehouses
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock\Status;
 
-use Magento\Framework\DB\GenericMapper;
 use Magento\Framework\DB\MapperFactory;
 use Magento\Framework\DB\Select;
 use Magento\Framework\Data\ObjectFactory;
@@ -20,7 +32,7 @@ use Magento\CatalogInventory\Api\StockConfigurationInterface;
  * Class StockStatusCriteriaMapper
  * @package Magento\CatalogInventory\Model\ResourceModel\Stock\Status
  */
-class StockStatusCriteriaMapper extends GenericMapper
+class StockStatusCriteriaMapper extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status\StockStatusCriteriaMapper
 {
     /**
      * @var StoreManagerInterface
@@ -51,20 +63,6 @@ class StockStatusCriteriaMapper extends GenericMapper
     }
 
     /**
-     * Apply initial query parameters
-     *
-     * @return void
-     */
-    public function mapInitialCondition()
-    {
-        $this->getSelect()->join(
-            ['cp_table' => $this->getTable('catalog_product_entity')],
-            'main_table.product_id = cp_table.entity_id',
-            ['sku', 'type_id']
-        );
-    }
-
-    /**
      * @inheritdoc
      */
     public function mapStockFilter()
@@ -91,41 +89,5 @@ class StockStatusCriteriaMapper extends GenericMapper
             $website = $store->getId();
         }
         $this->addFieldToFilter('main_table.website_id', $website);
-    }
-
-    /**
-     * Apply product(s) filter
-     *
-     * @param int|array|\Magento\Catalog\Model\Product|\Magento\Catalog\Model\Product[] $products
-     * @return void
-     */
-    public function mapProductsFilter($products)
-    {
-        $productIds = [];
-        if (!is_array($products)) {
-            $products = [$products];
-        }
-        foreach ($products as $product) {
-            if ($product instanceof \Magento\Catalog\Model\Product) {
-                $productIds[] = $product->getId();
-            } else {
-                $productIds[] = $product;
-            }
-        }
-        if (empty($productIds)) {
-            $productIds[] = false;
-        }
-        $this->addFieldToFilter('main_table.product_id', ['in' => $productIds]);
-    }
-
-    /**
-     * Apply filter by quantity
-     *
-     * @param float|int $qty
-     * @return void
-     */
-    public function mapQtyFilter($qty)
-    {
-        $this->addFieldToFilter('main_table.qty', ['lteq' => $qty]);
     }
 }

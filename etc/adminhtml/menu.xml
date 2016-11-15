@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * EaDesgin
+ * EaDesign
  *
  * NOTICE OF LICENSE
  *
@@ -13,14 +13,25 @@
  * obtain it through the world-wide-web, please send an email
  * to license@eadesign.ro so we can send you a copy immediately.
  *
- * @category    eadesigndev_pdfgenerator
+ * @category    eadesigndev_warehouses
  * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-    	<add id="Eadesigndev_Warehouses::warehouses" title="EaDesign Warehouses" module="Eadesigndev_Warehouses" sortOrder="10" resource="Eadesigndev_Warehouses::warehouses" parent="Magento_Backend::content"/>
-        <add id="Eadesigndev_Warehouses::warehouses_list" title="Manage Warehouses" module="Eadesigndev_Warehouses" sortOrder="10" parent="Eadesigndev_Warehouses::warehouses" action="warehouses/warehouses" resource="Eadesigndev_Warehouses::warehouses"/>
+    	<add id="Eadesigndev_Warehouses::warehouses"
+             title="EaDesign Warehouses"
+             module="Eadesigndev_Warehouses"
+             sortOrder="10"
+             resource="Eadesigndev_Warehouses::warehouses"
+             parent="Eadesigndev_Eacore::eadesign"/>
+        <add id="Eadesigndev_Warehouses::warehouses_list"
+             title="Manage Warehouses"
+             module="Eadesigndev_Warehouses"
+             sortOrder="10"
+             parent="Eadesigndev_Warehouses::warehouses"
+             action="warehouses/warehouses"
+             resource="Eadesigndev_Warehouses::warehouses"/>
     </menu>
 </config>

@@ -1,12 +1,24 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * EaDesign
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_warehouses
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
 namespace Eadesigndev\Warehouses\Model\ResourceModel;
 
-use Magento\CatalogInventory\Api\StockConfigurationInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
@@ -70,33 +82,6 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
         $connection->beginTransaction();
         $connection->update($this->getTable('warehouseinventory_stock_item'), ['qty' => $value], $where);
         $connection->commit();
-    }
-
-    /**
-     * Load some inventory configuration settings
-     *
-     * @return void
-     */
-    protected function _initConfig()
-    {
-        if (!$this->_isConfig) {
-            $configMap = [
-                '_isConfigManageStock' => \Magento\CatalogInventory\Model\Configuration::XML_PATH_MANAGE_STOCK,
-                '_isConfigBackorders' => \Magento\CatalogInventory\Model\Configuration::XML_PATH_BACKORDERS,
-                '_configMinQty' => \Magento\CatalogInventory\Model\Configuration::XML_PATH_MIN_QTY,
-                '_configNotifyStockQty' => \Magento\CatalogInventory\Model\Configuration::XML_PATH_NOTIFY_STOCK_QTY,
-            ];
-
-            foreach ($configMap as $field => $const) {
-                $this->{$field} = (int) $this->_scopeConfig->getValue(
-                    $const,
-                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-                );
-            }
-
-            $this->_isConfig = true;
-            $this->_configTypeIds = array_keys($this->stockConfiguration->getIsQtyTypeIds(true));
-        }
     }
 
     /**

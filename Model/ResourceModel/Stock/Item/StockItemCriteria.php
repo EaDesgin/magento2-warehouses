@@ -1,19 +1,30 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * EaDesign
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_warehouses
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
 // @codingStandardsIgnoreFile
 
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item;
 
-use Magento\Framework\Data\AbstractCriteria;
-
 /**
  * Class StockItemCriteria
  */
-class StockItemCriteria extends AbstractCriteria implements \Magento\CatalogInventory\Api\StockItemCriteriaInterface
+class StockItemCriteria extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteria implements \Magento\CatalogInventory\Api\StockItemCriteriaInterface
 {
     /**
      * @param string $mapper
@@ -22,71 +33,5 @@ class StockItemCriteria extends AbstractCriteria implements \Magento\CatalogInve
     {
         $this->mapperInterfaceName = $mapper ?: 'Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item\StockItemCriteriaMapper';
         $this->data['initial_condition'] = true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setStockStatus($storeId = null)
-    {
-        $this->data['stock_status'] = func_get_args();
-        return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setStockFilter($stock)
-    {
-        $this->data['stock_filter'] = $stock;
-        return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setScopeFilter($scope)
-    {
-        $this->data['website_filter'] = $scope;
-        return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setProductsFilter($products)
-    {
-        $this->data['products_filter'] = $products;
-        return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setManagedFilter($isStockManagedInConfig)
-    {
-        $this->data['managed_filter'] = $isStockManagedInConfig;
-        return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setQtyFilter($comparisonMethod, $qty)
-    {
-        $this->data['qty_filter'] = [$comparisonMethod, $qty];
-        return true;
-    }
-
-    /**
-     * Add Criteria object
-     *
-     * @param \Magento\CatalogInventory\Api\StockItemCriteriaInterface $criteria
-     * @return bool
-     */
-    public function addCriteria(\Magento\CatalogInventory\Api\StockItemCriteriaInterface $criteria)
-    {
-        $this->data[self::PART_CRITERIA_LIST]['list'][] = $criteria;
-        return true;
     }
 }

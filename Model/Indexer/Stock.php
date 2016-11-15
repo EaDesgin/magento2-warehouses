@@ -1,13 +1,25 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * EaDesign
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_warehouses
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 namespace Eadesigndev\Warehouses\Model\Indexer;
 
-use Magento\Framework\Indexer\CacheContext;
 
-class Stock implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
+class Stock extends \Magento\CatalogInventory\Model\Indexer\Stock implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
     /**
      * @var \Magento\CatalogInventory\Model\Indexer\Stock\Action\Row
@@ -25,11 +37,6 @@ class Stock implements \Magento\Framework\Indexer\ActionInterface, \Magento\Fram
     protected $_productStockIndexerFull;
 
     /**
-     * @var \Magento\Framework\Indexer\CacheContext
-     */
-    private $cacheContext;
-
-    /**
      * @param Stock\Action\Row $productStockIndexerRow
      * @param Stock\Action\Rows $productStockIndexerRows
      * @param Stock\Action\Full $productStockIndexerFull
@@ -42,73 +49,5 @@ class Stock implements \Magento\Framework\Indexer\ActionInterface, \Magento\Fram
         $this->_productStockIndexerRow = $productStockIndexerRow;
         $this->_productStockIndexerRows = $productStockIndexerRows;
         $this->_productStockIndexerFull = $productStockIndexerFull;
-    }
-
-    /**
-     * Execute materialization on ids entities
-     *
-     * @param int[] $ids
-     *
-     * @return void
-     */
-    public function execute($ids)
-    {
-        $this->_productStockIndexerRows->execute($ids);
-        $this->getCacheContext()->registerEntities(\Magento\Catalog\Model\Product::CACHE_TAG, $ids);
-    }
-
-    /**
-     * Execute full indexation
-     *
-     * @return void
-     */
-    public function executeFull()
-    {
-        $this->_productStockIndexerFull->execute();
-        $this->getCacheContext()->registerTags(
-            [
-                \Magento\Catalog\Model\Category::CACHE_TAG,
-                \Magento\Catalog\Model\Product::CACHE_TAG
-            ]
-        );
-    }
-
-    /**
-     * Execute partial indexation by ID list
-     *
-     * @param int[] $ids
-     *
-     * @return void
-     */
-    public function executeList(array $ids)
-    {
-        $this->_productStockIndexerRows->execute($ids);
-    }
-
-    /**
-     * Execute partial indexation by ID
-     *
-     * @param int $id
-     *
-     * @return void
-     */
-    public function executeRow($id)
-    {
-        $this->_productStockIndexerRow->execute($id);
-    }
-
-    /**
-     * Get cache context
-     *
-     * @return \Magento\Framework\Indexer\CacheContext
-     * @deprecated
-     */
-    protected function getCacheContext()
-    {
-        if (!($this->cacheContext instanceof CacheContext)) {
-            return \Magento\Framework\App\ObjectManager::getInstance()->get(CacheContext::class);
-        } else {
-            return $this->cacheContext;
-        }
     }
 }

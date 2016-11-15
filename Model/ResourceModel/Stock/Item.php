@@ -1,33 +1,29 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * EaDesign
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_warehouses
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock;
 
-use Magento\CatalogInventory\Api\Data\StockItemInterface;
-use Magento\CatalogInventory\Model\Indexer\Stock\Processor;
-use Magento\Framework\App\ResourceConnection as AppResource;
-use Magento\Framework\Model\AbstractModel;
-use Magento\Framework\Model\ResourceModel\Db\TransactionManagerInterface;
 
 /**
  * Stock item resource model
  */
 class Item extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Item
 {
-    /**
-     * Whether index events should be processed immediately
-     *
-     * @var bool
-     */
-    protected $processIndexEvents = true;
-
-    /**
-     * @var Processor
-     */
-    protected $stockIndexerProcessor;
-
     /**
      * Define main table and initialize connection
      *
@@ -36,93 +32,5 @@ class Item extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Item
     protected function _construct()
     {
         $this->_init('warehouseinventory_stock_item', 'item_id');
-    }
-
-    /**
-     * Loading stock item data by product
-     *
-     * @param \Magento\CatalogInventory\Api\Data\StockItemInterface $item
-     * @param int $productId
-     * @param int $stockId
-     * @return $this
-     */
-    public function loadByProductId(\Magento\CatalogInventory\Api\Data\StockItemInterface $item, $productId, $stockId)
-    {
-        $select = $this->_getLoadSelect('product_id', $productId, $item)->where('stock_id = :stock_id');
-        $data = $this->getConnection()->fetchRow($select, [':stock_id' => $stockId]);
-        if ($data) {
-            $item->setData($data);
-        } else {
-            // see \Magento\CatalogInventory\Model\Stock\Item::getStockQty
-            $item->setStockQty(0);
-        }
-        $this->_afterLoad($item);
-        return $this;
-    }
-
-    /**
-     * Retrieve select object and join it to product entity table to get type ids
-     *
-     * @param string $field
-     * @param int $value
-     * @param \Magento\CatalogInventory\Model\Stock\Item $object
-     * @return \Magento\Framework\DB\Select
-     */
-    protected function _getLoadSelect($field, $value, $object)
-    {
-        $select = parent::_getLoadSelect($field, $value, $object)
-            ->join(['p' => $this->getTable('catalog_product_entity')], 'product_id=p.entity_id', ['type_id']);
-        return $select;
-    }
-
-    /**
-     * Use qty correction for qty column update
-     *
-     * @param \Magento\Framework\DataObject $object
-     * @param string $table
-     * @return array
-     */
-    protected function _prepareDataForTable(\Magento\Framework\DataObject $object, $table)
-    {
-        $data = parent::_prepareDataForTable($object, $table);
-        $ifNullSql = $this->getConnection()->getIfNullSql('qty');
-        if (!$object->isObjectNew() && $object->getQtyCorrection()) {
-            if ($object->getQty() === null) {
-                $data['qty'] = null;
-            } elseif ($object->getQtyCorrection() < 0) {
-                $data['qty'] = new \Zend_Db_Expr($ifNullSql . '-' . abs($object->getQtyCorrection()));
-            } else {
-                $data['qty'] = new \Zend_Db_Expr($ifNullSql . '+' . $object->getQtyCorrection());
-            }
-        }
-        return $data;
-    }
-
-    /**
-     * Reindex CatalogInventory save event
-     *
-     * @param AbstractModel $object
-     * @return $this
-     */
-    protected function _afterSave(AbstractModel $object)
-    {
-        parent::_afterSave($object);
-        /** @var StockItemInterface $object */
-        if ($this->processIndexEvents) {
-            $this->stockIndexerProcessor->reindexRow($object->getProductId());
-        }
-        return $this;
-    }
-
-    /**
-     * Set whether index events should be processed immediately
-     *
-     * @param bool $process
-     * @return $this
-     */
-    public function setProcessIndexEvents($process = true)
-    {
-        $this->processIndexEvents = $process;
-        return $this;
     }
 }

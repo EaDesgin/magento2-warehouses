@@ -1,19 +1,31 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * EaDesign
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@eadesign.ro so we can send you a copy immediately.
+ *
+ * @category    eadesigndev_warehouses
+ * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
 // @codingStandardsIgnoreFile
 
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock\Status;
 
-use Magento\Framework\Data\AbstractCriteria;
 
 /**
  * Class StockStatusCriteria
  */
-class StockStatusCriteria extends AbstractCriteria implements \Magento\CatalogInventory\Api\StockStatusCriteriaInterface
+class StockStatusCriteria extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status\StockStatusCriteria implements \Magento\CatalogInventory\Api\StockStatusCriteriaInterface
 {
     /**
      * @param string $mapper
@@ -31,37 +43,5 @@ class StockStatusCriteria extends AbstractCriteria implements \Magento\CatalogIn
     {
         $this->data['stock_filter'] = $stock;
         return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setScopeFilter($scope)
-    {
-        $this->data['website_filter'] = $scope;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setProductsFilter($products)
-    {
-        $this->data['products_filter'] = $products;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setQtyFilter($qty)
-    {
-        $this->data['qty_filter'] = $qty;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function addCriteria(\Magento\CatalogInventory\Api\StockStatusCriteriaInterface $criteria)
-    {
-        $this->data[self::PART_CRITERIA_LIST]['list'][] = $criteria;
     }
 }
