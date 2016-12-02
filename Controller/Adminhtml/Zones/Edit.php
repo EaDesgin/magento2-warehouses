@@ -1,5 +1,4 @@
 <?php
-
 /**
  * EaDesign
  *
@@ -18,12 +17,12 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
-namespace Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses;
+namespace Eadesigndev\Warehouses\Controller\Adminhtml\Zones;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 
-class Index extends \Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses
+class Edit extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
 {
 
     /**
@@ -55,12 +54,7 @@ class Index extends \Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses
     {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Warehouses'));
-
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $model = $objectManager->create('Magento\CatalogInventory\Model\Indexer\Stock\Processor');
-
-        $model->reindexAll();;
+        $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Zones'));
 
         return $resultPage;
     }

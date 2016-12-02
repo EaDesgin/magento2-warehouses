@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?php
 /**
  * EaDesign
  *
@@ -17,16 +16,24 @@
  * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
--->
 
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+namespace Eadesigndev\Warehouses\Api;
 
-    <preference type="Eadesigndev\Warehouses\Model\Adminhtml\Stock\Item"
-                for="Magento\CatalogInventory\Model\Adminhtml\Stock\Item"/>
+/**
+ * Zone CRUD interface.
+ * @api
+ */
+interface ZoneRepositoryInterface
+{
+    public function save(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone);
 
-    <preference for="Eadesigndev\Warehouses\Api\Data\ZoneInterface"
-                type="Eadesigndev\Warehouses\Model\Stock" />
+    public function get($storeId, $websiteId = null);
 
+    public function getById($zoneId);
 
-</config>
+    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
+
+    public function delete(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone);
+
+    public function deleteById($zoneId);
+}

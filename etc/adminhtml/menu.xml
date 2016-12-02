@@ -27,11 +27,11 @@
              resource="Eadesigndev_Warehouses::warehouses"
              parent="Eadesigndev_Eacore::eadesign"/>
         <add id="Eadesigndev_Warehouses::warehouses_list"
-             title="Manage Warehouses"
+             title="Manage Zones"
              module="Eadesigndev_Warehouses"
              sortOrder="10"
              parent="Eadesigndev_Warehouses::warehouses"
-             action="warehouses/warehouses"
+             action="warehouses/zones"
              resource="Eadesigndev_Warehouses::warehouses"/>
     </menu>
 </config>

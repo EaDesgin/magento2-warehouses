@@ -1,5 +1,4 @@
 <?php
-
 /**
  * EaDesign
  *
@@ -21,10 +20,10 @@
 namespace Eadesigndev\Warehouses\Controller\Adminhtml;
 
 
-abstract class Warehouses extends \Magento\Backend\App\Action
+abstract class Zones extends \Magento\Backend\App\Action
 {
 
-    CONST ADMIN_RESOURCE_VIEW = 'Eadesigndev_Warehouses::warehouses';
+    CONST ADMIN_RESOURCE_VIEW = 'Eadesigndev_Warehouses::zones';
     CONST ADMIN_RESOURCE_SAVE = 'Eadesigndev_Warehouses::save';
 
     /**
@@ -56,7 +55,7 @@ abstract class Warehouses extends \Magento\Backend\App\Action
     protected function initPage($resultPage)
     {
         $resultPage->setActiveMenu('Eadesigndev_Warehouses::warehouses_list')
-            ->addBreadcrumb(__('EaDesign Warehouses Warehouses'), __('EaDesign Warehouses Warehouses'));
+            ->addBreadcrumb(__('EaDesign Zones'), __('EaDesign Zones'));
 
         return $resultPage;
     }

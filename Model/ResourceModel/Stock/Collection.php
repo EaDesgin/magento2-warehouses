@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?php
 /**
  * EaDesign
  *
@@ -17,16 +16,23 @@
  * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
--->
 
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock;
 
-    <preference type="Eadesigndev\Warehouses\Model\Adminhtml\Stock\Item"
-                for="Magento\CatalogInventory\Model\Adminhtml\Stock\Item"/>
+use Magento\CatalogInventory\Api\Data\StockCollectionInterface;
+use Magento\Framework\Data\AbstractSearchResult;
 
-    <preference for="Eadesigndev\Warehouses\Api\Data\ZoneInterface"
-                type="Eadesigndev\Warehouses\Model\Stock" />
-
-
-</config>
+/**
+ * Class Collection
+ * @package Magento\CatalogInventory\Model\ResourceModel\Stock
+ */
+class Collection extends AbstractSearchResult implements StockCollectionInterface
+{
+    /**
+     * @inheritdoc
+     */
+    protected function init()
+    {
+        $this->setDataInterfaceName('Eadesigndev\Warehouses\Api\Data\ZoneInterface');
+    }
+}
