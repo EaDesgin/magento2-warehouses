@@ -31,9 +31,9 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
      */
     public function getButtonData()
     {
-        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses::ADMIN_RESOURCE_SAVE)) {
+        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Zones::ADMIN_RESOURCE_SAVE)) {
             return [
-                'label' => __('Save Template'),
+                'label' => __('Save Zone'),
                 'class' => 'save primary',
                 'data_attribute' => [
                     'mage-init' => ['button' => ['event' => 'save']],

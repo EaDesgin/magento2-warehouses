@@ -32,7 +32,7 @@ class SaveAndContinueButton extends GenericButton implements ButtonProviderInter
      */
     public function getButtonData()
     {
-        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses::ADMIN_RESOURCE_SAVE)) {
+        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Zones::ADMIN_RESOURCE_SAVE)) {
             return [
                 'label' => __('Save and Continue Edit'),
                 'class' => 'save',

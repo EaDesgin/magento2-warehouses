@@ -71,12 +71,12 @@ class GenericButton
 
         $model = $this->zoneRegistry->retrieve(1);
 
-        echo '<pre>';
-        print_r($model->getData());
-        exit();
+//        echo '<pre>';
+//        print_r($model->getData());
+//        exit();
 
         try {
-            return $this->_coreRegistry->registry('warehouses_warehouses')->getData('warehouses_id');
+            return $model->getStockId();
         } catch (NoSuchEntityException $e) {
         }
         return null;

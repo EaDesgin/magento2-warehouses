@@ -23,8 +23,8 @@ namespace Eadesigndev\Warehouses\Controller\Adminhtml;
 abstract class Zones extends \Magento\Backend\App\Action
 {
 
-    CONST ADMIN_RESOURCE_VIEW = 'Eadesigndev_Warehouses::zones';
-    CONST ADMIN_RESOURCE_SAVE = 'Eadesigndev_Warehouses::save';
+    CONST ADMIN_RESOURCE_VIEW = 'Eadesigndev_Zones::zones';
+    CONST ADMIN_RESOURCE_SAVE = 'Eadesigndev_Zones::save';
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
@@ -41,8 +41,11 @@ abstract class Zones extends \Magento\Backend\App\Action
     protected $zoneRegistry;
 
     /**
+     * Zones constructor.
      * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Registry $coreRegistry
+     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Eadesigndev\Warehouses\Model\ZoneRepository $zoneModel
+     * @param \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -89,9 +92,6 @@ abstract class Zones extends \Magento\Backend\App\Action
         $model = $this->zoneModel->getById($id);
 
         $this->zoneRegistry->push($model);
-
-//        $this->setData('modedd', $model);
-
 
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();

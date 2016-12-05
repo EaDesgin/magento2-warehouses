@@ -31,7 +31,7 @@ class ResetButton extends GenericButton implements ButtonProviderInterface
      */
     public function getButtonData()
     {
-        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses::ADMIN_RESOURCE_SAVE)) {
+        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Zones::ADMIN_RESOURCE_SAVE)) {
             return [
                 'label' => __('Reset'),
                 'class' => 'reset',
