@@ -19,12 +19,31 @@
 
 namespace Eadesigndev\Warehouses\Model;
 
+
+use Eadesigndev\Warehouses\Model\ResourceModel\Stock;
+
 /**
  * Class Stock
  *
  */
 class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterface
 {
+
+    private $zoneInstances = [];
+
+    private $zoneResource;
+
+    private $zoneFactory;
+
+    public function __construct(
+        \Eadesigndev\Warehouses\Model\ResourceModel\Stock $zoneResource,
+        \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory
+    )
+    {
+        $this->zoneResource = $zoneResource;
+        $this->zoneFactory = $zoneFactory;
+    }
+
 
     public function save(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone)
     {
@@ -38,7 +57,19 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
 
     public function getById($zoneId)
     {
-        // TODO: Implement getById() method.
+        if (!isset($this->zoneInstances[$zoneId])) {
+            $zone = $this->zoneFactory->create();
+
+            $this->zoneResource->load($zone, $zoneId);
+
+            if (!$zone->getId()) {
+                //todo add exception with message here
+            }
+
+            $this->zoneInstances[$zoneId] = $zone;
+        }
+
+        return $this->zoneInstances[$zoneId];
     }
 
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)

@@ -44,14 +44,18 @@ class GenericButton
      */
     protected $context;
 
+    private $zoneRegistry;
+
     /**
      * @param Context $context
      */
     public function __construct(
         Context $context,
-        Registry $registry
+        Registry $registry,
+        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry
     )
     {
+        $this->zoneRegistry = $zoneRegistry;
         $this->_coreRegistry = $registry;
         $this->context = $context;
         $this->_authorization = $context->getAuthorization();
@@ -64,6 +68,13 @@ class GenericButton
      */
     public function getWarehousesId()
     {
+
+        $model = $this->zoneRegistry->retrieve(1);
+
+        echo '<pre>';
+        print_r($model->getData());
+        exit();
+
         try {
             return $this->_coreRegistry->registry('warehouses_warehouses')->getData('warehouses_id');
         } catch (NoSuchEntityException $e) {

@@ -27,11 +27,18 @@ abstract class Zones extends \Magento\Backend\App\Action
     CONST ADMIN_RESOURCE_SAVE = 'Eadesigndev_Warehouses::save';
 
     /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
+    protected $resultPageFactory;
+
+    /**
      * Core registry
      *
      * @var \Magento\Framework\Registry
      */
-    protected $_coreRegistry;
+    protected $zoneModel;
+
+    protected $zoneRegistry;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -39,10 +46,14 @@ abstract class Zones extends \Magento\Backend\App\Action
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Registry $coreRegistry
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
+        \Eadesigndev\Warehouses\Model\ZoneRepository $zoneModel,
+        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry
     )
     {
-        $this->_coreRegistry = $coreRegistry;
+        $this->resultPageFactory = $resultPageFactory;
+        $this->zoneModel = $zoneModel;
+        $this->zoneRegistry = $zoneRegistry;
         parent::__construct($context);
     }
 
@@ -56,6 +67,35 @@ abstract class Zones extends \Magento\Backend\App\Action
     {
         $resultPage->setActiveMenu('Eadesigndev_Warehouses::warehouses_list')
             ->addBreadcrumb(__('EaDesign Zones'), __('EaDesign Zones'));
+
+        return $resultPage;
+    }
+
+
+    /**
+     * Index action
+     *
+     * @return \Magento\Framework\Controller\ResultInterface
+     */
+    public function execute()
+    {
+
+        $id = $this->getRequest()->getParam('id');
+
+        if (!$id) {
+            //$model =  todo create empty model with factory
+        }
+
+        $model = $this->zoneModel->getById($id);
+
+        $this->zoneRegistry->push($model);
+
+//        $this->setData('modedd', $model);
+
+
+        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        $resultPage = $this->resultPageFactory->create();
+        $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Zones'));
 
         return $resultPage;
     }

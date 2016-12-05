@@ -26,36 +26,20 @@ class Edit extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
 {
 
     /**
-     * @var \Magento\Framework\View\Result\PageFactory
-     */
-    protected $resultPageFactory;
-
-    /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * Edit constructor.
+     * @param Context $context
+     * @param \Eadesigndev\Warehouses\Model\ZoneRepository $zoneModel
+     * @param PageFactory $resultPageFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Registry $coreRegistry,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
+        \Eadesigndev\Warehouses\Model\ZoneRepository $zoneModel,
+        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry
     )
     {
-        $this->resultPageFactory = $resultPageFactory;
-        parent::__construct($context, $coreRegistry);
+        parent::__construct($context, $resultPageFactory, $zoneModel,$zoneRegistry);
     }
 
-    /**
-     * Index action
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
-     */
-    public function execute()
-    {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
-        $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Zones'));
 
-        return $resultPage;
-    }
 }

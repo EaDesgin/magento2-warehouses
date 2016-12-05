@@ -32,7 +32,7 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
      */
     public function getButtonData()
     {
-        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses::ADMIN_RESOURCE_SAVE)) {
+//        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses::ADMIN_RESOURCE_SAVE)) {
             $data = [];
             if ($this->getWarehousesId()) {
                 $data = [
@@ -45,7 +45,7 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
                 ];
             }
             return $data;
-        }
+//        }
     }
 
     /**
