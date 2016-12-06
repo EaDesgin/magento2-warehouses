@@ -41,13 +41,14 @@
     </argument>
     <dataSource name="zones_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
+            <argument name="class" xsi:type="string">ZonesEditDataProvider</argument>
+            <!--<argument name="class" xsi:type="string">Eadesigndev\Warehouses\Model\Stock\DataProvider</argument>-->
             <argument name="name" xsi:type="string">zones_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">stock_id</argument>
-            <argument name="requestFieldName" xsi:type="string">stock_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="warehouses/zones/save"/>
+                    <item name="submit_url" xsi:type="url" path="pdfgenerator/templates/save"/>
                 </item>
             </argument>
         </argument>
@@ -63,63 +64,26 @@
                 <item name="label" xsi:type="string"/>
             </item>
         </argument>
-        <field name="template_id">
+        <field name="stock_id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="visible" xsi:type="boolean">false</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">template</item>
-                    <item name="dataScope" xsi:type="string">template_id</item>
+                    <item name="dataScope" xsi:type="string">stock_id</item>
                 </item>
             </argument>
         </field>
 
-        <field name="is_active">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">Enable Zone</item>
-                    <item name="formElement" xsi:type="string">checkbox</item>
-                    <item name="prefer" xsi:type="string">toggle</item>
-                    <item name="source" xsi:type="string">template</item>
-                    <item name="sortOrder" xsi:type="number">10</item>
-                    <item name="dataScope" xsi:type="string">is_active</item>
-                    <item name="valueMap" xsi:type="array">
-                        <item name="true" xsi:type="number">1</item>
-                        <item name="false" xsi:type="number">0</item>
-                    </item>
-                    <item name="default" xsi:type="number">0</item>
-                </item>
-            </argument>
-        </field>
-
-        <!--<field name="template_default">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">boolean</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Default template</item>-->
-                    <!--<item name="formElement" xsi:type="string">checkbox</item>-->
-                    <!--<item name="prefer" xsi:type="string">toggle</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">11</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_default</item>-->
-                    <!--<item name="valueMap" xsi:type="array">-->
-                        <!--<item name="true" xsi:type="number">1</item>-->
-                        <!--<item name="false" xsi:type="number">0</item>-->
-                    <!--</item>-->
-                    <!--<item name="default" xsi:type="number">0</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
 
         <field name="stock_name">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Zone Name</item>
+                    <item name="label" xsi:type="string" translate="true">Template name</item>
                     <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">data</item>
+                    <item name="source" xsi:type="string">template</item>
                     <item name="sortOrder" xsi:type="number">20</item>
                     <item name="dataScope" xsi:type="string">stock_name</item>
                     <item name="validation" xsi:type="array">
@@ -128,291 +92,24 @@
                 </item>
             </argument>
         </field>
-        <!--<field name="template_description">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">text</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Zone Description</item>-->
-                    <!--<item name="formElement" xsi:type="string">input</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">21</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_description</item>-->
-                    <!--<item name="validation" xsi:type="array">-->
-                        <!--<item name="required-entry" xsi:type="boolean">true</item>-->
-                    <!--</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
+        <field name="template_description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Template Description</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">template</item>
+                    <item name="sortOrder" xsi:type="number">21</item>
+                    <item name="dataScope" xsi:type="string">template_description</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
 
     </fieldset>
 
 
-    <!--<fieldset name="template_body">-->
-        <!--<argument name="data" xsi:type="array">-->
-            <!--<item name="config" xsi:type="array">-->
-                <!--<item name="collapsible" xsi:type="boolean">true</item>-->
-                <!--<item name="label" xsi:type="string" translate="true">Template body</item>-->
-                <!--<item name="sortOrder" xsi:type="number">11</item>-->
-            <!--</item>-->
-        <!--</argument>-->
-        <!--<field name="template_body">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="label" xsi:type="string"/>-->
-                    <!--<item name="formElement" xsi:type="string">wysiwyg</item>-->
-                    <!--<item name="wysiwygConfigData" xsi:type="array">-->
-                        <!--<item name="files_browser_window_url" xsi:type="boolean">true</item>-->
-                        <!--<item name="height" xsi:type="string">100px</item>-->
-                        <!--<item name="hidden" xsi:type="boolean">true</item>-->
-                        <!--<item name="toggle_button" xsi:type="boolean">true</item>-->
-                        <!--<item name="add_variables" xsi:type="boolean">true</item>-->
-                        <!--<item name="add_widgets" xsi:type="boolean">false</item>-->
-                        <!--<item name="add_images" xsi:type="boolean">false</item>-->
-                    <!--</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="wysiwyg" xsi:type="boolean">true</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_body</item>-->
-                    <!--<item name="additionalClasses" xsi:type="string">admin__field-wide</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-    <!--</fieldset>-->
-
-    <!--<fieldset name="template_header">-->
-        <!--<argument name="data" xsi:type="array">-->
-            <!--<item name="config" xsi:type="array">-->
-                <!--<item name="collapsible" xsi:type="boolean">true</item>-->
-                <!--<item name="label" xsi:type="string" translate="true">Template header</item>-->
-                <!--<item name="sortOrder" xsi:type="number">12</item>-->
-            <!--</item>-->
-        <!--</argument>-->
-        <!--<field name="template_header">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="label" xsi:type="string"/>-->
-                    <!--<item name="formElement" xsi:type="string">wysiwyg</item>-->
-                    <!--<item name="wysiwygConfigData" xsi:type="array">-->
-                        <!--<item name="files_browser_window_url" xsi:type="boolean">true</item>-->
-                        <!--<item name="height" xsi:type="string">100px</item>-->
-                        <!--<item name="hidden" xsi:type="boolean">true</item>-->
-                        <!--<item name="toggle_button" xsi:type="boolean">true</item>-->
-                        <!--<item name="add_variables" xsi:type="boolean">true</item>-->
-                        <!--<item name="add_widgets" xsi:type="boolean">false</item>-->
-                        <!--<item name="add_images" xsi:type="boolean">false</item>-->
-                    <!--</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="wysiwyg" xsi:type="boolean">true</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_header</item>-->
-                    <!--<item name="additionalClasses" xsi:type="string">admin__field-wide</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-    <!--</fieldset>-->
-
-    <!--<fieldset name="template_footer">-->
-        <!--<argument name="data" xsi:type="array">-->
-            <!--<item name="config" xsi:type="array">-->
-                <!--<item name="collapsible" xsi:type="boolean">true</item>-->
-                <!--<item name="label" xsi:type="string" translate="true">Template footer</item>-->
-                <!--<item name="sortOrder" xsi:type="number">13</item>-->
-            <!--</item>-->
-        <!--</argument>-->
-        <!--<field name="template_footer">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="label" xsi:type="string"/>-->
-                    <!--<item name="formElement" xsi:type="string">wysiwyg</item>-->
-                    <!--<item name="wysiwygConfigData" xsi:type="array">-->
-                        <!--<item name="files_browser_window_url" xsi:type="boolean">true</item>-->
-                        <!--<item name="height" xsi:type="string">100px</item>-->
-                        <!--<item name="hidden" xsi:type="boolean">true</item>-->
-                        <!--<item name="toggle_button" xsi:type="boolean">true</item>-->
-                        <!--<item name="add_variables" xsi:type="boolean">true</item>-->
-                        <!--<item name="add_widgets" xsi:type="boolean">false</item>-->
-                        <!--<item name="add_images" xsi:type="boolean">false</item>-->
-                    <!--</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="wysiwyg" xsi:type="boolean">true</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_footer</item>-->
-                    <!--<item name="additionalClasses" xsi:type="string">admin__field-wide</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-    <!--</fieldset>-->
-
-    <!--<fieldset name="template_css">-->
-        <!--<argument name="data" xsi:type="array">-->
-            <!--<item name="config" xsi:type="array">-->
-                <!--<item name="collapsible" xsi:type="boolean">true</item>-->
-                <!--<item name="label" xsi:type="string" translate="true">Template css</item>-->
-                <!--<item name="sortOrder" xsi:type="number">14</item>-->
-            <!--</item>-->
-        <!--</argument>-->
-        <!--<field name="template_css">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">text</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true"/>-->
-                    <!--<item name="formElement" xsi:type="string">textarea</item>-->
-                    <!--<item name="source" xsi:type="string">page</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_css</item>-->
-                    <!--<item name="additionalClasses" xsi:type="string">admin__field-wide</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-    <!--</fieldset>-->
-
-    <!--<fieldset name="template_settings">-->
-        <!--<argument name="data" xsi:type="array">-->
-            <!--<item name="config" xsi:type="array">-->
-                <!--<item name="collapsible" xsi:type="boolean">true</item>-->
-                <!--<item name="label" xsi:type="string" translate="true">Template settings</item>-->
-                <!--<item name="sortOrder" xsi:type="number">60</item>-->
-            <!--</item>-->
-        <!--</argument>-->
-
-        <!--<field name="template_file_name">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">text</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Template file name</item>-->
-                    <!--<item name="formElement" xsi:type="string">input</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">1</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_file_name</item>-->
-                    <!--<item name="validation" xsi:type="array">-->
-                        <!--<item name="required-entry" xsi:type="boolean">true</item>-->
-                    <!--</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-
-
-
-
-        <!--<field name="template_custom_form">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">boolean</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Custom format</item>-->
-                    <!--<item name="formElement" xsi:type="string">checkbox</item>-->
-                    <!--<item name="prefer" xsi:type="string">toggle</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">3</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_custom_form</item>-->
-                    <!--<item name="valueMap" xsi:type="array">-->
-                        <!--<item name="true" xsi:type="number">1</item>-->
-                        <!--<item name="false" xsi:type="number">0</item>-->
-                    <!--</item>-->
-                    <!--<item name="default" xsi:type="number">0</item>-->
-
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-
-        <!--<field name="template_custom_h">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">text</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Custom height (mm)</item>-->
-                    <!--<item name="formElement" xsi:type="string">input</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">4</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_custom_h</item>-->
-                    <!--<item name="validation" xsi:type="array">-->
-                        <!--<item name="validate-number" xsi:type="boolean">true</item>-->
-                    <!--</item>-->
-                    <!--<item name="default" xsi:type="number">270</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-
-        <!--<field name="template_custom_w">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">text</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Custom width (mm)</item>-->
-                    <!--<item name="formElement" xsi:type="string">input</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">5</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_custom_w</item>-->
-                    <!--<item name="validation" xsi:type="array">-->
-                        <!--<item name="validate-number" xsi:type="boolean">true</item>-->
-                    <!--</item>-->
-                    <!--<item name="default" xsi:type="number">210</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-
-
-
-        <!--<field name="template_custom_t">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">text</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Margin top (mm)</item>-->
-                    <!--<item name="formElement" xsi:type="string">input</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">7</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_custom_t</item>-->
-                    <!--<item name="validation" xsi:type="array">-->
-                        <!--<item name="validate-number" xsi:type="boolean">true</item>-->
-                    <!--</item>-->
-                    <!--<item name="default" xsi:type="number">20</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-
-        <!--<field name="template_custom_b">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">text</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Margin bottom (mm)</item>-->
-                    <!--<item name="formElement" xsi:type="string">input</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">8</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_custom_b</item>-->
-                    <!--<item name="validation" xsi:type="array">-->
-                        <!--<item name="validate-number" xsi:type="boolean">true</item>-->
-                    <!--</item>-->
-                    <!--<item name="default" xsi:type="number">20</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-
-        <!--<field name="template_custom_l">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">text</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Margin left (mm)</item>-->
-                    <!--<item name="formElement" xsi:type="string">input</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">9</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_custom_l</item>-->
-                    <!--<item name="validation" xsi:type="array">-->
-                        <!--<item name="validate-number" xsi:type="boolean">true</item>-->
-                    <!--</item>-->
-                    <!--<item name="default" xsi:type="number">20</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-
-        <!--<field name="template_custom_r">-->
-            <!--<argument name="data" xsi:type="array">-->
-                <!--<item name="config" xsi:type="array">-->
-                    <!--<item name="dataType" xsi:type="string">text</item>-->
-                    <!--<item name="label" xsi:type="string" translate="true">Margin left (mm)</item>-->
-                    <!--<item name="formElement" xsi:type="string">input</item>-->
-                    <!--<item name="source" xsi:type="string">template</item>-->
-                    <!--<item name="sortOrder" xsi:type="number">10</item>-->
-                    <!--<item name="dataScope" xsi:type="string">template_custom_r</item>-->
-                    <!--<item name="validation" xsi:type="array">-->
-                        <!--<item name="validate-number" xsi:type="boolean">true</item>-->
-                    <!--</item>-->
-                    <!--<item name="default" xsi:type="number">20</item>-->
-                <!--</item>-->
-            <!--</argument>-->
-        <!--</field>-->
-
-    <!--</fieldset>-->
 </form>

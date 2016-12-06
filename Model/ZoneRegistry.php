@@ -42,7 +42,7 @@ class ZoneRegistry
         if (isset($this->zoneRegistryById[$zoneId])) {
             return $this->zoneRegistryById[$zoneId];
         }
-        exit('test');
+
         /** @var Zone $zone */
         $zone = $this->zoneFactory->create()->load($zoneId);
         if (!$zone->getId()) {
