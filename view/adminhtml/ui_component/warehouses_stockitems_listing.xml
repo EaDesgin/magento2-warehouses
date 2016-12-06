@@ -687,7 +687,7 @@
             </argument>
         </column>
 
-        <actionsColumn name="actions" class="Eadesigndev\Warehouses\Ui\Component\Listing\Column\Actions">
+        <actionsColumn name="actions" class="Eadesigndev\Warehouses\Ui\Component\Listing\ColumnItems\Actions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="resizeEnabled" xsi:type="boolean">false</item>
