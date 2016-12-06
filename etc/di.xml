@@ -67,6 +67,7 @@
         <arguments>
             <argument name="collections" xsi:type="array">
                 <item name="zones_data_source" xsi:type="string">ZoneCollection</item>
+                <item name="items_data_source" xsi:type="string">ItemsCollection</item>
             </argument>
         </arguments>
     </type>
@@ -85,25 +86,16 @@
         </arguments>
     </virtualType>
 
-    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
-        <arguments>
-            <argument name="collections" xsi:type="array">
-                <item name="items_data_source" xsi:type="string">ItemsCollection</item>
-            </argument>
-        </arguments>
-    </type>
-
     <virtualType name="ItemsGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
         <arguments>
             <argument name="collection" xsi:type="object" shared="false">ItemsCollection</argument>
-            <argument name="filterPool" xsi:type="object" shared="false">ItemsGirdFilterPool</argument>
         </arguments>
     </virtualType>
 
     <virtualType name="ItemsCollection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
             <argument name="mainTable" xsi:type="string">warehouseinventory_stock_item</argument>
-            <argument name="resourceModel" xsi:type="string">Eadesigndev\Warehouses\Model\ResourceModel\Stock</argument>
+            <argument name="resourceModel" xsi:type="string">Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item</argument>
         </arguments>
     </virtualType>
 
