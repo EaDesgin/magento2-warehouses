@@ -25,7 +25,7 @@ namespace Eadesigndev\Warehouses\Controller\Adminhtml;
 abstract class StockItems extends \Magento\Backend\App\Action
 {
 
-    CONST ADMIN_RESOURCE_VIEW = 'Eadesigndev_StockItems::zones';
+    CONST ADMIN_RESOURCE_VIEW = 'Eadesigndev_StockItems::stockitems';
     CONST ADMIN_RESOURCE_SAVE = 'Eadesigndev_StockItems::save';
 
     /**

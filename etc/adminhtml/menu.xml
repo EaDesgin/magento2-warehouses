@@ -33,5 +33,12 @@
              parent="Eadesigndev_Warehouses::warehouses"
              action="warehouses/zones"
              resource="Eadesigndev_Warehouses::warehouses"/>
+        <add id="Eadesigndev_Warehouses::items_list"
+             title="Manage Items"
+             module="Eadesigndev_Warehouses"
+             sortOrder="10"
+             parent="Eadesigndev_Warehouses::warehouses"
+             action="warehouses/stockitems"
+             resource="Eadesigndev_Warehouses::warehouses"/>
     </menu>
 </config>
