@@ -79,6 +79,12 @@
         </arguments>
     </virtualType>
 
+    <virtualType name="ZonesEditDataProvider" type="Eadesigndev\Warehouses\Model\Stock\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">ZoneCollection</argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="ZoneCollection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
             <argument name="mainTable" xsi:type="string">warehouseinventory_stock</argument>
