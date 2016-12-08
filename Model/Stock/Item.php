@@ -18,23 +18,79 @@
  */
 namespace Eadesigndev\Warehouses\Model\Stock;
 
-use Magento\Catalog\Model\Product;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
+use Magento\CatalogInventory\Api\StockConfigurationInterface as StockConfigurationInterface;
+use Magento\CatalogInventory\Api\StockItemRepositoryInterface as StockItemRepositoryInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
+use Magento\Framework\Api\AttributeValueFactory;
+use Magento\Framework\Api\ExtensionAttributesFactory;
+use Eadesigndev\Warehouses\Helper\Validations;
 
 /**
- * Catalog Inventory Stock Item Model
+ * Catalog Inventory Stock Item Model extension
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  */
 class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockItemInterface
 {
+
+    protected $validations;
+
     /**
      * Stock item entity code
      */
     const ENTITY = 'werehaouseinventory_stock_item';
 
+
+    /**
+     * Item constructor.
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param ExtensionAttributesFactory $extensionFactory
+     * @param AttributeValueFactory $customAttributeFactory
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param StockConfigurationInterface $stockConfiguration
+     * @param StockRegistryInterface $stockRegistry
+     * @param StockItemRepositoryInterface $stockItemRepository
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param Validations $validations
+     * @param array $data
+     */
+    public function __construct(
+        \Magento\Framework\Model\Context $context,
+        \Magento\Framework\Registry $registry,
+        ExtensionAttributesFactory $extensionFactory,
+        AttributeValueFactory $customAttributeFactory,
+        \Magento\Customer\Model\Session $customerSession,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        StockConfigurationInterface $stockConfiguration,
+        StockRegistryInterface $stockRegistry,
+        StockItemRepositoryInterface $stockItemRepository,
+        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        Validations $validations,
+        array $data = []
+    )
+    {
+        parent::__construct(
+            $context,
+            $registry,
+            $extensionFactory,
+            $customAttributeFactory,
+            $customerSession,
+            $storeManager,
+            $stockConfiguration,
+            $stockRegistry,
+            $stockItemRepository,
+            $resource,
+            $resourceCollection,
+            $data
+        );
+        $this->validations = $validations;
+    }
 
     /**
      * Initialize resource model
@@ -45,6 +101,7 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
     {
         $this->_init('Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item');
     }
+
     /**
      * Retrieve stock identifier
      *
@@ -52,18 +109,8 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
      */
     public function getStockId()
     {
-//        $stockId = $this->getData(static::STOCK_ID);
-//        if ($stockId === null) {
-//            $stockId = $this->stockRegistry->getStock($this->getWebsiteId())->getStockId();
-//        }
 
-        //todo ned to validate here for store 0
-
-        $stockId = $this->getStoreId();
-
-        if ($this->getStoreId() == 0) {
-            $stockId = 1;
-        }
+        $stockId = $this->validations->zoneById($this->getStoreId());
 
         return (int)$stockId;
     }
@@ -76,13 +123,7 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
      */
     public function setStockId($stockId)
     {
-        $stockId = $this->getStoreId();
-
-        //todo validate here with the same system as get
-
-        if ($this->getStoreId() == 0) {
-            $stockId = 1;
-        }
+        $stockId = $this->validations->zoneById($this->getStoreId());
 
         return $this->setData(self::STOCK_ID, $stockId);
     }

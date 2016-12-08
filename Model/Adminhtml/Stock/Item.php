@@ -26,6 +26,8 @@ use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Catalog\Model\Product;
+use Eadesigndev\Warehouses\Helper\Validations;
+
 
 /**
  * Catalog Inventory Stock Model for adminhtml area
@@ -40,6 +42,7 @@ class Item extends \Eadesigndev\Warehouses\Model\Stock\Item implements IdentityI
     protected $groupManagement;
 
     /**
+     * Item constructor.
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param ExtensionAttributesFactory $extensionFactory
@@ -50,10 +53,10 @@ class Item extends \Eadesigndev\Warehouses\Model\Stock\Item implements IdentityI
      * @param StockRegistryInterface $stockRegistry
      * @param StockItemRepositoryInterface $stockItemRepository
      * @param GroupManagementInterface $groupManagement
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
+     * @param Validations $validations
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param array $data
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -66,8 +69,9 @@ class Item extends \Eadesigndev\Warehouses\Model\Stock\Item implements IdentityI
         StockRegistryInterface $stockRegistry,
         StockItemRepositoryInterface $stockItemRepository,
         GroupManagementInterface $groupManagement,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        Validations $validations,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         array $data = []
     ) {
         parent::__construct(
@@ -82,6 +86,7 @@ class Item extends \Eadesigndev\Warehouses\Model\Stock\Item implements IdentityI
             $stockItemRepository,
             $resource,
             $resourceCollection,
+            $validations,
             $data
         );
 

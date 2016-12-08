@@ -20,6 +20,7 @@ namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock;
 
 use Magento\CatalogInventory\Model\Stock;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
+use Eadesigndev\Warehouses\Helper\Validations;
 
 /**
  * CatalogInventory Stock Status per website Resource Model
@@ -28,12 +29,39 @@ use Magento\CatalogInventory\Api\StockConfigurationInterface;
 class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
 {
 
+    /**
+     * @var int
+     */
     private $stockId = Stock::DEFAULT_STOCK_ID;
 
     /**
      * @var StockConfigurationInterface
      */
     private $stockConfiguration;
+
+    /**
+     * @var Validations
+     */
+    private $validations;
+
+    /**
+     * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Store\Model\WebsiteFactory $websiteFactory
+     * @param \Magento\Eav\Model\Config $eavConfig
+     * @param string $connectionName
+     */
+    public function __construct(
+        \Magento\Framework\Model\ResourceModel\Db\Context $context,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Store\Model\WebsiteFactory $websiteFactory,
+        \Magento\Eav\Model\Config $eavConfig,
+        Validations $validations,
+        $connectionName = null
+    ) {
+        $this->validations = $validations;
+        parent::__construct($context,$storeManager,$websiteFactory,$eavConfig,$connectionName);
+    }
 
     /**
      * Resource model initialization
@@ -194,7 +222,6 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
         return $this->stockConfiguration;
     }
 
-    //todo move this ti another helper for generalization
     /**
      * @return int|void
      */
@@ -202,10 +229,8 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
     {
         $storeId = $this->_storeManager->getStore()->getId();
 
-        if ($storeId === null) {
-            return Stock::DEFAULT_STOCK_ID;
-        }
+        $stockId = $this->validations->zoneById($storeId);
 
-        return $this->stockId = $storeId;
+        return $this->stockId = $stockId;
     }
 }

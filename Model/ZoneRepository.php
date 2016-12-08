@@ -19,9 +19,6 @@
 
 namespace Eadesigndev\Warehouses\Model;
 
-
-use Eadesigndev\Warehouses\Model\ResourceModel\Stock;
-
 /**
  * Class Stock
  *
@@ -50,7 +47,7 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
         // TODO: Implement save() method.
     }
 
-    public function get($storeId, $websiteId = null)
+    public function get($zoneId, $websiteId = 0)
     {
         // TODO: Implement get() method.
     }

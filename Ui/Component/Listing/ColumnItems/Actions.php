@@ -67,13 +67,13 @@ class Actions extends Column
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {
-            $storeId = $this->context->getFilterParam('item_id');
+            $itemId = $this->context->getFilterParam('item_id');
 
             foreach ($dataSource['data']['items'] as &$item) {
                 $item[$this->getData('name')]['edit'] = [
                     'href' => $this->urlBuilder->getUrl(
                         'warehouses/stockitems/edit',
-                        ['id' => $item['item_id'], 'store' => $storeId]
+                        ['id' => $item['item_id'], 'store' => $itemId]
                     ),
                     'label' => __('Edit'),
                     'hidden' => false,

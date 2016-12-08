@@ -27,7 +27,7 @@ interface ZoneRepositoryInterface
 {
     public function save(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone);
 
-    public function get($storeId, $websiteId = null);
+    public function get($zoneId, $websiteId = 0);
 
     public function getById($zoneId);
 

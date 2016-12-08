@@ -26,7 +26,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface as Logger;
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
-
+use Eadesigndev\Warehouses\Helper\Validations;
 
 /**
  * Class StockStatusCriteriaMapper
@@ -40,16 +40,23 @@ class StockStatusCriteriaMapper extends \Magento\CatalogInventory\Model\Resource
      */
     private $storeManager;
 
+    /**
+     * @var Validations
+     */
+    private $validations;
+
     public function __construct(
         Logger $logger,
         FetchStrategyInterface $fetchStrategy,
         ObjectFactory $objectFactory,
         MapperFactory $mapperFactory,
         StoreManagerInterface $storeManager,
+        Validations $validations,
         Select $select = null
     )
     {
         $this->storeManager = $storeManager;
+        $this->validations = $validations;
         parent::__construct($logger, $fetchStrategy, $objectFactory, $mapperFactory, $select);
     }
 
@@ -68,13 +75,9 @@ class StockStatusCriteriaMapper extends \Magento\CatalogInventory\Model\Resource
     public function mapStockFilter()
     {
         $storeId = $this->storeManager->getStore()->getId();
+        $stockId = $this->validations->zoneById($storeId);
 
-        if ($storeId == 0) {
-            $storeId = 1;
-        }
-
-        $stock = $storeId;
-        $this->addFieldToFilter('main_table.stock_id', $stock);
+        $this->addFieldToFilter('main_table.stock_id', $stockId);
     }
 
     /**
@@ -86,7 +89,7 @@ class StockStatusCriteriaMapper extends \Magento\CatalogInventory\Model\Resource
     public function mapWebsiteFilter($website)
     {
         if ($website instanceof \Magento\Store\Model\Website) {
-            $website = $store->getId();
+            $website = $website->getId();
         }
         $this->addFieldToFilter('main_table.website_id', $website);
     }

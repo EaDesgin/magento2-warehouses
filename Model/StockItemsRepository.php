@@ -50,7 +50,7 @@ class StockItemsRepository implements \Eadesigndev\Warehouses\Api\StockItemsRepo
         // TODO: Implement save() method.
     }
 
-    public function get($storeId, $websiteId = null)
+    public function get($zoneId, $websiteId = 0)
     {
         // TODO: Implement get() method.
     }

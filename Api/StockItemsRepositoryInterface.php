@@ -47,7 +47,7 @@ interface StockItemsRepositoryInterface
 {
     public function save(\Eadesigndev\Warehouses\Api\Data\StockItemsInterface $item);
 
-    public function get($storeId, $websiteId = null);
+    public function get($zoneId, $websiteId = 0);
 
     public function getById($itemId);
 

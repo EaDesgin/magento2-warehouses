@@ -94,13 +94,9 @@ class StockItemCriteriaMapper extends GenericMapper
     public function mapStockFilter()
     {
         $storeId = $this->storeManager->getStore()->getId();
+        $stockId = $this->validations->zoneById($storeId);
 
-        if ($storeId == 0) {
-            $storeId = 1;
-        }
-
-        $stock = $storeId;
-        $this->addFieldToFilter('main_table.stock_id', $stock);
+        $this->addFieldToFilter('main_table.stock_id', $stockId);
     }
 
     /**
