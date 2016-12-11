@@ -19,32 +19,75 @@
 
 namespace Eadesigndev\Warehouses\Model;
 
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\LocalizedException;
+
 /**
  * Class Stock
  *
  */
 class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterface
 {
+    /**
+     * @var ResourceModel\Stock
+     */
+    private $resourceModel;
 
+    /**
+     * @var array
+     */
     private $zoneInstances = [];
 
+    /**
+     * @var ResourceModel\Stock
+     */
     private $zoneResource;
 
+    /**
+     * @var ZoneFactory
+     */
     private $zoneFactory;
 
+    /**
+     * ZoneRepository constructor.
+     * @param ResourceModel\Stock $zoneResource
+     * @param ZoneFactory $zoneFactory
+     * @param ResourceModel\Stock $resourceModel
+     */
     public function __construct(
         \Eadesigndev\Warehouses\Model\ResourceModel\Stock $zoneResource,
-        \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory
+        \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory,
+        \Eadesigndev\Warehouses\Model\ResourceModel\Stock $resourceModel
     )
     {
         $this->zoneResource = $zoneResource;
         $this->zoneFactory = $zoneFactory;
+        $this->resourceModel = $resourceModel;
     }
 
-
+    /**
+     * @param \Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone
+     * @return \Eadesigndev\Warehouses\Api\Data\ZoneInterface
+     * @throws CouldNotSaveException
+     */
     public function save(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone)
     {
-        // TODO: Implement save() method.
+        if ($zone->getId() == 1) {
+            throw new CouldNotSaveException(__(
+                'Could not save the zone 1. The Default zone is not editable'
+            ));
+        }
+
+        try {
+            $this->resourceModel->save($zone);
+        } catch (\Exception $exception) {
+            throw new CouldNotSaveException(__(
+                'Could not save the zone: %1',
+                $exception->getMessage()
+            ));
+        }
+
+        return $zone;
     }
 
     public function get($zoneId, $websiteId = 0)
@@ -52,21 +95,28 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
         // TODO: Implement get() method.
     }
 
-    public function getById($zoneId)
+    /**
+     * @param $stockId
+     * @return mixed
+     * @throws LocalizedException
+     */
+    public function getById($stockId)
     {
-        if (!isset($this->zoneInstances[$zoneId])) {
+        if (!isset($this->zoneInstances[$stockId])) {
             $zone = $this->zoneFactory->create();
 
-            $this->zoneResource->load($zone, $zoneId);
+            $this->zoneResource->load($zone, $stockId);
 
             if (!$zone->getId()) {
-                //todo add exception with message here
+                throw new LocalizedException(__(
+                    "There was a problem with the id."
+                ));
             }
 
-            $this->zoneInstances[$zoneId] = $zone;
+            $this->zoneInstances[$stockId] = $zone;
         }
 
-        return $this->zoneInstances[$zoneId];
+        return $this->zoneInstances[$stockId];
     }
 
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)

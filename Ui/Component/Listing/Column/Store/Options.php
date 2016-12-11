@@ -19,7 +19,7 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
-namespace Eadesigndev\Warehouses\Ui\Component\Listing\Column;
+namespace Eadesigndev\Warehouses\Ui\Component\Listing\Column\Store;
 
 use Magento\Store\Ui\Component\Listing\Column\Store\Options as StoreOptions;
 
@@ -38,7 +38,11 @@ class Options extends StoreOptions
      */
     public function toOptionArray()
     {
-//        exit('est');
+
+//        echo '<pre>';
+//        print_r($this->currentOptions);
+//        exit();
+
         if ($this->options !== null) {
             return $this->options;
         }

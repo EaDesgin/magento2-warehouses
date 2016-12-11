@@ -38,7 +38,16 @@ abstract class Zones extends \Magento\Backend\App\Action
      */
     protected $zoneModel;
 
+    /**
+     * @var \Eadesigndev\Warehouses\Model\ZoneRegistry
+     */
     protected $zoneRegistry;
+
+    protected $zoneFactory;
+
+    protected $dataObjectHelper;
+
+    protected $resultForwardFactory;
 
     /**
      * Zones constructor.
@@ -51,12 +60,18 @@ abstract class Zones extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Eadesigndev\Warehouses\Model\ZoneRepository $zoneModel,
-        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry
+        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry,
+        \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory,
+        \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
+        \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
     )
     {
         $this->resultPageFactory = $resultPageFactory;
         $this->zoneModel = $zoneModel;
         $this->zoneRegistry = $zoneRegistry;
+        $this->zoneFactory = $zoneFactory;
+        $this->dataObjectHelper = $dataObjectHelper;
+        $this->resultForwardFactory = $resultForwardFactory;
         parent::__construct($context);
     }
 
@@ -85,11 +100,13 @@ abstract class Zones extends \Magento\Backend\App\Action
 
         $id = $this->getRequest()->getParam('id');
 
-        if (!$id) {
-            //$model =  todo create empty model with factory
+        if ($id){
+            $model = $this->zoneModel->getById($id);
         }
 
-        $model = $this->zoneModel->getById($id);
+        if (!$id || $model->getId()) {
+            $model = $this->zoneFactory->create();
+        }
 
         $this->zoneRegistry->push($model);
 

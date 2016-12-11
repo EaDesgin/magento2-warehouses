@@ -33,7 +33,7 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
      */
     protected function searchResultToOutput(SearchResultInterface $searchResult)
     {
-
+        $itemData = [];
         foreach ($searchResult->getItems() as $item) {
             foreach ($item->getCustomAttributes() as $attribute) {
                 $itemData[$item->getData($this->primaryFieldName)][$attribute->getAttributeCode()] = $attribute->getValue();

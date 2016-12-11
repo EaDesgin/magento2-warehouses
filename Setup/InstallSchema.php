@@ -44,10 +44,17 @@ class InstallSchema implements InstallSchemaInterface
         $table = $installer->getConnection()
             ->newTable($installer->getTable('warehouseinventory_stock'))
             ->addColumn(
-                'stock_id',
+                'zone_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
                 null,
-                ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => false],
+                'Warehouse Id'
+            )
+            ->addColumn(
+                'stock_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+                5,
+                ['unsigned' => true, 'nullable' => false, 'primary' => true],
                 'Warehouse Id'
             )
             ->addColumn(
@@ -63,6 +70,15 @@ class InstallSchema implements InstallSchemaInterface
                 255,
                 [],
                 'Stock Name'
+            )
+            ->addIndex(
+                $setup->getIdxName(
+                    $installer->getTable('warehouseinventory_stock'),
+                    ['zone_id', 'stock_id'],
+                    \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
+                ),
+                ['zone_id', 'stock_id'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
             )
             ->addIndex(
                 $setup->getIdxName(
@@ -264,7 +280,6 @@ class InstallSchema implements InstallSchemaInterface
                 ['unsigned' => true, 'nullable' => false, 'default' => 0],
                 'Is Divided into Multiple Boxes for Shipping'
             )
-
             ->addIndex(
                 $installer->getIdxName(
                     'warehouseinventory_stock_item',

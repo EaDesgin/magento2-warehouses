@@ -19,7 +19,8 @@
  */
 
 -->
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">warehouses_zones_edit.zones_data_source</item>
@@ -42,13 +43,12 @@
     <dataSource name="zones_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">ZonesEditDataProvider</argument>
-            <!--<argument name="class" xsi:type="string">Eadesigndev\Warehouses\Model\Stock\DataProvider</argument>-->
             <argument name="name" xsi:type="string">zones_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">stock_id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="pdfgenerator/templates/save"/>
+                    <item name="submit_url" xsi:type="url" path="*/*/save"/>
                 </item>
             </argument>
         </argument>
@@ -64,24 +64,36 @@
                 <item name="label" xsi:type="string"/>
             </item>
         </argument>
+
         <field name="stock_id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="visible" xsi:type="boolean">false</item>
                     <item name="dataType" xsi:type="string">text</item>
-                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="formElement" xsi:type="string">hidden</item>
                     <item name="source" xsi:type="string">template</item>
                     <item name="dataScope" xsi:type="string">stock_id</item>
                 </item>
             </argument>
         </field>
 
+        <field name="website_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">hidden</item>
+                    <item name="source" xsi:type="string">template</item>
+                    <item name="dataScope" xsi:type="string">website_id</item>
+                </item>
+            </argument>
+        </field>
 
         <field name="stock_name">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Template name</item>
+                    <item name="label" xsi:type="string" translate="true">Zone name</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">template</item>
                     <item name="sortOrder" xsi:type="number">20</item>
@@ -92,23 +104,23 @@
                 </item>
             </argument>
         </field>
-        <field name="template_description">
+
+        <field name="storeviews">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Eadesigndev\Warehouses\Ui\Component\Listing\Column\Store\Options</item>
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Template Description</item>
-                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Store View</item>
+                    <item name="formElement" xsi:type="string">select</item>
                     <item name="source" xsi:type="string">template</item>
-                    <item name="sortOrder" xsi:type="number">21</item>
-                    <item name="dataScope" xsi:type="string">template_description</item>
+                    <item name="dataScope" xsi:type="string">stock_id</item>
+                    <item name="default" xsi:type="string">0</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
                 </item>
             </argument>
         </field>
-
-
     </fieldset>
 
 

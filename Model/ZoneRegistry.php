@@ -49,7 +49,7 @@ class ZoneRegistry
             // zone does not exist
             throw NoSuchEntityException::singleField('zoneid', $zoneId);
         } else {
-            $emailKey = $this->getEmailKey($zone->getEmail(), $zone->getData('stock_name'));
+            $emailKey = $this->getZoneKey($zone->getEmail(), $zone->getData('stock_name'));
             $this->zoneRegistryById[$zoneId] = $zone;
             $this->zoneRegistryByName[$emailKey] = $zone;
             return $zone;

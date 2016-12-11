@@ -28,8 +28,8 @@ interface ZoneInterface extends \Magento\Framework\Api\CustomAttributesDataInter
     /**#@+
      * Constants for keys of data array. Identical to the name of the getter in snake case
      */
-    const ZONE_ID = 'stock_id';
-    const WEBSITE_ID = 'website_id';
+    const ZONE_ID = 'zone_id';
+    const ZONE_WEBSITE_ID = 'website_id';
     const ZONE_NAME = 'stock_name';
     /**#@-*/
 

@@ -18,12 +18,13 @@
  */
 
 namespace Eadesigndev\Warehouses\Model;
+use Eadesigndev\Warehouses\Api\Data\ZoneInterface;
 
 /**
  * Class Stock
  *
  */
-class Stock extends \Magento\CatalogInventory\Model\Stock
+class Stock extends \Magento\CatalogInventory\Model\Stock implements ZoneInterface
 {
 
     /**
@@ -32,6 +33,69 @@ class Stock extends \Magento\CatalogInventory\Model\Stock
     protected function _construct()
     {
         $this->_init('Eadesigndev\Warehouses\Model\ResourceModel\Stock');
+    }
+
+    /**
+     * Get ID
+     *
+     * @return int|null
+     */
+    public function getZoneId()
+    {
+        return $this->getData(ZoneInterface::ZONE_ID);
+    }
+
+    /**
+     * Set ID
+     *
+     * @param int $id
+     * @return $this
+     */
+    public function setZoneId($id)
+    {
+        return $this->setData(ZoneInterface::ZONE_ID, $id);
+    }
+
+    /**
+     * Get zone ID
+     *
+     * @return int|null
+     */
+    public function getWebsiteId()
+    {
+        return $this->getData(ZoneInterface::ZONE_WEBSITE_ID);
+    }
+
+    /**
+     * Set website id ID
+     *
+     * @param int $websiteId
+     * @return $this
+     */
+    public function setWebsiteId($websiteId)
+    {
+        return $this->setData(ZoneInterface::ZONE_WEBSITE_ID,$websiteId);
+    }
+
+    /**
+     * Get zone name
+     *
+     * @return zone name
+     */
+    public function getZoneName()
+    {
+        return $this->getData(ZoneInterface::ZONE_NAME);
+    }
+
+    /**
+     * Set zone name
+     *
+     * @param $name
+     * @return $this
+     */
+    public function setZoneName($name)
+    {
+        return $this->setData(ZoneInterface::ZONE_NAME, $name);
     }
 
 }

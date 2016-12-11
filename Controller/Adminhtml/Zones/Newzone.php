@@ -1,5 +1,6 @@
 <?php
-/**
+/*******************************************************************************
+ *
  * EaDesign
  *
  * NOTICE OF LICENSE
@@ -15,16 +16,16 @@
  * @category    eadesigndev_warehouses
  * @copyright   Copyright (c) 2008-2016 EaDesign by Eco Active S.R.L.
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
+ *
+ ******************************************************************************/
 
 namespace Eadesigndev\Warehouses\Controller\Adminhtml\Zones;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 
-class Edit extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
+class Newzone extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
 {
-
     /**
      * Edit constructor.
      * @param Context $context
@@ -55,5 +56,15 @@ class Edit extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
         );
     }
 
-
+    /**
+     * Forward to edit
+     *
+     * @return \Magento\Backend\Model\View\Result\Forward
+     */
+    public function execute()
+    {
+        /** @var \Magento\Backend\Model\View\Result\Forward $resultForward */
+        $resultForward = $this->resultForwardFactory->create();
+        return $resultForward->forward('edit');
+    }
 }

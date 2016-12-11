@@ -21,7 +21,7 @@
 
 namespace Eadesigndev\Warehouses\Controller\Adminhtml\StockItems;
 
-class Newtitem extends \Eadesigndev\Warehouses\Controller\Adminhtml\StockItems
+class Newitem extends \Eadesigndev\Warehouses\Controller\Adminhtml\StockItems
 {
     /**
      * @var \Magento\Backend\Model\View\Result\Forward

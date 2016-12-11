@@ -27,6 +27,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface as Logger;
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
+use Eadesigndev\Warehouses\Helper\Validations;
 
 /**
  * Interface StockItemCriteriaMapper
@@ -59,9 +60,11 @@ class StockItemCriteriaMapper extends GenericMapper
         ObjectFactory $objectFactory,
         MapperFactory $mapperFactory,
         StoreManagerInterface $storeManager,
+        Validations $validations,
         Select $select = null
     )
     {
+        $this->validations = $validations;
         $this->storeManager = $storeManager;
         parent::__construct($logger, $fetchStrategy, $objectFactory, $mapperFactory, $select);
     }

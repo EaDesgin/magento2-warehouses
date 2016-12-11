@@ -69,7 +69,7 @@ class StockItemsRegistry
             // zone does not exist
             throw NoSuchEntityException::singleField('item_id', $itemId);
         } else {
-            $emailKey = $this->getEmailKey($item->getEmail(), $item->getData('stock_name'));
+            $emailKey = $this->getZoneKey($item->getEmail(), $item->getData('stock_name'));
             $this->itemRegistryById[$itemId] = $item;
             $this->itemRegistryByName[$emailKey] = $item;
             return $item;

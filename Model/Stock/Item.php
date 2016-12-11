@@ -69,9 +69,10 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
         StockConfigurationInterface $stockConfiguration,
         StockRegistryInterface $stockRegistry,
         StockItemRepositoryInterface $stockItemRepository,
+        Validations $validations,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        Validations $validations,
+
         array $data = []
     )
     {
