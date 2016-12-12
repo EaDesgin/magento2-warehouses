@@ -108,8 +108,8 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
             $this->zoneResource->load($zone, $zoneId);
 
             if (!$zone->getId()) {
-                throw new LocalizedException( __(
-                    "There was a problem witht the id."
+                throw new LocalizedException(__(
+                    "There was a problem witht the exit id."
                 ));
             }
 
@@ -132,7 +132,12 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
             $this->resourceModel->load($zone, $stockId);
 
             if (!$zone->getId()) {
-                throw new LocalizedException( __(
+                $stockId = \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID;
+                $this->resourceModel->load($zone, $stockId);
+            }
+
+            if (!$zone->getId()) {
+                throw new LocalizedException(__(
                     "There was a problem witht the id."
                 ));
             }
