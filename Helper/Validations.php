@@ -25,6 +25,12 @@ use Eadesigndev\Warehouses\Model\ZoneRepository;
 
 class Validations extends AbstractHelper
 {
+
+    /**
+     * @var
+     */
+    public $zone;
+
     /**
      * @var ZoneRepository
      */
@@ -61,6 +67,8 @@ class Validations extends AbstractHelper
 
         $zoneModel = $this->zoneRepository->getById($zoneId);
 
+        $this->zone = $zoneModel;
+
         if (!$zoneModel->getId()) {
             return $this->zoneId;
         }
@@ -68,6 +76,25 @@ class Validations extends AbstractHelper
         $this->zoneId = $zoneId;
 
         return $this->zoneId;
+    }
+
+    /**
+     * @param $zoneId
+     * @return bool
+     */
+    public function zone($zoneId)
+    {
+        if (!$zoneId) {
+            $this->zoneId = $zoneId;
+        }
+
+        $this->zoneId = $zoneId;
+
+        $zoneModel = $this->zoneRepository->getById($this->zoneId);
+
+        $this->zone = $zoneModel;
+
+        return $this->zone;
     }
 
 }

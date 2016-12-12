@@ -39,6 +39,56 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
     }
 
     /**
+     * Insert new stock item on new zone.
+     *
+     * @param $zoneId
+     */
+    public function insertItemsOnNewZone($zoneId)
+    {
+
+        $itemTable = $this->getTable('warehouseinventory_stock_item');
+
+        $select = $this->getConnection()->select()->from(
+            $this->getConnection()->getTableName($itemTable)
+        );
+
+        $all = $this->getConnection()->fetchAll($select);
+
+        $forInsert = $this->processNewZoneData($zoneId, $all);
+
+        $this->getConnection()
+            ->insertMultiple(
+                $itemTable,
+                $forInsert
+            );
+    }
+
+    /**
+     * Reset the zone id and change the stock id for the data to be save
+     *
+     * @param $zoneId
+     * @param array $data
+     * @return array
+     */
+    private function processNewZoneData($zoneId, $data = [])
+    {
+
+        $final = [];
+
+        if (!$zoneId) {
+            return [];
+        }
+
+        foreach ($data as $row) {
+            $row['item_id'] = null;
+            $row['stock_id'] = $zoneId;
+            $final[] = $row;
+        }
+
+        return $final;
+    }
+
+    /**
      * Lock Stock Item records
      *
      * @param int[] $productIds

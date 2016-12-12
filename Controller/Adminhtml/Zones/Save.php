@@ -46,12 +46,11 @@ class Save extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
             $model = $this->zoneModel->getById($id);
         }
 
-        if (!$id || $model->getId()) {
+        if (!$id) {
             $model = $this->zoneFactory->create();
         }
 
         $data = $this->getRequest()->getParams();
-
 
         if (!$this->getRequest()->getParam('website_id')) {
             $data['website_id'] = 0;
@@ -69,7 +68,7 @@ class Save extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
             $this->messageManager->addErrorMessage($e->getMessage());
             $resultRedirect->setPath('*/*/edit', ['id' => $model->getId()]);
         } catch (\Exception $e) {
-            $this->messageManager->addErrorMessage(__('There was a problem saving the zone'));
+            $this->messageManager->addErrorMessage(__('There was a problem saving the zone' . $e->getMessage()));
             $resultRedirect->setPath('*/*/edit', ['id' => $model->getId()]);
         }
 

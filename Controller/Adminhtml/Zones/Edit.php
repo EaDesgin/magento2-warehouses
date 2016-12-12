@@ -55,6 +55,7 @@ class Edit extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
         );
     }
 
+
     /**
      * Index action
      *
@@ -69,7 +70,7 @@ class Edit extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
             $model = $this->zoneModel->getByEditId($id);
         }
 
-        if (!$id || $model->getId()) {
+        if (!$id) {
             $model = $this->zoneFactory->create();
         }
 

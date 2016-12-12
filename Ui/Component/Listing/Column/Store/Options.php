@@ -1,7 +1,5 @@
 <?php
 /**
- * Sample_News extension
- * /**
  * EaDesgin
  *
  * NOTICE OF LICENSE
@@ -22,14 +20,39 @@
 namespace Eadesigndev\Warehouses\Ui\Component\Listing\Column\Store;
 
 use Magento\Store\Ui\Component\Listing\Column\Store\Options as StoreOptions;
+use Magento\Store\Model\System\Store as SystemStore;
+use Magento\Framework\Escaper;
+use Eadesigndev\Warehouses\Helper\Validations;
 
 class Options extends StoreOptions
 {
 
     /**
+     * The helper
+     * @var Validations
+     */
+    private $validations;
+
+    /**
      * All Store Views value
      */
     const ALL_STORE_VIEWS = '0';
+
+    /**
+     * Constructor
+     *
+     * @param SystemStore $systemStore
+     * @param Escaper $escaper
+     */
+    public function __construct(
+        SystemStore $systemStore,
+        Escaper $escaper,
+        Validations $validations
+    )
+    {
+        $this->validations = $validations;
+        parent::__construct($systemStore, $escaper);
+    }
 
     /**
      * Get options
@@ -38,19 +61,60 @@ class Options extends StoreOptions
      */
     public function toOptionArray()
     {
-
-//        echo '<pre>';
-//        print_r($this->currentOptions);
-//        exit();
-
-        if ($this->options !== null) {
-            return $this->options;
-        }
-
         $this->generateCurrentOptions();
 
         $this->options = array_values($this->currentOptions);
 
+        $this->options[] = [
+            'label' => 'Please select',
+            'value' => ''
+        ];
+
         return $this->options;
+    }
+
+    /**
+     * Generate current options
+     *
+     * @return void
+     */
+    protected function generateCurrentOptions()
+    {
+        $websiteCollection = $this->systemStore->getWebsiteCollection();
+        $groupCollection = $this->systemStore->getGroupCollection();
+        $storeCollection = $this->systemStore->getStoreCollection();
+        /** @var \Magento\Store\Model\Website $website */
+        foreach ($websiteCollection as $website) {
+            $groups = [];
+            /** @var \Magento\Store\Model\Group $group */
+            foreach ($groupCollection as $group) {
+                if ($group->getWebsiteId() == $website->getId()) {
+                    $stores = [];
+                    /** @var  \Magento\Store\Model\Store $store */
+                    foreach ($storeCollection as $store) {
+                        if ($store->getGroupId() == $group->getId()) {
+                            $stock = $this->validations->zone($store->getId());
+                            if ($stock->getStockId() == $store->getId()) {
+                                continue;
+                            }
+
+                            $name = $this->escaper->escapeHtml($store->getName());
+                            $stores[$name]['label'] = str_repeat(' ', 8) . $name;
+                            $stores[$name]['value'] = $store->getId();
+                        }
+                    }
+                    if (!empty($stores)) {
+                        $name = $this->escaper->escapeHtml($group->getName());
+                        $groups[$name]['label'] = str_repeat(' ', 4) . $name;
+                        $groups[$name]['value'] = array_values($stores);
+                    }
+                }
+            }
+            if (!empty($groups)) {
+                $name = $this->escaper->escapeHtml($website->getName());
+                $this->currentOptions[$name]['label'] = $name;
+                $this->currentOptions[$name]['value'] = array_values($groups);
+            }
+        }
     }
 }

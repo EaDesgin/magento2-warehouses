@@ -78,6 +78,8 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
             ));
         }
 
+        $beforeSaveId = $zone->getZoneId();
+
         try {
             $this->zoneResource->save($zone);
         } catch (\Exception $exception) {
@@ -85,6 +87,14 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
                 'Could not save the zone: %1',
                 $exception->getMessage()
             ));
+        }
+
+        $afterSaveId = $zone->getZoneId();
+
+        /** need a better system here, observer maybe */
+        //todo change the validation
+        if ($afterSaveId && !$beforeSaveId) {
+            $this->zoneResource->insertItemsOnNewZone($zone->getStockId());
         }
 
         return $zone;
