@@ -44,7 +44,7 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">ZonesEditDataProvider</argument>
             <argument name="name" xsi:type="string">zones_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string">stock_id</argument>
+            <argument name="primaryFieldName" xsi:type="string">zone_id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">

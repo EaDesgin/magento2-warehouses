@@ -28,17 +28,29 @@ interface ZoneInterface extends \Magento\Framework\Api\CustomAttributesDataInter
     /**#@+
      * Constants for keys of data array. Identical to the name of the getter in snake case
      */
-    const ZONE_ID = 'zone_id';
+    const ZONE_INCREMENT_ID = 'zone_id';
+    const ZONE_ID = 'stock_id';
     const ZONE_WEBSITE_ID = 'website_id';
     const ZONE_NAME = 'stock_name';
     /**#@-*/
+
+    /**
+     * @return mixed
+     */
+    public function getZoneId();
+
+    /**
+     * @param $incrementId
+     * @return mixed
+     */
+    public function setZoneId($incrementId);
 
     /**
      * Get ID
      *
      * @return int|null
      */
-    public function getZoneId();
+    public function getStockId();
 
     /**
      * Set ID
@@ -46,7 +58,7 @@ interface ZoneInterface extends \Magento\Framework\Api\CustomAttributesDataInter
      * @param int $id
      * @return $this
      */
-    public function setZoneId($id);
+    public function setStockId($id);
 
     /**
      * Get zone ID

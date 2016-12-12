@@ -314,13 +314,13 @@ class InstallSchema implements InstallSchemaInterface
                 'entity_id',
                 \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
             )
-            ->addForeignKey(
-                $installer->getFkName('warehouseinventory_stock_item', 'stock_id', 'warehouseinventory_stock', 'stock_id'),
-                'stock_id',
-                $installer->getTable('warehouseinventory_stock'),
-                'stock_id',
-                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-            )
+//            ->addForeignKey(
+//                $installer->getFkName('warehouseinventory_stock_item', 'stock_id', 'warehouseinventory_stock', 'stock_id'),
+//                'stock_id',
+//                $installer->getTable('warehouseinventory_stock'),
+//                'stock_id',
+//                \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+//            )
             ->setComment('Cataloginventory Stock Item');
         $installer->getConnection()
             ->createTable($table);
@@ -484,6 +484,10 @@ class InstallSchema implements InstallSchemaInterface
             ->setComment('Cataloginventory Stock Status Indexer Tmp');
         $installer->getConnection()
             ->createTable($table);
+
+
+
+        //ALTER TABLE `warehouseinventory_stock_item` DROP FOREIGN KEY `WAREHOUSEINV_STOCK_ITEM_STOCK_ID_WAREHOUSEINV_STOCK_STOCK_ID`; ALTER TABLE `warehouseinventory_stock_item` ADD CONSTRAINT `WAREHOUSEINV_STOCK_ITEM_STOCK_ID_WAREHOUSEINV_STOCK_STOCK_ID` FOREIGN KEY (`stock_id`) REFERENCES `eaerp21`.`warehouseinventory_stock`(`stock_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
         $installer->endSetup();
 

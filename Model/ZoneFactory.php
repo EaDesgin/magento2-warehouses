@@ -43,7 +43,7 @@ class ZoneFactory implements FactoryInterface
      * @param ObjectManagerInterface $objectManager
      * @param $instanceName
      */
-    public function __construct(ObjectManagerInterface $objectManager, $instanceName = Stock::class)
+    public function __construct(ObjectManagerInterface $objectManager, $instanceName = StockModifier::class)
     {
         $this->objectManager = $objectManager;
         $this->instanceName = $instanceName;

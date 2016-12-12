@@ -42,7 +42,7 @@ class Save extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
         $resultRedirect = $this->resultRedirectFactory->create();
         $id = $this->getRequest()->getParam('id');
 
-        if ($id){
+        if ($id) {
             $model = $this->zoneModel->getById($id);
         }
 
@@ -52,11 +52,12 @@ class Save extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
 
         $data = $this->getRequest()->getParams();
 
-        if(!$this->getRequest()->getParam('website_id')){
+
+        if (!$this->getRequest()->getParam('website_id')) {
             $data['website_id'] = 0;
         }
-        if(!$this->getRequest()->getParam('stock_id')){
-            $data['stock_id'] = null;
+        if (!$this->getRequest()->getParam('zone_id')) {
+            $data['zone_id'] = null;
         }
 
         $this->dataObjectHelper->populateWithArray($model, $data, ZoneInterface::class);

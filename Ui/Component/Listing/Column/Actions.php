@@ -53,7 +53,7 @@ class Actions extends Column
                 $item[$this->getData('name')]['edit'] = [
                     'href' => $this->urlBuilder->getUrl(
                         'warehouses/zones/edit',
-                        ['id' => $item['stock_id'], 'store' => $zoneId]
+                        ['id' => $item['zone_id'], 'store' => $zoneId]
                     ),
                     'label' => __('Edit'),
                     'hidden' => false,

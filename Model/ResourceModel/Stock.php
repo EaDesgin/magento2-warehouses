@@ -27,6 +27,7 @@ use Magento\Store\Model\StoreManagerInterface;
 class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
 {
 
+
     /**
      * Define main table and initialize connection
      *
@@ -34,7 +35,7 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
      */
     protected function _construct()
     {
-        $this->_init('warehouseinventory_stock', 'stock_id');
+        $this->_init('warehouseinventory_stock', \Eadesigndev\Warehouses\Model\Stock::STOCK_PRIMARY);
     }
 
     /**
@@ -166,9 +167,9 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
 
         $connection = $this->getConnection();
         $condition = $connection->quoteInto(
-            '(use_config_notify_stock_qty = 1 AND qty < ?)',
-            $this->_configNotifyStockQty
-        ) . ' OR (use_config_notify_stock_qty = 0 AND qty < notify_stock_qty)';
+                '(use_config_notify_stock_qty = 1 AND qty < ?)',
+                $this->_configNotifyStockQty
+            ) . ' OR (use_config_notify_stock_qty = 0 AND qty < notify_stock_qty)';
         $currentDbTime = $connection->quoteInto('?', $this->dateTime->gmtDate());
         $conditionalDate = $connection->getCheckSql($condition, $currentDbTime, 'NULL');
 
@@ -223,12 +224,12 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
         }
 
         $where = $connection->prepareSqlCondition(
-            'invtr.low_stock_date',
-            ['notnull' => true]
-        ) . ' ' . \Magento\Framework\DB\Select::SQL_AND . ' ((' . join(
-            ') ' . \Magento\Framework\DB\Select::SQL_OR . ' (',
-            $where
-        ) . '))';
+                'invtr.low_stock_date',
+                ['notnull' => true]
+            ) . ' ' . \Magento\Framework\DB\Select::SQL_AND . ' ((' . join(
+                ') ' . \Magento\Framework\DB\Select::SQL_OR . ' (',
+                $where
+            ) . '))';
 
         $collection->joinTable(
             ['invtr' => 'warehouseinventory_stock_item'],

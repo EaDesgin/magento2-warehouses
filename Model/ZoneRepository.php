@@ -50,12 +50,12 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
 
     /**
      * ZoneRepository constructor.
-     * @param ResourceModel\Stock $zoneResource
+     * @param ResourceModel\StockResourceModifier $zoneResource
      * @param ZoneFactory $zoneFactory
      * @param ResourceModel\Stock $resourceModel
      */
     public function __construct(
-        \Eadesigndev\Warehouses\Model\ResourceModel\Stock $zoneResource,
+        \Eadesigndev\Warehouses\Model\ResourceModel\StockResourceModifier $zoneResource,
         \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory,
         \Eadesigndev\Warehouses\Model\ResourceModel\Stock $resourceModel
     )
@@ -72,14 +72,14 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
      */
     public function save(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone)
     {
-        if ($zone->getId() == 1) {
+        if ($zone->getStockId() == 1) {
             throw new CouldNotSaveException(__(
                 'Could not save the zone 1. The Default zone is not editable'
             ));
         }
 
         try {
-            $this->resourceModel->save($zone);
+            $this->zoneResource->save($zone);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__(
                 'Could not save the zone: %1',
@@ -96,6 +96,30 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
     }
 
     /**
+     * @param $zoneId
+     * @return mixed
+     * @throws LocalizedException
+     */
+    public function getByEditId($zoneId)
+    {
+        if (!isset($this->zoneInstances[$zoneId])) {
+            $zone = $this->zoneFactory->create();
+
+            $this->zoneResource->load($zone, $zoneId);
+
+            if (!$zone->getId()) {
+                throw new LocalizedException( __(
+                    "There was a problem witht the id."
+                ));
+            }
+
+            $this->zoneInstances[$zoneId] = $zone;
+        }
+
+        return $this->zoneInstances[$zoneId];
+    }
+
+    /**
      * @param $stockId
      * @return mixed
      * @throws LocalizedException
@@ -105,11 +129,11 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
         if (!isset($this->zoneInstances[$stockId])) {
             $zone = $this->zoneFactory->create();
 
-            $this->zoneResource->load($zone, $stockId);
+            $this->resourceModel->load($zone, $stockId);
 
             if (!$zone->getId()) {
-                throw new LocalizedException(__(
-                    "There was a problem with the id."
+                throw new LocalizedException( __(
+                    "There was a problem witht the id."
                 ));
             }
 

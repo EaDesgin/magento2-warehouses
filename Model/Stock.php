@@ -18,6 +18,7 @@
  */
 
 namespace Eadesigndev\Warehouses\Model;
+
 use Eadesigndev\Warehouses\Api\Data\ZoneInterface;
 
 /**
@@ -26,6 +27,9 @@ use Eadesigndev\Warehouses\Api\Data\ZoneInterface;
  */
 class Stock extends \Magento\CatalogInventory\Model\Stock implements ZoneInterface
 {
+
+    const STOCK_PRIMARY = 'stock_id';
+    const ZONE_PRIMARY = 'zone_id';
 
     /**
      * @return void
@@ -36,11 +40,28 @@ class Stock extends \Magento\CatalogInventory\Model\Stock implements ZoneInterfa
     }
 
     /**
+     * @return mixed
+     */
+    public function getZoneId()
+    {
+        return $this->getData(ZoneInterface::ZONE_INCREMENT_ID);
+    }
+
+    /**
+     * @param $incrementId
+     * @return $this
+     */
+    public function setZoneId($incrementId)
+    {
+        return $this->setData(ZoneInterface::ZONE_INCREMENT_ID, $incrementId);
+    }
+
+    /**
      * Get ID
      *
      * @return int|null
      */
-    public function getZoneId()
+    public function getStockId()
     {
         return $this->getData(ZoneInterface::ZONE_ID);
     }
@@ -51,7 +72,7 @@ class Stock extends \Magento\CatalogInventory\Model\Stock implements ZoneInterfa
      * @param int $id
      * @return $this
      */
-    public function setZoneId($id)
+    public function setStockId($id)
     {
         return $this->setData(ZoneInterface::ZONE_ID, $id);
     }
@@ -74,7 +95,7 @@ class Stock extends \Magento\CatalogInventory\Model\Stock implements ZoneInterfa
      */
     public function setWebsiteId($websiteId)
     {
-        return $this->setData(ZoneInterface::ZONE_WEBSITE_ID,$websiteId);
+        return $this->setData(ZoneInterface::ZONE_WEBSITE_ID, $websiteId);
     }
 
     /**

@@ -17,25 +17,22 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
-namespace Eadesigndev\Warehouses\Api;
+namespace Eadesigndev\Warehouses\Model;
+
+use Eadesigndev\Warehouses\Api\Data\ZoneInterface;
 
 /**
- * Zone CRUD interface.
- * @api
+ * Class Stock
+ *
  */
-interface ZoneRepositoryInterface
+class StockModifier extends Stock
 {
-    public function save(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone);
+    /**
+     * @return void
+     */
+    protected function _construct()
+    {
+        $this->_init('Eadesigndev\Warehouses\Model\ResourceModel\StockResourceModifier');
+    }
 
-    public function get($zoneId, $websiteId = 0);
-
-    public function getById($stockId);
-
-    public function getByEditId($zoneId);
-
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
-
-    public function delete(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone);
-
-    public function deleteById($zoneId);
 }

@@ -55,5 +55,32 @@ class Edit extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
         );
     }
 
+    /**
+     * Index action
+     *
+     * @return \Magento\Framework\Controller\ResultInterface
+     */
+    public function execute()
+    {
+
+        $id = $this->getRequest()->getParam('id');
+
+        if ($id){
+            $model = $this->zoneModel->getByEditId($id);
+        }
+
+        if (!$id || $model->getId()) {
+            $model = $this->zoneFactory->create();
+        }
+
+        $this->zoneRegistry->push($model);
+
+        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        $resultPage = $this->resultPageFactory->create();
+        $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Zones'));
+
+        return $resultPage;
+    }
+
 
 }
