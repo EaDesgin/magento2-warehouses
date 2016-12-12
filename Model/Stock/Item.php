@@ -18,13 +18,13 @@
  */
 namespace Eadesigndev\Warehouses\Model\Stock;
 
-use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockConfigurationInterface as StockConfigurationInterface;
 use Magento\CatalogInventory\Api\StockItemRepositoryInterface as StockItemRepositoryInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Eadesigndev\Warehouses\Helper\Validations;
+use Eadesigndev\Warehouses\Api\Data\StockItemsInterface;
 
 /**
  * Catalog Inventory Stock Item Model extension
@@ -32,7 +32,7 @@ use Eadesigndev\Warehouses\Helper\Validations;
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  */
-class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockItemInterface
+class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockItemsInterface
 {
 
     protected $validations;

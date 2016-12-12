@@ -47,15 +47,12 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
     {
 
         $itemTable = $this->getTable('warehouseinventory_stock_item');
-
         $select = $this->getConnection()->select()->from(
             $this->getConnection()->getTableName($itemTable)
         );
 
         $all = $this->getConnection()->fetchAll($select);
-
         $forInsert = $this->processNewZoneData($zoneId, $all);
-
         $this->getConnection()
             ->insertMultiple(
                 $itemTable,
@@ -74,9 +71,8 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
     {
 
         $final = [];
-
         if (!$zoneId) {
-            return [];
+            return $final;
         }
 
         foreach ($data as $row) {

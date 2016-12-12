@@ -25,59 +25,8 @@ namespace Eadesigndev\Warehouses\Api\Data;
  * Item interface.
  * @api
  */
-interface StockItemsInterface extends \Magento\Framework\Api\CustomAttributesDataInterface
+interface StockItemsInterface extends \Magento\CatalogInventory\Api\Data\StockItemInterface
 {
-    /**#@+
-     * Constants for keys of data array. Identical to the name of the getter in snake case
-     */
-    const ITEM_ID = 'item_id';
-    const WEBSITE_ID = 'website_id';
-    const ITEM_NAME = 'item_name';
-    /**#@-*/
 
-    /**
-     * Get ID
-     *
-     * @return int|null
-     */
-    public function getItemId();
-
-    /**
-     * Set ID
-     *
-     * @param int $id
-     * @return $this
-     */
-    public function setItemId($id);
-
-    /**
-     * Get item ID
-     *
-     * @return int|null
-     */
-    public function getWebsiteId();
-
-    /**
-     * Set website id ID
-     *
-     * @param int $websiteId
-     * @return $this
-     */
-    public function setWebsiteId($websiteId);
-
-    /**
-     * Get item name
-     *
-     * @return item name
-     */
-    public function getItemName();
-
-    /**
-     * Set item name
-     *
-     * @param $name
-     * @return $this
-     */
-    public function setItemName($name);
 
 }

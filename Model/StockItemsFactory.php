@@ -40,6 +40,7 @@
 namespace Eadesigndev\Warehouses\Model;
 
 use Magento\Framework\ObjectManagerInterface;
+use Eadesigndev\Warehouses\Model\Stock\Item;
 
 class StockItemsFactory implements FactoryInterface
 {
@@ -63,7 +64,7 @@ class StockItemsFactory implements FactoryInterface
      * @param ObjectManagerInterface $objectManager
      * @param $instanceName
      */
-    public function __construct(ObjectManagerInterface $objectManager, $instanceName = Stock::class)
+    public function __construct(ObjectManagerInterface $objectManager, $instanceName = Item::class)
     {
         $this->objectManager = $objectManager;
         $this->instanceName = $instanceName;

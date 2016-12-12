@@ -66,6 +66,9 @@
     <preference for="Eadesigndev\Warehouses\Api\Data\ZoneInterface"
                 type="Eadesigndev\Warehouses\Model\Stock" />
 
+    <preference for="Eadesigndev\Warehouses\Api\Data\StockItemsInterface"
+                type="Eadesigndev\Warehouses\Model\Stock\Item" />
+
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">

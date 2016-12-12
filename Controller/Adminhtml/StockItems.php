@@ -40,25 +40,20 @@ abstract class StockItems extends \Magento\Backend\App\Action
      */
     protected $itemModel;
 
-    protected $itemRegistry;
-
     /**
      * StockItems constructor.
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Eadesigndev\Warehouses\Model\StockItemsRepository $itemModel
-     * @param \Eadesigndev\Warehouses\Model\StockItemsRegistry $itemRegistry
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Eadesigndev\Warehouses\Model\StockItemsRepository $itemModel,
-        \Eadesigndev\Warehouses\Model\StockItemsRegistry $itemRegistry
+        \Eadesigndev\Warehouses\Model\StockItemsRepository $itemModel
     )
     {
         $this->resultPageFactory = $resultPageFactory;
         $this->itemModel = $itemModel;
-        $this->itemRegistry = $itemRegistry;
         parent::__construct($context);
     }
 
@@ -72,32 +67,6 @@ abstract class StockItems extends \Magento\Backend\App\Action
     {
         $resultPage->setActiveMenu('Eadesigndev_Warehouses::warehouses_list')
             ->addBreadcrumb(__('EaDesign Stock Items'), __('EaDesign Stock Items'));
-
-        return $resultPage;
-    }
-
-
-    /**
-     * Index action
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
-     */
-    public function execute()
-    {
-
-        $id = $this->getRequest()->getParam('id');
-
-        if (!$id) {
-            //$model =  todo create empty model with factory
-        }
-
-        $model = $this->itemModel->getById($id);
-
-        $this->itemRegistry->push($model);
-
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
-        $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Stock Items'));
 
         return $resultPage;
     }

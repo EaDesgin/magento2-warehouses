@@ -36,7 +36,7 @@ class StockItemsRepository implements \Eadesigndev\Warehouses\Api\StockItemsRepo
     private $itemFactory;
 
     public function __construct(
-        \Eadesigndev\Warehouses\Model\ResourceModel\Stock $itemResource,
+        \Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item $itemResource,
         \Eadesigndev\Warehouses\Model\StockItemsFactory $itemFactory
     )
     {
@@ -47,7 +47,17 @@ class StockItemsRepository implements \Eadesigndev\Warehouses\Api\StockItemsRepo
 
     public function save(\Eadesigndev\Warehouses\Api\Data\StockItemsInterface $item)
     {
-        // TODO: Implement save() method.
+
+        try {
+            $this->itemResource->save($item);
+        } catch (\Exception $exception) {
+            throw new CouldNotSaveException(__(
+                'Could not save the zone: %1',
+                $exception->getMessage()
+            ));
+        }
+
+        return $item;
     }
 
     public function get($zoneId, $websiteId = 0)
@@ -57,10 +67,12 @@ class StockItemsRepository implements \Eadesigndev\Warehouses\Api\StockItemsRepo
 
     public function getById($itemId)
     {
+
         if (!isset($this->itemInstances[$itemId])) {
             $item = $this->itemFactory->create();
 
             $this->itemResource->load($item, $itemId);
+
 
             if (!$item->getId()) {
                 //todo add exception with message here
