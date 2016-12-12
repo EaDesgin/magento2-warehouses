@@ -67,5 +67,52 @@ class InstallData implements InstallDataInterface
             $eavSetup->addAttributeToGroup($entityTypeId, $attributeSetId, $groupName, $attribute['attribute_id'], 60);
             $eavSetup->updateAttribute($entityTypeId, $attribute['attribute_id'], 'default_value', 1);
         }
+
+        $this->copyDataFromCatalogInventoryStockItem($setup);
+        $this->copyDataFromCatalogInventoryStockStatus($setup);
     }
+
+    /**
+     * copy the data from cataloginventory_stock_item to warehouseinventory_stock_item
+     *
+     * @param ModuleDataSetupInterface $setup
+     */
+    private function copyDataFromCatalogInventoryStockItem(ModuleDataSetupInterface $setup)
+    {
+
+        $select = $setup->getConnection()->select()->from(
+            $setup->getConnection()->getTableName($setup->getTable('cataloginventory_stock_item')));
+
+        $data = $setup->getConnection()->fetchAll($select);
+
+        $setup->getConnection()
+            ->insertMultiple(
+                $setup->getTable('warehouseinventory_stock_item'),
+                $data
+            );
+
+    }
+
+    /**
+     * copy the data from cataloginventory_stock_status to warehouseinventory_stock_status
+     *
+     * @param ModuleDataSetupInterface $setup
+     */
+    private function copyDataFromCatalogInventoryStockStatus(ModuleDataSetupInterface $setup)
+    {
+
+        $select = $setup->getConnection()->select()->from(
+            $setup->getConnection()->getTableName($setup->getTable('cataloginventory_stock_status')));
+
+        $data = $setup->getConnection()->fetchAll($select);
+
+        $setup->getConnection()
+            ->insertMultiple(
+                $setup->getTable('warehouseinventory_stock_status'),
+                $data
+            );
+
+    }
+
+
 }
