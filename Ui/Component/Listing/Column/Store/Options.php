@@ -94,6 +94,9 @@ class Options extends StoreOptions
                     foreach ($storeCollection as $store) {
                         if ($store->getGroupId() == $group->getId()) {
                             $stock = $this->validations->zone($store->getId());
+
+                            // todo add here a system to include the selection also
+
                             if ($stock->getStockId() == $store->getId()) {
                                 continue;
                             }
