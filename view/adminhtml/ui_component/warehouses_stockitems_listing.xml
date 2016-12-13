@@ -329,7 +329,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">text</item>
-                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="visible" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">10</item>
                     <item name="label" xsi:type="string" translate="true">Stock Id</item>
                 </item>
@@ -360,6 +360,7 @@
                     <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
                     <item name="editor" xsi:type="string">select</item>
                     <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">25</item>
                     <item name="label" xsi:type="string" translate="true">Is in Stock</item>
                 </item>
             </argument>
@@ -406,6 +407,7 @@
                     <item name="editor" xsi:type="string">select</item>
                     <item name="dataType" xsi:type="string">select</item>
                     <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Manage Stock</item>
                 </item>
             </argument>
@@ -468,6 +470,7 @@
                         </item>
                     </item>
                     <item name="sortOrder" xsi:type="number">90</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Min Sale Qty</item>
                 </item>
             </argument>
@@ -498,6 +501,8 @@
                             <item name="required-entry" xsi:type="boolean">true</item>
                         </item>
                     </item>
+                    <item name="sortOrder" xsi:type="number">105</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Max Sale Qty</item>
                 </item>
             </argument>
@@ -505,14 +510,14 @@
 
         <column name="use_config_max_sale_qty">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Use Config Max Sale Qty</item>
                 </item>
             </argument>
@@ -520,14 +525,14 @@
 
         <column name="use_config_notify_stock_qty">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">120</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Use Config Notify Stock Qty</item>
                 </item>
             </argument>
@@ -537,14 +542,14 @@
 
         <column name="use_config_manage_stock">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Use Config Manage Stock</item>
                 </item>
             </argument>
@@ -552,14 +557,14 @@
 
         <column name="stock_status_changed_auto">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">140</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Stock Status Changed Auto</item>
                 </item>
             </argument>
@@ -567,14 +572,14 @@
 
         <column name="use_config_qty_increments">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">150</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Use Config Qty Increments</item>
                 </item>
             </argument>
@@ -590,6 +595,8 @@
                             <item name="required-entry" xsi:type="boolean">true</item>
                         </item>
                     </item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">151</item>
                     <item name="label" xsi:type="string" translate="true">Qty Increments</item>
                 </item>
             </argument>
@@ -597,14 +604,14 @@
 
         <column name="use_config_enable_qty_inc">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">152</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Use Config Enable Qty Increments</item>
                 </item>
             </argument>
@@ -612,14 +619,14 @@
 
         <column name="enable_qty_increments">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">160</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Enable Qty Increments</item>
                 </item>
             </argument>
@@ -627,14 +634,14 @@
 
         <column name="is_decimal_divided">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">165</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Is Divided into Multiple Boxes for Shipping</item>
                 </item>
             </argument>
@@ -642,14 +649,14 @@
 
         <column name="website_id">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">170</item>
+                    <item name="visible" xsi:type="boolean">false</item>
                     <item name="label" xsi:type="string" translate="true">Is Divided into Multiple Boxes for Shipping</item>
                 </item>
             </argument>

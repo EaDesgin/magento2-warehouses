@@ -119,7 +119,7 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
 
             if (!$zone->getId()) {
                 throw new LocalizedException(__(
-                    "There was a problem witht the exit id."
+                    "There was a problem with the exit id."
                 ));
             }
 
@@ -148,7 +148,7 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
 
             if (!$zone->getId()) {
                 throw new LocalizedException(__(
-                    "There was a problem witht the id."
+                    "There was a problem with the id."
                 ));
             }
 
