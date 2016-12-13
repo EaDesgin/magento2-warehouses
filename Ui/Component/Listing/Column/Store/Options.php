@@ -23,6 +23,7 @@ use Magento\Store\Ui\Component\Listing\Column\Store\Options as StoreOptions;
 use Magento\Store\Model\System\Store as SystemStore;
 use Magento\Framework\Escaper;
 use Eadesigndev\Warehouses\Helper\Validations;
+use Magento\Framework\App\Request\Http;
 
 class Options extends StoreOptions
 {
@@ -34,23 +35,31 @@ class Options extends StoreOptions
     private $validations;
 
     /**
+     * @var
+     */
+    private $request;
+
+    /**
      * All Store Views value
      */
     const ALL_STORE_VIEWS = '0';
 
     /**
-     * Constructor
-     *
+     * Options constructor.
      * @param SystemStore $systemStore
      * @param Escaper $escaper
+     * @param Validations $validations
+     * @param Http $request
      */
     public function __construct(
         SystemStore $systemStore,
         Escaper $escaper,
-        Validations $validations
+        Validations $validations,
+        Http $request
     )
     {
         $this->validations = $validations;
+        $this->request = $request;
         parent::__construct($systemStore, $escaper);
     }
 
@@ -93,11 +102,10 @@ class Options extends StoreOptions
                     /** @var  \Magento\Store\Model\Store $store */
                     foreach ($storeCollection as $store) {
                         if ($store->getGroupId() == $group->getId()) {
-                            $stock = $this->validations->zone($store->getId());
 
-                            // todo add here a system to include the selection also
-
-                            if ($stock->getStockId() == $store->getId()) {
+                            //$stock = $this->validations->zone($store->getId());
+                            // TODO add bether filter here - ise id to load the dta or some way to get the current model
+                            if ($store->getId() == \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID) {
                                 continue;
                             }
 

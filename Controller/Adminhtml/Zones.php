@@ -43,10 +43,19 @@ abstract class Zones extends \Magento\Backend\App\Action
      */
     protected $zoneRegistry;
 
+    /**
+     * @var \Eadesigndev\Warehouses\Model\ZoneFactory
+     */
     protected $zoneFactory;
 
+    /**
+     * @var \Magento\Framework\Api\DataObjectHelper
+     */
     protected $dataObjectHelper;
 
+    /**
+     * @var \Magento\Backend\Model\View\Result\ForwardFactory
+     */
     protected $resultForwardFactory;
 
     /**
@@ -102,9 +111,7 @@ abstract class Zones extends \Magento\Backend\App\Action
 
         if ($id){
             $model = $this->zoneModel->getById($id);
-        }
-
-        if (!$id || $model->getId()) {
+        } else {
             $model = $this->zoneFactory->create();
         }
 

@@ -73,7 +73,7 @@ class Validations extends AbstractHelper
             return $this->zoneId;
         }
 
-        $this->zoneId = $zoneId;
+        $this->zoneId = $zoneModel->getStockId();
 
         return $this->zoneId;
     }

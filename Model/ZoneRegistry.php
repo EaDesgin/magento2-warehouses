@@ -26,10 +26,20 @@ class ZoneRegistry
 
     const REGISTRY_SEPARATOR = ':';
 
+    /**
+     * @var ZoneFactory
+     */
     private $zoneFactory;
 
+    /**
+     * @var array
+     */
     private $zoneRegistryById = [];
 
+    /**
+     * ZoneRegistry constructor.
+     * @param ZoneFactory $zoneFactory
+     */
     public function __construct(
         \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory
     )
@@ -37,6 +47,11 @@ class ZoneRegistry
         $this->zoneFactory = $zoneFactory;
     }
 
+    /**
+     * @param $zoneId
+     * @return Zone|mixed
+     * @throws NoSuchEntityException
+     */
     public function retrieve($zoneId)
     {
         if (isset($this->zoneRegistryById[$zoneId])) {
@@ -49,17 +64,21 @@ class ZoneRegistry
             // zone does not exist
             throw NoSuchEntityException::singleField('zoneid', $zoneId);
         } else {
-            $emailKey = $this->getZoneKey($zone->getEmail(), $zone->getData('stock_name'));
+            $emailKey = $this->getZoneKey($zone->getId(), $zone->getData('stock_name'));
             $this->zoneRegistryById[$zoneId] = $zone;
             $this->zoneRegistryByName[$emailKey] = $zone;
             return $zone;
         }
     }
 
+    /**
+     * @param \Magento\CatalogInventory\Model\Stock $zone
+     * @return $this
+     */
     public function push(\Magento\CatalogInventory\Model\Stock $zone)
     {
         $this->zoneRegistryById[$zone->getId()] = $zone;
-        $zoneKey = $this->getZoneKey($zone->getEmail(), $zone->getData('stock_name'));
+        $zoneKey = $this->getZoneKey($zone->getId(), $zone->getData('stock_name'));
         $this->zoneRegistryByName[$zoneKey] = $zone;
         return $this;
     }
