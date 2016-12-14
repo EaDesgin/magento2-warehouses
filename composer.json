@@ -1,6 +1,6 @@
 {
   "name": "eadesignro/module-warehouses",
-  "description": "EaDesign Warehouses",
+  "description": "Magento 2 EaDesign Warehouses Store View Inventory",
   "type": "magento2-module",
   "version": "1.0.1",
   "autoload": {
