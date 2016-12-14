@@ -11,7 +11,7 @@ At first only one zone/warehouse is created by default. You can check the newly 
 * when you delete a zone all the stock data will be deleted for that zone and your stock data will be handled by the default zone.
 * when you add/delete zones you will need to re-index the stock to see the fronted values right away;
 
-# Installaton. 
+# Installation. 
 
 You can install the module via composer or manually by adding it to the app/code directory. The module is available on packagist.org
 
