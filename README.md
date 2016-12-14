@@ -17,7 +17,7 @@ You can install the module via composer or manually by adding it to the app/code
 
 Via composer
 
-- composer config repositories.sample-module-news git git@github.com:EaDesgin/magento2-warehouses;
+- composer config repositories.magento2-warehouses git git@github.com:EaDesgin/magento2-warehouses;
 - sudo composer require eadesignro/module-warehouses;
 - php bin/magento setup:upgrade;
 
