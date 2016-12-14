@@ -100,7 +100,11 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
         return $zone;
     }
 
-    public function get($zoneId, $websiteId = 0)
+    /**
+     * @param $zoneId
+     * @param int $stockId
+     */
+    public function get($zoneId, $stockId = 0)
     {
         // TODO: Implement get() method.
     }
@@ -119,7 +123,7 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
 
             if (!$zone->getId()) {
                 throw new LocalizedException(__(
-                    "There was a problem with the exit id."
+                    __("There was a problem with the id.")
                 ));
             }
 
@@ -148,7 +152,7 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
 
             if (!$zone->getId()) {
                 throw new LocalizedException(__(
-                    "There was a problem with the id."
+                    __("There was a problem with the id.")
                 ));
             }
 
@@ -158,19 +162,49 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
         return $this->zoneInstances[$stockId];
     }
 
+    /**
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)
     {
         // TODO: Implement getList() method.
     }
 
+    /**
+     * @param \Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone
+     * @return bool
+     * @throws CouldNotSaveException
+     * @throws LocalizedException
+     */
     public function delete(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone)
     {
-        // TODO: Implement delete() method.
+
+        if ($zone->getStockId() == 1) {
+            throw new CouldNotSaveException(__(
+                'Could not delete the zone 1. The Default zone is not editable'
+            ));
+        }
+
+        $id = $zone->getId();
+        try {
+            unset($this->zoneInstances[$id]);
+            $this->zoneResource->delete($zone);
+
+        } catch (\Exception $e) {
+            throw new LocalizedException(
+                $e->getMessage()
+            );
+        }
+
+        unset($this->zoneInstances[$id]);
+
+        return true;
     }
 
     public function deleteById($zoneId)
     {
-        // TODO: Implement deleteById() method.
+        $zone = $this->getByEditId($zoneId);
+        return $this->delete($zone);
     }
 
 }

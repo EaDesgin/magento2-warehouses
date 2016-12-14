@@ -32,20 +32,17 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
      */
     public function getButtonData()
     {
-//        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Warehouses::ADMIN_RESOURCE_SAVE)) {
-            $data = [];
-            if ($this->getWarehousesId()) {
-                $data = [
-                    'label' => __('Delete Zone'),
-                    'class' => 'delete',
-                    'on_click' => 'deleteConfirm(\'' . __(
-                            'Are you sure you want to do this?'
-                        ) . '\', \'' . $this->getDeleteUrl() . '\')',
-                    'sort_order' => 20,
-                ];
-            }
+        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Zones::ADMIN_RESOURCE_SAVE)) {
+            $data = [
+                'label' => __('Delete Zone'),
+                'class' => 'delete',
+                'on_click' => 'deleteConfirm(\'' . __(
+                        'Are you sure you want to do this?'
+                    ) . '\', \'' . $this->getDeleteUrl() . '\')',
+                'sort_order' => 20,
+            ];
             return $data;
-//        }
+        }
     }
 
     /**
@@ -53,6 +50,6 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
      */
     public function getDeleteUrl()
     {
-        return $this->getUrl('*/*/delete', ['id' => $this->getWarehousesId()]);
+        return $this->getUrl('*/*/delete', ['id' => $this->request->getParam('id')]);
     }
 }

@@ -51,6 +51,9 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
             $this->getConnection()->getTableName($itemTable)
         );
 
+        // todo add here base on to me able to move stocks across zones
+        $select->where('stock_id=?', \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID);
+
         $all = $this->getConnection()->fetchAll($select);
         $forInsert = $this->processNewZoneData($zoneId, $all);
         $this->getConnection()

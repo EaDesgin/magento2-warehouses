@@ -36,9 +36,10 @@ class SaveAndContinueButton extends GenericButton implements ButtonProviderInter
             return [
                 'label' => __('Save and Continue Edit'),
                 'class' => 'save',
+                'on_click' => 'puladecal',
                 'data_attribute' => [
                     'mage-init' => [
-                        'button' => ['event' => 'saveAndContinueEdit'],
+                        'button' => ['event' => 'saveAndContinueEdit','target'=>'self'],
                     ],
                 ],
                 'sort_order' => 80,

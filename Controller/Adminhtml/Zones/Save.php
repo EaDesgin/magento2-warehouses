@@ -72,10 +72,15 @@ class Save extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
             $resultRedirect->setPath('*/*/edit', ['id' => $model->getId()]);
         }
 
+        $back = $this->getRequest()->getParam('back');
+
+        if ($back) {
+            $resultRedirect->setPath('*/*/' . $back, ['id' => $model->getId()]);
+            return $resultRedirect;
+        }
 
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultRedirect->setPath('*/*/index');
-
         return $resultRedirect;
 
     }

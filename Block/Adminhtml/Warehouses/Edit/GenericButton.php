@@ -39,12 +39,21 @@ class GenericButton
      * @var \Magento\Framework\Registry
      */
     protected $_coreRegistry = null;
+
     /**
      * @var Context
      */
     protected $context;
 
+    /**
+     * @var \Eadesigndev\Warehouses\Model\ZoneRegistry
+     */
     private $zoneRegistry;
+
+    /**
+     * @var \Magento\Framework\App\Request\Http
+     */
+    protected $request;
 
     /**
      * @param Context $context
@@ -52,34 +61,15 @@ class GenericButton
     public function __construct(
         Context $context,
         Registry $registry,
-        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry
+        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry,
+        \Magento\Framework\App\Request\Http $request
     )
     {
         $this->zoneRegistry = $zoneRegistry;
         $this->_coreRegistry = $registry;
         $this->context = $context;
+        $this->request = $request;
         $this->_authorization = $context->getAuthorization();
-    }
-
-    /**
-     * Return Warehouses ID
-     *
-     * @return int|null
-     */
-    public function getWarehousesId()
-    {
-
-        $model = $this->zoneRegistry->retrieve(1);
-
-//        echo '<pre>';
-//        print_r($model->getData());
-//        exit();
-
-        try {
-            return $model->getStockId();
-        } catch (NoSuchEntityException $e) {
-        }
-        return null;
     }
 
     /**
