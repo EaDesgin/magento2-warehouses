@@ -21,6 +21,7 @@ namespace Eadesigndev\Warehouses\Model;
 
 
 use Eadesigndev\Warehouses\Model\ResourceModel\Stock;
+use Magento\Framework\Exception\CouldNotSaveException;
 
 /**
  * Class Stock
