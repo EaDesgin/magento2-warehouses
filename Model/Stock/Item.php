@@ -110,6 +110,10 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
     public function getStockId()
     {
 
+        if ($this->validations === null) {
+            return \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID;
+        }
+
         $stockId = $this->validations->zoneById($this->getStoreId());
 
         return (int)$stockId;
@@ -123,6 +127,10 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
      */
     public function setStockId($stockId)
     {
+        if ($this->validations === null) {
+            return \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID;
+        }
+
         $stockId = $this->validations->zoneById($this->getStoreId());
 
         return $this->setData(self::STOCK_ID, $stockId);

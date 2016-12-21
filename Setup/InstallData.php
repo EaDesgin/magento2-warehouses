@@ -56,17 +56,6 @@ class InstallData implements InstallDataInterface
                 ['stock_id' => 1, 'stock_name' => 'Default']
             );
 
-        /** @var EavSetup $eavSetup */
-        $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
-        $groupName = 'Product Details';
-        $entityTypeId = $eavSetup->getEntityTypeId(\Magento\Catalog\Model\Product::ENTITY);
-        $attributeSetId = $eavSetup->getAttributeSetId($entityTypeId, 'Default');
-
-        $attribute = $eavSetup->getAttribute($entityTypeId, 'quantity_and_stock_status');
-        if ($attribute) {
-            $eavSetup->addAttributeToGroup($entityTypeId, $attributeSetId, $groupName, $attribute['attribute_id'], 60);
-            $eavSetup->updateAttribute($entityTypeId, $attribute['attribute_id'], 'default_value', 1);
-        }
 
         $this->copyDataFromCatalogInventoryStockItem($setup);
         $this->copyDataFromCatalogInventoryStockStatus($setup);
