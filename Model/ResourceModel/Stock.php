@@ -228,7 +228,7 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
             ->where('type_id IN(?)', $this->_configTypeIds);
 
         $where = sprintf(
-            'store_id = %1$d' .
+            'website_id = %1$d' .
             ' AND ((use_config_manage_stock = 1 AND 1 = %2$d) OR (use_config_manage_stock = 0 AND manage_stock = 1))' .
             ' AND product_id IN (%3$s)',
             $websiteId,
