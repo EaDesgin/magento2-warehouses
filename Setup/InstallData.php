@@ -74,9 +74,10 @@ class InstallData implements InstallDataInterface
 
         $data = $setup->getConnection()->fetchAll($select);
 
-        if(empty($data))
+        if(empty($data)){
             return;
-
+        }
+        
         $setup->getConnection()
             ->insertMultiple(
                 $setup->getTable('warehouseinventory_stock_item'),
