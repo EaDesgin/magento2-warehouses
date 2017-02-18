@@ -25,3 +25,7 @@ Via composer
 
 You need to remove the module. 
 **If you added products in the time you used EaDesign Warehouses Store View Inventory you will need to import their stocks to create the stock data. Soon we will add a synchronization system for this.**
+
+#Video install and use
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Or49WH8diT4/0.jpg)](https://www.youtube.com/watch?v=Or49WH8diT4)
