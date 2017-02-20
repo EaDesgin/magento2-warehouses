@@ -56,6 +56,11 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
 
         $all = $this->getConnection()->fetchAll($select);
         $forInsert = $this->processNewZoneData($zoneId, $all);
+        
+        if(empty($forInsert)) {
+            return;
+        }
+        
         $this->getConnection()
             ->insertMultiple(
                 $itemTable,
