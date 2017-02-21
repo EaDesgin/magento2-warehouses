@@ -40,7 +40,7 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
     /**
      * Stock item entity code
      */
-    const ENTITY = 'werehaouseinventory_stock_item';
+    const ENTITY = 'warehouseinventory_stock_item';
 
 
     /**
