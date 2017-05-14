@@ -18,7 +18,6 @@
  */
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock;
 
-
 /**
  * Stock item resource model
  */

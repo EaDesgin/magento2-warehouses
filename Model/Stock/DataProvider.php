@@ -36,12 +36,12 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
         $itemData = [];
         foreach ($searchResult->getItems() as $item) {
             foreach ($item->getCustomAttributes() as $attribute) {
-                $itemData[$item->getData($this->primaryFieldName)][$attribute->getAttributeCode()] = $attribute->getValue();
+                $itemData
+                [$item->getData($this->primaryFieldName)]
+                [$attribute->getAttributeCode()] = $attribute->getValue();
             }
-            $itemData;
         }
 
         return $itemData;
     }
-
 }

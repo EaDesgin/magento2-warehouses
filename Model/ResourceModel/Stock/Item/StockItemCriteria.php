@@ -21,10 +21,13 @@
 
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item;
 
+use Magento\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteria as CatalogStockItemCriteria;
+use Magento\CatalogInventory\Api\StockItemCriteriaInterface;
+
 /**
  * Class StockItemCriteria
  */
-class StockItemCriteria extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Item\StockItemCriteria implements \Magento\CatalogInventory\Api\StockItemCriteriaInterface
+class StockItemCriteria extends CatalogStockItemCriteria implements StockItemCriteriaInterface
 {
     /**
      * @param string $mapper

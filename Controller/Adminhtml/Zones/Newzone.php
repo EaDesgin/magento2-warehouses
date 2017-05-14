@@ -21,30 +21,36 @@
 
 namespace Eadesigndev\Warehouses\Controller\Adminhtml\Zones;
 
+use Eadesigndev\Warehouses\Controller\Adminhtml\Zones;
+use Eadesigndev\Warehouses\Model\ZoneFactory;
+use Eadesigndev\Warehouses\Model\ZoneRegistry;
+use Eadesigndev\Warehouses\Model\ZoneRepository;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\View\Result\PageFactory;
+use Magento\Backend\Model\View\Result\ForwardFactory;
 
-class Newzone extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
+class Newzone extends Zones
 {
     /**
-     * Edit constructor.
+     * Newzone constructor.
      * @param Context $context
      * @param PageFactory $resultPageFactory
-     * @param \Eadesigndev\Warehouses\Model\ZoneRepository $zoneModel
-     * @param \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry
-     * @param \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory
-     * @param \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
+     * @param ZoneRepository $zoneModel
+     * @param ZoneRegistry $zoneRegistry
+     * @param ZoneFactory $zoneFactory
+     * @param DataObjectHelper $dataObjectHelper
+     * @param ForwardFactory $resultForwardFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Eadesigndev\Warehouses\Model\ZoneRepository $zoneModel,
-        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry,
-        \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory,
-        \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
-        \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
-    )
-    {
+        Context $context,
+        PageFactory $resultPageFactory,
+        ZoneRepository $zoneModel,
+        ZoneRegistry $zoneRegistry,
+        ZoneFactory $zoneFactory,
+        DataObjectHelper $dataObjectHelper,
+        ForwardFactory $resultForwardFactory
+    ) {
         parent::__construct(
             $context,
             $resultPageFactory,

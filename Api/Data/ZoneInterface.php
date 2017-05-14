@@ -89,5 +89,4 @@ interface ZoneInterface extends \Magento\Framework\Api\CustomAttributesDataInter
      * @return $this
      */
     public function setZoneName($name);
-
 }

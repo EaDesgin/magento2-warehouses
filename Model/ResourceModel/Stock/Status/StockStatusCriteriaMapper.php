@@ -19,20 +19,20 @@
 
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock\Status;
 
+use Magento\CatalogInventory\Model\ResourceModel\Stock\Status\StockStatusCriteriaMapper as CatalogCriteriaMapper;
 use Magento\Framework\DB\MapperFactory;
 use Magento\Framework\DB\Select;
 use Magento\Framework\Data\ObjectFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface as Logger;
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
-use Magento\CatalogInventory\Api\StockConfigurationInterface;
 use Eadesigndev\Warehouses\Helper\Validations;
 
 /**
  * Class StockStatusCriteriaMapper
  * @package Magento\CatalogInventory\Model\ResourceModel\Stock\Status
  */
-class StockStatusCriteriaMapper extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status\StockStatusCriteriaMapper
+class StockStatusCriteriaMapper extends CatalogCriteriaMapper
 {
     /**
      * @var StoreManagerInterface
@@ -53,8 +53,7 @@ class StockStatusCriteriaMapper extends \Magento\CatalogInventory\Model\Resource
         StoreManagerInterface $storeManager,
         Validations $validations,
         Select $select = null
-    )
-    {
+    ) {
         $this->storeManager = $storeManager;
         $this->validations = $validations;
         parent::__construct($logger, $fetchStrategy, $objectFactory, $mapperFactory, $select);

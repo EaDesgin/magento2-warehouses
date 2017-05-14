@@ -22,6 +22,7 @@ use Magento\CatalogInventory\Api\StockConfigurationInterface as StockConfigurati
 use Magento\CatalogInventory\Api\StockItemRepositoryInterface as StockItemRepositoryInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\CatalogInventory\Model\Stock;
+use Magento\CatalogInventory\Model\Stock\Item as ModelStockItem;
 use Magento\Customer\Model\Session;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
@@ -36,10 +37,8 @@ use Magento\Store\Model\StoreManagerInterface;
 /**
  * Catalog Inventory Stock Item Model extension
  *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  */
-class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockItemsInterface
+class Item extends ModelStockItem implements StockItemsInterface
 {
 
     protected $validations;

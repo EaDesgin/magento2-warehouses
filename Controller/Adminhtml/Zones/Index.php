@@ -19,20 +19,21 @@
 
 namespace Eadesigndev\Warehouses\Controller\Adminhtml\Zones;
 
-use Magento\Backend\App\Action\Context;
-use Magento\Framework\View\Result\PageFactory;
+use Eadesigndev\Warehouses\Controller\Adminhtml\Zones;
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Framework\Controller\ResultInterface;
 
-class Index extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
+class Index extends Zones
 {
 
     /**
      * Index action
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /** @var Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Zones'));
 

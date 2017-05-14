@@ -118,5 +118,4 @@ class Stock extends \Magento\CatalogInventory\Model\Stock implements ZoneInterfa
     {
         return $this->setData(ZoneInterface::ZONE_NAME, $name);
     }
-
 }

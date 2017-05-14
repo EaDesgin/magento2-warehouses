@@ -39,20 +39,23 @@
 
 namespace Eadesigndev\Warehouses\Controller\Adminhtml\StockItems;
 
+use Eadesigndev\Warehouses\Controller\Adminhtml\StockItems;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\View\Result\PageFactory;
 
-class Index extends \Eadesigndev\Warehouses\Controller\Adminhtml\StockItems
+class Index extends StockItems
 {
 
     /**
      * Index action
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /** @var Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Stock Items'));
 

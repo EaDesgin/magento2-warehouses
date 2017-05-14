@@ -19,18 +19,20 @@
 
 namespace Eadesigndev\Warehouses\Model\Indexer\Stock\Action;
 
+use Eadesigndev\Warehouses\Model\Indexer\Stock\AbstractAction;
+use Magento\Framework\Exception\LocalizedException;
+
 /**
  * Class Full reindex action
  *
- * @package Magento\CatalogInventory\Model\Indexer\Stock\Action
  */
-class Full extends \Eadesigndev\Warehouses\Model\Indexer\Stock\AbstractAction
+class Full extends AbstractAction
 {
     /**
      * Execute Full reindex
      *
      * @param null|array $ids
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      *
      * @return void
      *
@@ -41,7 +43,7 @@ class Full extends \Eadesigndev\Warehouses\Model\Indexer\Stock\AbstractAction
         try {
             $this->reindexAll();
         } catch (\Exception $e) {
-            throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()), $e);
+            throw new LocalizedException(__($e->getMessage()), $e);
         }
     }
 }

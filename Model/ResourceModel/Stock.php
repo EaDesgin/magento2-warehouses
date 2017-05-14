@@ -19,14 +19,16 @@
 
 namespace Eadesigndev\Warehouses\Model\ResourceModel;
 
+use Magento\CatalogInventory\Model\ResourceModel\Stock as ModelResurceStock;
+use Magento\Framework\DB\Select;
 use Magento\Store\Model\StoreManagerInterface;
+use Zend_Db_Expr;
 
 /**
  * Stock resource model
  */
-class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
+class Stock extends ModelResurceStock
 {
-
 
     /**
      * Define main table and initialize connection
@@ -132,6 +134,8 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
         $connection->beginTransaction();
         $connection->update($this->getTable('warehouseinventory_stock_item'), ['qty' => $value], $where);
         $connection->commit();
+
+        return $this;
     }
 
     /**
@@ -139,7 +143,7 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
      *
      * @param string|int $website
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @return void
+     * @return $this
      */
     public function updateSetOutOfStock($website = null)
     {
@@ -167,6 +171,8 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
         );
 
         $connection->update($this->getTable('warehouseinventory_stock_item'), $values, $where);
+
+        return $this;
     }
 
     /**
@@ -216,13 +222,14 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
 
         $connection = $this->getConnection();
         $condition = $connection->quoteInto(
-                '(use_config_notify_stock_qty = 1 AND qty < ?)',
-                $this->_configNotifyStockQty
-            ) . ' OR (use_config_notify_stock_qty = 0 AND qty < notify_stock_qty)';
+            '(use_config_notify_stock_qty = 1 AND qty < ?)',
+            $this->_configNotifyStockQty
+        ).
+            ' OR (use_config_notify_stock_qty = 0 AND qty < notify_stock_qty)';
         $currentDbTime = $connection->quoteInto('?', $this->dateTime->gmtDate());
         $conditionalDate = $connection->getCheckSql($condition, $currentDbTime, 'NULL');
 
-        $value = ['low_stock_date' => new \Zend_Db_Expr($conditionalDate)];
+        $value = ['low_stock_date' => new Zend_Db_Expr($conditionalDate)];
 
         $select = $connection->select()->from($this->getTable('catalog_product_entity'), 'entity_id')
             ->where('type_id IN(?)', $this->_configTypeIds);
@@ -269,14 +276,16 @@ class Stock extends \Magento\CatalogInventory\Model\ResourceModel\Stock
 
         $where = [];
         foreach ($conditions as $k => $part) {
-            $where[$k] = join(' ' . \Magento\Framework\DB\Select::SQL_AND . ' ', $part);
+            $where[$k] = join(' ' . Select::SQL_AND . ' ', $part);
         }
 
         $where = $connection->prepareSqlCondition(
-                'invtr.low_stock_date',
-                ['notnull' => true]
-            ) . ' ' . \Magento\Framework\DB\Select::SQL_AND . ' ((' . join(
-                ') ' . \Magento\Framework\DB\Select::SQL_OR . ' (',
+            'invtr.low_stock_date',
+            ['notnull' => true]
+        ) .
+            ' '
+            . Select::SQL_AND . ' ((' . join(
+                ') ' . Select::SQL_OR . ' (',
                 $where
             ) . '))';
 

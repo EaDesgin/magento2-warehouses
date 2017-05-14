@@ -20,9 +20,11 @@
 namespace Eadesigndev\Warehouses\Controller\Adminhtml\Zones;
 
 use Eadesigndev\Warehouses\Api\Data\ZoneInterface;
+use Eadesigndev\Warehouses\Controller\Adminhtml\Zones;
+use Magento\Backend\Model\View\Result\Page;
 use Magento\Framework\Exception\LocalizedException;
 
-class Save extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
+class Save extends Zones
 {
     /**
      * Authorization level of a basic admin session
@@ -79,10 +81,9 @@ class Save extends \Eadesigndev\Warehouses\Controller\Adminhtml\Zones
             return $resultRedirect;
         }
 
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /** @var Page $resultPage */
         $resultRedirect->setPath('*/*/index');
+
         return $resultRedirect;
-
     }
-
 }

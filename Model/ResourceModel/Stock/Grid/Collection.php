@@ -22,6 +22,13 @@ namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock\Grid;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\Search\AggregationInterface;
 use Eadesigndev\Warehouses\Model\ResourceModel\Stock\Collection as ZonesCollection;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
+use Magento\Framework\Data\Collection\EntityFactoryInterface;
+use Magento\Framework\EntityManager\MetadataPool;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Class Collection
@@ -36,38 +43,35 @@ class Collection extends ZonesCollection implements SearchResultInterface
     private $aggregations;
 
     /**
-     * @param \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory
+     * @param EntityFactoryInterface $entityFactory
      * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy
-     * @param \Magento\Framework\Event\ManagerInterface $eventManager
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\EntityManager\MetadataPool $metadataPool
+     * @param FetchStrategyInterface $fetchStrategy
+     * @param ManagerInterface $eventManager
+     * @param StoreManagerInterface $storeManager
+     * @param MetadataPool $metadataPool
      * @param mixed|null $mainTable
-     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb $eventPrefix
+     * @param AbstractDb $eventPrefix
      * @param mixed $eventObject
      * @param mixed $resourceModel
      * @param string $model
      * @param null $connection
-     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb|null $resource
-     *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @param AbstractDb|null $resource
      */
     public function __construct(
-        \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
+        EntityFactoryInterface $entityFactory,
         \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
-        \Magento\Framework\Event\ManagerInterface $eventManager,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\EntityManager\MetadataPool $metadataPool,
+        FetchStrategyInterface $fetchStrategy,
+        ManagerInterface $eventManager,
+        StoreManagerInterface $storeManager,
+        MetadataPool $metadataPool,
         $mainTable,
         $eventPrefix,
         $eventObject,
         $resourceModel,
         $model = 'Magento\Framework\View\Element\UiComponent\DataProvider\Document',
         $connection = null,
-        \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
-    )
-    {
+        AbstractDb $resource = null
+    ) {
         parent::__construct(
             $entityFactory,
             $logger,
@@ -104,7 +108,7 @@ class Collection extends ZonesCollection implements SearchResultInterface
     /**
      * Get search criteria.
      *
-     * @return \Magento\Framework\Api\SearchCriteriaInterface|null
+     * @return SearchCriteriaInterface|null
      */
     public function getSearchCriteria()
     {
@@ -114,13 +118,11 @@ class Collection extends ZonesCollection implements SearchResultInterface
     /**
      * Set search criteria.
      *
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @param SearchCriteriaInterface $searchCriteria
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setSearchCriteria(
-        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null
-    )
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
     {
         return $this;
     }

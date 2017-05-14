@@ -21,15 +21,19 @@
 
 namespace Eadesigndev\Warehouses\Controller\Adminhtml;
 
+use Eadesigndev\Warehouses\Model\StockItemsRepository;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Framework\View\Result\PageFactory;
 
 abstract class StockItems extends \Magento\Backend\App\Action
 {
 
-    CONST ADMIN_RESOURCE_VIEW = 'Eadesigndev_StockItems::stockitems';
-    CONST ADMIN_RESOURCE_SAVE = 'Eadesigndev_StockItems::save';
+    const ADMIN_RESOURCE_VIEW = 'Eadesigndev_StockItems::stockitems';
+    const ADMIN_RESOURCE_SAVE = 'Eadesigndev_StockItems::save';
 
     /**
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var PageFactory
      */
     protected $resultPageFactory;
 
@@ -42,14 +46,14 @@ abstract class StockItems extends \Magento\Backend\App\Action
 
     /**
      * StockItems constructor.
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Eadesigndev\Warehouses\Model\StockItemsRepository $itemModel
+     * @param Context $context
+     * @param PageFactory $resultPageFactory
+     * @param StockItemsRepository $itemModel
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Eadesigndev\Warehouses\Model\StockItemsRepository $itemModel
+        Context $context,
+        PageFactory $resultPageFactory,
+        StockItemsRepository $itemModel
     )
     {
         $this->resultPageFactory = $resultPageFactory;
@@ -60,8 +64,8 @@ abstract class StockItems extends \Magento\Backend\App\Action
     /**
      * Init page
      *
-     * @param \Magento\Backend\Model\View\Result\Page $resultPage
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @param Page $resultPage
+     * @return Page
      */
     protected function initPage($resultPage)
     {

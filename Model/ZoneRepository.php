@@ -19,6 +19,10 @@
 
 namespace Eadesigndev\Warehouses\Model;
 
+use Eadesigndev\Warehouses\Api\Data\ZoneInterface;
+use Eadesigndev\Warehouses\Api\ZoneRepositoryInterface;
+use Eadesigndev\Warehouses\Model\ResourceModel\Stock;
+use Eadesigndev\Warehouses\Model\ResourceModel\StockResourceModifier;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 
@@ -26,7 +30,7 @@ use Magento\Framework\Exception\LocalizedException;
  * Class Stock
  *
  */
-class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterface
+class ZoneRepository implements ZoneRepositoryInterface
 {
     /**
      * @var ResourceModel\Stock
@@ -55,22 +59,21 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
      * @param ResourceModel\Stock $resourceModel
      */
     public function __construct(
-        \Eadesigndev\Warehouses\Model\ResourceModel\StockResourceModifier $zoneResource,
-        \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory,
-        \Eadesigndev\Warehouses\Model\ResourceModel\Stock $resourceModel
-    )
-    {
+        StockResourceModifier $zoneResource,
+        ZoneFactory $zoneFactory,
+        Stock $resourceModel
+    ) {
         $this->zoneResource = $zoneResource;
         $this->zoneFactory = $zoneFactory;
         $this->resourceModel = $resourceModel;
     }
 
     /**
-     * @param \Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone
-     * @return \Eadesigndev\Warehouses\Api\Data\ZoneInterface
+     * @param ZoneInterface $zone
+     * @return ZoneInterface
      * @throws CouldNotSaveException
      */
-    public function save(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone)
+    public function save(ZoneInterface $zone)
     {
         if ($zone->getStockId() == 1) {
             throw new CouldNotSaveException(__(
@@ -154,12 +157,12 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
     }
 
     /**
-     * @param \Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone
+     * @param ZoneInterface $zone
      * @return bool
      * @throws CouldNotSaveException
      * @throws LocalizedException
      */
-    public function delete(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone)
+    public function delete(ZoneInterface $zone)
     {
 
         if ($zone->getStockId() == 1) {
@@ -172,10 +175,9 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
         try {
             unset($this->zoneInstances[$id]);
             $this->zoneResource->delete($zone);
-
         } catch (\Exception $e) {
             throw new LocalizedException(
-                $e->getMessage()
+                __($e->getMessage())
             );
         }
 
@@ -189,5 +191,4 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
         $zone = $this->getByEditId($zoneId);
         return $this->delete($zone);
     }
-
 }

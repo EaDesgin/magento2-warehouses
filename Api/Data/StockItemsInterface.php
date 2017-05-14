@@ -21,12 +21,16 @@
 
 namespace Eadesigndev\Warehouses\Api\Data;
 
+use Magento\CatalogInventory\Api\Data\StockItemInterface;
+
 /**
  * Item interface.
  * @api
  */
-interface StockItemsInterface extends \Magento\CatalogInventory\Api\Data\StockItemInterface
+interface StockItemsInterface extends StockItemInterface
 {
-
-
+    /**
+     * @return int|null
+     */
+    public function getItemId();
 }

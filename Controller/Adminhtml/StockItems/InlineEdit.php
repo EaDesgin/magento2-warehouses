@@ -21,10 +21,15 @@
 
 namespace Eadesigndev\Warehouses\Controller\Adminhtml\StockItems;
 
+use Eadesigndev\Warehouses\Controller\Adminhtml\StockItems;
+use Eadesigndev\Warehouses\Model\StockItemsRepository;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Eadesigndev\Warehouses\Api\StockItemsRepositoryInterface;
+use Magento\Framework\View\Result\PageFactory;
 
-class InlineEdit extends \Eadesigndev\Warehouses\Controller\Adminhtml\StockItems
+class InlineEdit extends StockItems
 {
 
     /**
@@ -34,25 +39,23 @@ class InlineEdit extends \Eadesigndev\Warehouses\Controller\Adminhtml\StockItems
 
     /**
      * InlineEdit constructor.
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Eadesigndev\Warehouses\Model\StockItemsRepository $itemModel
+     * @param Context $context
+     * @param PageFactory $resultPageFactory
+     * @param StockItemsRepository $itemModel
      * @param JsonFactory $jsonFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Eadesigndev\Warehouses\Model\StockItemsRepository $itemModel,
+        Context $context,
+        PageFactory $resultPageFactory,
+        StockItemsRepository $itemModel,
         JsonFactory $jsonFactory
-    )
-    {
+    ) {
         $this->jsonFactory = $jsonFactory;
         parent::__construct($context, $resultPageFactory, $itemModel);
     }
 
-
     /**
-     * @return $this
+     * @return Json
      */
     public function execute()
     {
@@ -63,12 +66,11 @@ class InlineEdit extends \Eadesigndev\Warehouses\Controller\Adminhtml\StockItems
 
         if ($this->getRequest()->getParam('isAjax')) {
             $postItems = $this->getRequest()->getParam('items', []);
-            if (!count($postItems)) {
+            if (empty($postItems)) {
                 $messages[] = __('Please correct the data sent.');
                 $error = true;
             } else {
                 foreach (array_keys($postItems) as $itemsId) {
-
                     $items = $this->itemModel->getById($itemsId);
 
                     try {
@@ -85,10 +87,12 @@ class InlineEdit extends \Eadesigndev\Warehouses\Controller\Adminhtml\StockItems
             }
         }
 
-        return $resultJson->setData([
+        $result = $resultJson->setData([
             'messages' => $messages,
             'error' => $error
         ]);
+
+        return $result;
     }
 
     /**

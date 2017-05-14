@@ -20,6 +20,12 @@
 namespace Eadesigndev\Warehouses\Model\Indexer\Stock;
 
 use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\Product\Type;
+use Magento\CatalogInventory\Model\ResourceModel\Indexer\StockFactory;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Indexer\CacheContext;
 
 abstract class AbstractAction
 {
@@ -31,17 +37,17 @@ abstract class AbstractAction
     protected $_resource;
 
     /**
-     * @var \Magento\CatalogInventory\Model\ResourceModel\Indexer\StockFactory
+     * @var StockFactory
      */
     protected $_indexerFactory;
 
     /**
-     * @var \Magento\Catalog\Model\Product\Type
+     * @var Type
      */
     protected $_catalogProductType;
 
     /**
-     * @var \Magento\Framework\DB\Adapter\AdapterInterface
+     * @var AdapterInterface
      */
     protected $_connection;
 
@@ -61,28 +67,28 @@ abstract class AbstractAction
     protected $_isNeedUseIdxTable = false;
 
     /**
-     * @var \Magento\Framework\Indexer\CacheContext
+     * @var CacheContext
      */
     private $cacheContext;
 
     /**
-     * @var \Magento\Framework\Event\ManagerInterface
+     * @var ManagerInterface
      */
     private $eventManager;
 
     /**
      * @param ResourceConnection $resource
-     * @param \Magento\CatalogInventory\Model\ResourceModel\Indexer\StockFactory $indexerFactory
-     * @param \Magento\Catalog\Model\Product\Type $catalogProductType
-     * @param \Magento\Framework\Indexer\CacheContext $cacheContext
-     * @param \Magento\Framework\Event\ManagerInterface $eventManager
+     * @param StockFactory $indexerFactory
+     * @param Type $catalogProductType
+     * @param CacheContext $cacheContext
+     * @param ManagerInterface $eventManager
      */
     public function __construct(
-        \Magento\Framework\App\ResourceConnection $resource,
-        \Magento\CatalogInventory\Model\ResourceModel\Indexer\StockFactory $indexerFactory,
-        \Magento\Catalog\Model\Product\Type $catalogProductType,
-        \Magento\Framework\Indexer\CacheContext $cacheContext,
-        \Magento\Framework\Event\ManagerInterface $eventManager
+        ResourceConnection $resource,
+        StockFactory $indexerFactory,
+        Type $catalogProductType,
+        CacheContext $cacheContext,
+        ManagerInterface $eventManager
     ) {
         $this->_resource = $resource;
         $this->_indexerFactory = $indexerFactory;
@@ -103,7 +109,7 @@ abstract class AbstractAction
     /**
      * Retrieve connection instance
      *
-     * @return bool|\Magento\Framework\DB\Adapter\AdapterInterface
+     * @return bool|AdapterInterface
      */
     protected function _getConnection()
     {

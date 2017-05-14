@@ -26,8 +26,6 @@ use Magento\CatalogInventory\Api\Data\StockStatusInterface;
  */
 class Status extends \Magento\CatalogInventory\Model\Stock\Status implements StockStatusInterface
 {
-
-
     /**
      * Init resource model
      *

@@ -19,62 +19,73 @@
 
 namespace Eadesigndev\Warehouses\Controller\Adminhtml;
 
+use Eadesigndev\Warehouses\Model\ZoneFactory;
+use Eadesigndev\Warehouses\Model\ZoneRegistry;
+use Eadesigndev\Warehouses\Model\ZoneRepository;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\ForwardFactory;
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Result\PageFactory;
 
 abstract class Zones extends \Magento\Backend\App\Action
 {
 
-    CONST ADMIN_RESOURCE_VIEW = 'Eadesigndev_Zones::zones';
-    CONST ADMIN_RESOURCE_SAVE = 'Eadesigndev_Zones::save';
+    const ADMIN_RESOURCE_VIEW = 'Eadesigndev_Zones::zones';
+    const ADMIN_RESOURCE_SAVE = 'Eadesigndev_Zones::save';
 
     /**
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var PageFactory
      */
     protected $resultPageFactory;
 
     /**
      * Core registry
      *
-     * @var \Magento\Framework\Registry
+     * @var Registry
      */
     protected $zoneModel;
 
     /**
-     * @var \Eadesigndev\Warehouses\Model\ZoneRegistry
+     * @var ZoneRegistry
      */
     protected $zoneRegistry;
 
     /**
-     * @var \Eadesigndev\Warehouses\Model\ZoneFactory
+     * @var ZoneFactory
      */
     protected $zoneFactory;
 
     /**
-     * @var \Magento\Framework\Api\DataObjectHelper
+     * @var DataObjectHelper
      */
     protected $dataObjectHelper;
 
     /**
-     * @var \Magento\Backend\Model\View\Result\ForwardFactory
+     * @var ForwardFactory
      */
     protected $resultForwardFactory;
 
     /**
      * Zones constructor.
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Eadesigndev\Warehouses\Model\ZoneRepository $zoneModel
-     * @param \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry
+     * @param Context $context
+     * @param PageFactory $resultPageFactory
+     * @param ZoneRepository $zoneModel
+     * @param ZoneRegistry $zoneRegistry
+     * @param ZoneFactory $zoneFactory
+     * @param DataObjectHelper $dataObjectHelper
+     * @param ForwardFactory $resultForwardFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Eadesigndev\Warehouses\Model\ZoneRepository $zoneModel,
-        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry,
-        \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory,
-        \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
-        \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
-    )
-    {
+        Context $context,
+        PageFactory $resultPageFactory,
+        ZoneRepository $zoneModel,
+        ZoneRegistry $zoneRegistry,
+        ZoneFactory $zoneFactory,
+        DataObjectHelper $dataObjectHelper,
+        ForwardFactory $resultForwardFactory
+    ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->zoneModel = $zoneModel;
         $this->zoneRegistry = $zoneRegistry;
@@ -87,8 +98,8 @@ abstract class Zones extends \Magento\Backend\App\Action
     /**
      * Init page
      *
-     * @param \Magento\Backend\Model\View\Result\Page $resultPage
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @param Page $resultPage
+     * @return Page
      */
     protected function initPage($resultPage)
     {
@@ -109,7 +120,7 @@ abstract class Zones extends \Magento\Backend\App\Action
 
         $id = $this->getRequest()->getParam('id');
 
-        if ($id){
+        if ($id) {
             $model = $this->zoneModel->getById($id);
         } else {
             $model = $this->zoneFactory->create();
@@ -117,7 +128,7 @@ abstract class Zones extends \Magento\Backend\App\Action
 
         $this->zoneRegistry->push($model);
 
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /** @var Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->getConfig()->getTitle()->prepend(__('EaDesign Zones'));
 

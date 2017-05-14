@@ -19,6 +19,8 @@
 
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item;
 
+use Magento\Catalog\Model\Product;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\DB\GenericMapper;
 use Magento\Framework\DB\MapperFactory;
 use Magento\Framework\DB\Select;
@@ -47,12 +49,14 @@ class StockItemCriteriaMapper extends GenericMapper
     private $storeManager;
 
     /**
+     * StockItemCriteriaMapper constructor.
      * @param Logger $logger
      * @param FetchStrategyInterface $fetchStrategy
      * @param ObjectFactory $objectFactory
-     * @param StoreManagerInterface $storeManager
      * @param MapperFactory $mapperFactory
-     * @param Select $select
+     * @param StoreManagerInterface $storeManager
+     * @param Validations $validations
+     * @param Select|null $select
      */
     public function __construct(
         Logger $logger,
@@ -62,8 +66,7 @@ class StockItemCriteriaMapper extends GenericMapper
         StoreManagerInterface $storeManager,
         Validations $validations,
         Select $select = null
-    )
-    {
+    ) {
         $this->validations = $validations;
         $this->storeManager = $storeManager;
         parent::__construct($logger, $fetchStrategy, $objectFactory, $mapperFactory, $select);
@@ -123,7 +126,7 @@ class StockItemCriteriaMapper extends GenericMapper
             $products = [$products];
         }
         foreach ($products as $product) {
-            if ($product instanceof \Magento\Catalog\Model\Product) {
+            if ($product instanceof Product) {
                 $productIds[] = $product->getId();
             } else {
                 $productIds[] = $product;
@@ -137,7 +140,6 @@ class StockItemCriteriaMapper extends GenericMapper
 
     /**
      * @inheritdoc
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function mapStockStatus($storeId = null)
     {
@@ -189,7 +191,7 @@ class StockItemCriteriaMapper extends GenericMapper
     private function getStockConfiguration()
     {
         if ($this->stockConfiguration === null) {
-            $this->stockConfiguration = \Magento\Framework\App\ObjectManager::getInstance()
+            $this->stockConfiguration = ObjectManager::getInstance()
                 ->get('Magento\CatalogInventory\Api\StockConfigurationInterface');
         }
         return $this->stockConfiguration;

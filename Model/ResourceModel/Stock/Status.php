@@ -19,10 +19,12 @@
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock;
 
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
+use Magento\CatalogInventory\Model\ResourceModel\Stock\Status as ResourceModelStockStatus;
 use Magento\CatalogInventory\Model\Stock;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
 use Eadesigndev\Warehouses\Helper\Validations;
 use Magento\Eav\Model\Config;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Store\Model\WebsiteFactory;
@@ -30,7 +32,7 @@ use Magento\Store\Model\WebsiteFactory;
 /**
  * CatalogInventory Stock Status per website Resource Model
  */
-class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
+class Status extends ResourceModelStockStatus
 {
 
     /**
@@ -49,11 +51,13 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
     private $validations;
 
     /**
+     * Status constructor.
      * @param Context $context
      * @param StoreManagerInterface $storeManager
      * @param WebsiteFactory $websiteFactory
      * @param Config $eavConfig
-     * @param string $connectionName
+     * @param Validations $validations
+     * @param null $connectionName
      */
     public function __construct(
         Context $context,
@@ -141,7 +145,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
      * @param int $websiteId
      * @return array
      */
-    public function getProductsStockStatuses($productIds, $websiteId)
+    protected function getProductsStockStatuses($productIds, $websiteId)
     {
         if (!is_array($productIds)) {
             $productIds = [$productIds];
@@ -226,7 +230,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
     private function getStockConfiguration()
     {
         if ($this->stockConfiguration === null) {
-            $this->stockConfiguration = \Magento\Framework\App\ObjectManager::getInstance()
+            $this->stockConfiguration = ObjectManager::getInstance()
                 ->get('Magento\CatalogInventory\Api\StockConfigurationInterface');
         }
         return $this->stockConfiguration;

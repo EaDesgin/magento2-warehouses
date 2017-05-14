@@ -19,7 +19,9 @@
 
 namespace Eadesigndev\Warehouses\Model\Plugin\CatalogSearch;
 
+use Closure;
 use Magento\CatalogSearch\Model\Search\IndexBuilder as SearchIndexBuilder;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Indexer\ScopeResolver\IndexScopeResolver;
 use Magento\CatalogSearch\Model\Search\TableMapper;
@@ -65,6 +67,9 @@ class IndexBuilder
      */
     private $storeManager;
 
+    //todo check this part
+    private $dimensionScopeResolver;
+
     /**
      * IndexBuilder constructor.
      * @param ResourceConnection $resourceConnection
@@ -91,12 +96,12 @@ class IndexBuilder
     }
 
     /**
-     * Build index query
-     *
-     * @param RequestInterface $request
+     * @param SearchIndexBuilder $subject
+     * @param Closure $procede
+     * @param $request
      * @return Select
      */
-    public function aroundBuild(SearchIndexBuilder $subject, \Closure $procede, $request)
+    public function aroundBuild(SearchIndexBuilder $subject, Closure $procede, $request)
     {
 
         $searchIndexTable = $this->indexScopeResolver->resolve($request->getIndex(), $request->getDimensions());
@@ -143,7 +148,7 @@ class IndexBuilder
      *
      * @param RequestInterface $request
      * @param Select $select
-     * @return \Magento\Framework\DB\Select
+     * @return Select
      */
     private function processDimensions(RequestInterface $request, Select $select)
     {
@@ -184,7 +189,7 @@ class IndexBuilder
     private function getStockConfigurationData()
     {
         if ($this->stockConfiguration === null) {
-            $this->stockConfiguration = \Magento\Framework\App\ObjectManager::getInstance()
+            $this->stockConfiguration = ObjectManager::getInstance()
                 ->get('Magento\CatalogInventory\Api\StockConfigurationInterface');
         }
         return $this->stockConfiguration;

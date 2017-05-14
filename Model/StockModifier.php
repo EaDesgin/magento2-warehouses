@@ -19,8 +19,6 @@
 
 namespace Eadesigndev\Warehouses\Model;
 
-use Eadesigndev\Warehouses\Api\Data\ZoneInterface;
-
 /**
  * Class Stock
  *
@@ -34,5 +32,4 @@ class StockModifier extends Stock
     {
         $this->_init('Eadesigndev\Warehouses\Model\ResourceModel\StockResourceModifier');
     }
-
 }

@@ -19,10 +19,10 @@
 
 namespace Eadesigndev\Warehouses\Ui\Component\Listing\Column\Store;
 
+use Eadesigndev\Warehouses\Helper\Validations;
 use Magento\Store\Ui\Component\Listing\Column\Store\Options as StoreOptions;
 use Magento\Store\Model\System\Store as SystemStore;
 use Magento\Framework\Escaper;
-use Eadesigndev\Warehouses\Helper\Validations;
 use Magento\Framework\App\Request\Http;
 
 class Options extends StoreOptions
@@ -56,8 +56,7 @@ class Options extends StoreOptions
         Escaper $escaper,
         Validations $validations,
         Http $request
-    )
-    {
+    ) {
         $this->validations = $validations;
         $this->request = $request;
         parent::__construct($systemStore, $escaper);
@@ -102,7 +101,6 @@ class Options extends StoreOptions
                     /** @var  \Magento\Store\Model\Store $store */
                     foreach ($storeCollection as $store) {
                         if ($store->getGroupId() == $group->getId()) {
-
                             //$stock = $this->validations->zone($store->getId());
                             // TODO add bether filter here - ise id to load the dta or some way to get the current model
                             if ($store->getId() == \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID) {

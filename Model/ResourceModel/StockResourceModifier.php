@@ -31,5 +31,4 @@ class StockResourceModifier extends Stock
     {
         $this->_init('warehouseinventory_stock', \Eadesigndev\Warehouses\Model\Stock::ZONE_PRIMARY);
     }
-
 }

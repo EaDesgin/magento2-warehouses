@@ -19,6 +19,8 @@
 
 namespace Eadesigndev\Warehouses\Model;
 
+use Eadesigndev\Warehouses\Model\ZoneFactory;
+use Magento\CatalogInventory\Model\Stock;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 class ZoneRegistry
@@ -41,9 +43,8 @@ class ZoneRegistry
      * @param ZoneFactory $zoneFactory
      */
     public function __construct(
-        \Eadesigndev\Warehouses\Model\ZoneFactory $zoneFactory
-    )
-    {
+        ZoneFactory $zoneFactory
+    ) {
         $this->zoneFactory = $zoneFactory;
     }
 
@@ -72,17 +73,16 @@ class ZoneRegistry
     }
 
     /**
-     * @param \Magento\CatalogInventory\Model\Stock $zone
+     * @param Stock $zone
      * @return $this
      */
-    public function push(\Magento\CatalogInventory\Model\Stock $zone)
+    public function push(Stock $zone)
     {
         $this->zoneRegistryById[$zone->getId()] = $zone;
         $zoneKey = $this->getZoneKey($zone->getId(), $zone->getData('stock_name'));
         $this->zoneRegistryByName[$zoneKey] = $zone;
         return $this;
     }
-
 
     private function getZoneKey($zoneId, $zoneName)
     {

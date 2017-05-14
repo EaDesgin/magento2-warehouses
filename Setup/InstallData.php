@@ -19,15 +19,11 @@
 
 namespace Eadesigndev\Warehouses\Setup;
 
-use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
-/**
- * @codeCoverageIgnore
- */
 class InstallData implements InstallDataInterface
 {
     /**
@@ -56,7 +52,6 @@ class InstallData implements InstallDataInterface
                 ['stock_id' => 1, 'stock_name' => 'Default']
             );
 
-
         $this->copyDataFromCatalogInventoryStockItem($setup);
         $this->copyDataFromCatalogInventoryStockStatus($setup);
     }
@@ -70,7 +65,8 @@ class InstallData implements InstallDataInterface
     {
 
         $select = $setup->getConnection()->select()->from(
-            $setup->getConnection()->getTableName($setup->getTable('cataloginventory_stock_item')));
+            $setup->getConnection()->getTableName($setup->getTable('cataloginventory_stock_item'))
+        );
 
         $data = $setup->getConnection()->fetchAll($select);
 
@@ -79,7 +75,6 @@ class InstallData implements InstallDataInterface
                 $setup->getTable('warehouseinventory_stock_item'),
                 $data
             );
-
     }
 
     /**
@@ -91,7 +86,8 @@ class InstallData implements InstallDataInterface
     {
 
         $select = $setup->getConnection()->select()->from(
-            $setup->getConnection()->getTableName($setup->getTable('cataloginventory_stock_status')));
+            $setup->getConnection()->getTableName($setup->getTable('cataloginventory_stock_status'))
+        );
 
         $data = $setup->getConnection()->fetchAll($select);
 
@@ -100,8 +96,5 @@ class InstallData implements InstallDataInterface
                 $setup->getTable('warehouseinventory_stock_status'),
                 $data
             );
-
     }
-
-
 }

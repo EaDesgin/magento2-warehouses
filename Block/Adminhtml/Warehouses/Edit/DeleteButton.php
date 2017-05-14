@@ -19,6 +19,7 @@
 
 namespace Eadesigndev\Warehouses\Block\Adminhtml\Warehouses\Edit;
 
+use Eadesigndev\Warehouses\Controller\Adminhtml\Zones;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
@@ -32,17 +33,18 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
      */
     public function getButtonData()
     {
-        if ($this->_isAllowedAction(\Eadesigndev\Warehouses\Controller\Adminhtml\Zones::ADMIN_RESOURCE_SAVE)) {
+
+        $data = '';
+        if ($this->_isAllowedAction(Zones::ADMIN_RESOURCE_SAVE)) {
             $data = [
                 'label' => __('Delete Zone'),
                 'class' => 'delete',
-                'on_click' => 'deleteConfirm(\'' . __(
-                        'Are you sure you want to do this?'
-                    ) . '\', \'' . $this->getDeleteUrl() . '\')',
+                'on_click' => 'deleteConfirm(\'' . __('Are you sure you want to do this?') .
+                    '\', \'' . $this->getDeleteUrl() . '\')',
                 'sort_order' => 20,
             ];
-            return $data;
         }
+        return $data;
     }
 
     /**

@@ -42,6 +42,7 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
                 'sort_order' => 90,
             ];
         }
+
+        return null;
     }
-    
 }

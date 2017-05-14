@@ -20,15 +20,21 @@
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Indexer\Stock;
 
 use Magento\Catalog\Model\ResourceModel\Product\Indexer\AbstractIndexer;
+use Magento\CatalogInventory\Model\ResourceModel\Indexer\Stock\QueryProcessorComposite;
+use Magento\CatalogInventory\Model\ResourceModel\Indexer\Stock\StockInterface;
 use Magento\CatalogInventory\Model\Stock;
+use Magento\Eav\Model\Config;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
+use Magento\Framework\Indexer\Table\StrategyInterface;
+use Magento\Framework\Model\ResourceModel\Db\Context;
 
 /**
  * CatalogInventory Default Stock Status Indexer Resource Model
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class DefaultStock extends AbstractIndexer implements \Magento\CatalogInventory\Model\ResourceModel\Indexer\Stock\StockInterface
+class DefaultStock extends AbstractIndexer implements StockInterface
 {
     /**
      * Current Product Type Id
@@ -47,7 +53,7 @@ class DefaultStock extends AbstractIndexer implements \Magento\CatalogInventory\
     /**
      * Core store config
      *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $_scopeConfig;
 
@@ -64,17 +70,17 @@ class DefaultStock extends AbstractIndexer implements \Magento\CatalogInventory\
     /**
      * Class constructor
      *
-     * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
-     * @param \Magento\Framework\Indexer\Table\StrategyInterface $tableStrategy
-     * @param \Magento\Eav\Model\Config $eavConfig
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param Context $context
+     * @param StrategyInterface $tableStrategy
+     * @param Config $eavConfig
+     * @param ScopeConfigInterface $scopeConfig
      * @param string $connectionName
      */
     public function __construct(
-        \Magento\Framework\Model\ResourceModel\Db\Context $context,
-        \Magento\Framework\Indexer\Table\StrategyInterface $tableStrategy,
-        \Magento\Eav\Model\Config $eavConfig,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        Context $context,
+        StrategyInterface $tableStrategy,
+        Config $eavConfig,
+        ScopeConfigInterface $scopeConfig,
         $connectionName = null
     ) {
         $this->_scopeConfig = $scopeConfig;
@@ -254,8 +260,6 @@ class DefaultStock extends AbstractIndexer implements \Magento\CatalogInventory\
         $select = $this->_getStockStatusSelect($entityIds, true);
         $select = $this->getQueryProcessorComposite()->processQuery($select, $entityIds, true);
         $query = $connection->query($select);
-
-
 
         $i = 0;
         $data = [];

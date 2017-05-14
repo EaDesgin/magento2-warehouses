@@ -49,8 +49,7 @@ class Validations extends AbstractHelper
     public function __construct(
         Context $context,
         ZoneRepository $zoneRepository
-    )
-    {
+    ) {
         $this->zoneRepository = $zoneRepository;
         parent::__construct($context);
     }
@@ -96,5 +95,4 @@ class Validations extends AbstractHelper
 
         return $this->zone;
     }
-
 }

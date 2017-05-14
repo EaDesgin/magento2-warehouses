@@ -18,7 +18,7 @@ class Actions extends Column
     /**
      * @var UrlInterface
      */
-    protected $urlBuilder;
+    public $urlBuilder;
 
     /**
      * @param ContextInterface $context

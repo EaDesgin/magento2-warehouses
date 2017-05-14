@@ -19,7 +19,10 @@
 
 namespace Eadesigndev\Warehouses\Block\Adminhtml\Warehouses\Edit;
 
+use Eadesigndev\Warehouses\Model\ZoneRegistry;
 use Magento\Backend\Block\Widget\Context;
+use Magento\Framework\App\Request\Http;
+use Magento\Framework\AuthorizationInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Registry;
 
@@ -29,14 +32,14 @@ use Magento\Framework\Registry;
 class GenericButton
 {
     /**
-     * @var \Magento\Framework\AuthorizationInterface
+     * @var AuthorizationInterface
      */
     protected $_authorization;
 
     /**
      * Core registry
      *
-     * @var \Magento\Framework\Registry
+     * @var Registry
      */
     protected $_coreRegistry = null;
 
@@ -46,25 +49,28 @@ class GenericButton
     protected $context;
 
     /**
-     * @var \Eadesigndev\Warehouses\Model\ZoneRegistry
+     * @var ZoneRegistry
      */
     private $zoneRegistry;
 
     /**
-     * @var \Magento\Framework\App\Request\Http
+     * @var Http
      */
     protected $request;
 
     /**
+     * GenericButton constructor.
      * @param Context $context
+     * @param Registry $registry
+     * @param ZoneRegistry $zoneRegistry
+     * @param Http $request
      */
     public function __construct(
         Context $context,
         Registry $registry,
-        \Eadesigndev\Warehouses\Model\ZoneRegistry $zoneRegistry,
-        \Magento\Framework\App\Request\Http $request
-    )
-    {
+        ZoneRegistry $zoneRegistry,
+        Http $request
+    ) {
         $this->zoneRegistry = $zoneRegistry;
         $this->_coreRegistry = $registry;
         $this->context = $context;
