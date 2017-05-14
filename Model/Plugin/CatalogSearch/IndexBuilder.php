@@ -19,11 +19,10 @@
 
 namespace Eadesigndev\Warehouses\Model\Plugin\CatalogSearch;
 
-
+use Magento\CatalogSearch\Model\Search\IndexBuilder as SearchIndexBuilder;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Indexer\ScopeResolver\IndexScopeResolver;
 use Magento\CatalogSearch\Model\Search\TableMapper;
-
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\DB\Select;
 use Magento\Framework\Search\Adapter\Mysql\ConditionManager;
@@ -41,16 +40,40 @@ class IndexBuilder
      */
     private $resourceConnection;
 
+    /**
+     * @var IndexScopeResolver
+     */
     private $indexScopeResolver;
 
+    /**
+     * @var TableMapper
+     */
     private $tableMapperData;
 
+    /**
+     * @var ScopeConfigInterface
+     */
     private $configData;
 
+    /**
+     * @var StockConfigurationInterface
+     */
     private $stockConfiguration;
 
+    /**
+     * @var StoreInterfaceManager
+     */
     private $storeManager;
 
+    /**
+     * IndexBuilder constructor.
+     * @param ResourceConnection $resourceConnection
+     * @param IndexScopeResolver $indexScopeResolver
+     * @param TableMapper $tableMapperData
+     * @param ScopeConfigInterface $configData
+     * @param ConditionManager $conditionManager
+     * @param StoreInterfaceManager $storeManager
+     */
     public function __construct(
         ResourceConnection $resourceConnection,
         IndexScopeResolver $indexScopeResolver,
@@ -58,8 +81,7 @@ class IndexBuilder
         ScopeConfigInterface $configData,
         ConditionManager $conditionManager,
         StoreInterfaceManager $storeManager
-    )
-    {
+    ) {
         $this->resourceConnection = $resourceConnection;
         $this->indexScopeResolver = $indexScopeResolver;
         $this->tableMapperData = $tableMapperData;
@@ -74,7 +96,7 @@ class IndexBuilder
      * @param RequestInterface $request
      * @return Select
      */
-    public function aroundBuild(\Magento\CatalogSearch\Model\Search\IndexBuilder $subject, \Closure $procede, $request)
+    public function aroundBuild(SearchIndexBuilder $subject, \Closure $procede, $request)
     {
 
         $searchIndexTable = $this->indexScopeResolver->resolve($request->getIndex(), $request->getDimensions());
@@ -110,6 +132,8 @@ class IndexBuilder
             );
             $select->where('stock_index.stock_status = ?', Stock::DEFAULT_STOCK_ID);
         }
+
+        $procede($request);
 
         return $select;
     }

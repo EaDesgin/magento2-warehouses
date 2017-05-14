@@ -18,13 +18,17 @@
  */
 namespace Eadesigndev\Warehouses\Model\ResourceModel\Stock;
 
+use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\CatalogInventory\Model\Stock;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
 use Eadesigndev\Warehouses\Helper\Validations;
+use Magento\Eav\Model\Config;
+use Magento\Framework\Model\ResourceModel\Db\Context;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Store\Model\WebsiteFactory;
 
 /**
  * CatalogInventory Stock Status per website Resource Model
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
 {
@@ -45,22 +49,28 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
     private $validations;
 
     /**
-     * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Store\Model\WebsiteFactory $websiteFactory
-     * @param \Magento\Eav\Model\Config $eavConfig
+     * @param Context $context
+     * @param StoreManagerInterface $storeManager
+     * @param WebsiteFactory $websiteFactory
+     * @param Config $eavConfig
      * @param string $connectionName
      */
     public function __construct(
-        \Magento\Framework\Model\ResourceModel\Db\Context $context,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Store\Model\WebsiteFactory $websiteFactory,
-        \Magento\Eav\Model\Config $eavConfig,
+        Context $context,
+        StoreManagerInterface $storeManager,
+        WebsiteFactory $websiteFactory,
+        Config $eavConfig,
         Validations $validations,
         $connectionName = null
     ) {
         $this->validations = $validations;
-        parent::__construct($context,$storeManager,$websiteFactory,$eavConfig,$connectionName);
+        parent::__construct(
+            $context,
+            $storeManager,
+            $websiteFactory,
+            $eavConfig,
+            $connectionName
+        );
     }
 
     /**
@@ -89,8 +99,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
         $qty,
         $websiteId,
         $stockId = Stock::DEFAULT_STOCK_ID
-    )
-    {
+    ) {
 
         $stockId = $this->stockId();
 
@@ -130,10 +139,9 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
      *
      * @param int[] $productIds
      * @param int $websiteId
-     * @param int $stockId
      * @return array
      */
-    public function getProductsStockStatuses($productIds, $websiteId, $stockId = Stock::DEFAULT_STOCK_ID)
+    public function getProductsStockStatuses($productIds, $websiteId)
     {
         if (!is_array($productIds)) {
             $productIds = [$productIds];
@@ -146,10 +154,11 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
             ->where('website_id=?', (int) $websiteId);
         return $this->getConnection()->fetchPairs($select);
     }
+
     /**
-     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
+     * @param Collection $collection
      * @param bool $isFilterInStock
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
+     * @return Collection $collection
      */
     public function addStockDataToCollection($collection, $isFilterInStock)
     {
@@ -182,7 +191,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
     /**
      * Add only is in stock products filter to product collection
      *
-     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
+     * @param Collection $collection
      * @return $this
      */
     public function addIsInStockFilterToCollection($collection)
@@ -208,6 +217,7 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
         );
         return $this;
     }
+
     /**
      * @return StockConfigurationInterface
      *
@@ -223,12 +233,11 @@ class Status extends \Magento\CatalogInventory\Model\ResourceModel\Stock\Status
     }
 
     /**
-     * @return int|void
+     * @return int
      */
     private function stockId()
     {
         $storeId = $this->_storeManager->getStore()->getId();
-
         $stockId = $this->validations->zoneById($storeId);
 
         return $this->stockId = $stockId;

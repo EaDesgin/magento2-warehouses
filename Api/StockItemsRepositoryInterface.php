@@ -39,21 +39,23 @@
 
 namespace Eadesigndev\Warehouses\Api;
 
+use Eadesigndev\Warehouses\Api\Data\StockItemsInterface;
+
 /**
  * Item CRUD interface.
  * @api
  */
 interface StockItemsRepositoryInterface
 {
-    public function save(\Eadesigndev\Warehouses\Api\Data\StockItemsInterface $item);
+    /**
+     * @param StockItemsInterface $item
+     * @return $item
+     */
+    public function save(StockItemsInterface $item);
 
-    public function get($zoneId, $websiteId = 0);
-
+    /**
+     * @param $itemId
+     * @return int
+     */
     public function getById($itemId);
-
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
-
-    public function delete(\Eadesigndev\Warehouses\Api\Data\StockItemsInterface $item);
-
-    public function deleteById($itemId);
 }

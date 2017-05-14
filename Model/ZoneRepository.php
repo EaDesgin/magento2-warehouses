@@ -102,15 +102,6 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
 
     /**
      * @param $zoneId
-     * @param int $stockId
-     */
-    public function get($zoneId, $stockId = 0)
-    {
-        // TODO: Implement get() method.
-    }
-
-    /**
-     * @param $zoneId
      * @return mixed
      * @throws LocalizedException
      */
@@ -160,14 +151,6 @@ class ZoneRepository implements \Eadesigndev\Warehouses\Api\ZoneRepositoryInterf
         }
 
         return $this->zoneInstances[$stockId];
-    }
-
-    /**
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     */
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)
-    {
-        // TODO: Implement getList() method.
     }
 
     /**

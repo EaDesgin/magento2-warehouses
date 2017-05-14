@@ -19,33 +19,51 @@
 
 namespace Eadesigndev\Warehouses\Model;
 
-
+use Eadesigndev\Warehouses\Api\Data\StockItemsInterface;
+use Eadesigndev\Warehouses\Api\StockItemsRepositoryInterface;
+use Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item;
 use Magento\Framework\Exception\CouldNotSaveException;
 
 /**
  * Class Stock
- *
  */
-class StockItemsRepository implements \Eadesigndev\Warehouses\Api\StockItemsRepositoryInterface
+class StockItemsRepository implements StockItemsRepositoryInterface
 {
 
+    /**
+     * @var array
+     */
     private $itemInstances = [];
 
+    /**
+     * @var Item
+     */
     private $itemResource;
 
+    /**
+     * @var StockItemsFactory
+     */
     private $itemFactory;
 
+    /**
+     * StockItemsRepository constructor.
+     * @param Item $itemResource
+     * @param StockItemsFactory $itemFactory
+     */
     public function __construct(
-        \Eadesigndev\Warehouses\Model\ResourceModel\Stock\Item $itemResource,
-        \Eadesigndev\Warehouses\Model\StockItemsFactory $itemFactory
-    )
-    {
+        Item $itemResource,
+        StockItemsFactory $itemFactory
+    ) {
         $this->itemResource = $itemResource;
         $this->itemFactory = $itemFactory;
     }
 
-
-    public function save(\Eadesigndev\Warehouses\Api\Data\StockItemsInterface $item)
+    /**
+     * @param StockItemsInterface $item
+     * @return StockItemsInterface
+     * @throws CouldNotSaveException
+     */
+    public function save(StockItemsInterface $item)
     {
 
         try {
@@ -60,43 +78,14 @@ class StockItemsRepository implements \Eadesigndev\Warehouses\Api\StockItemsRepo
         return $item;
     }
 
-    public function get($zoneId, $websiteId = 0)
-    {
-        // TODO: Implement get() method.
-    }
-
     public function getById($itemId)
     {
-
         if (!isset($this->itemInstances[$itemId])) {
             $item = $this->itemFactory->create();
-
             $this->itemResource->load($item, $itemId);
-
-
-            if (!$item->getId()) {
-                //todo add exception with message here
-            }
-
             $this->itemInstances[$itemId] = $item;
         }
 
         return $this->itemInstances[$itemId];
     }
-
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)
-    {
-        // TODO: Implement getList() method.
-    }
-
-    public function delete(\Eadesigndev\Warehouses\Api\Data\StockItemsInterface $item)
-    {
-        // TODO: Implement delete() method.
-    }
-
-    public function deleteById($itemId)
-    {
-        // TODO: Implement deleteById() method.
-    }
-
 }

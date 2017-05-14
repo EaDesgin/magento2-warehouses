@@ -18,15 +18,22 @@
  */
 namespace Eadesigndev\Warehouses\Model\Adminhtml\Stock;
 
+use Eadesigndev\Warehouses\Model\Stock\Item as ModelStockItem;
 use Magento\CatalogInventory\Api\StockConfigurationInterface as StockConfigurationInterface;
 use Magento\CatalogInventory\Api\StockItemRepositoryInterface as StockItemRepositoryInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\Customer\Api\GroupManagementInterface;
+use Magento\Customer\Model\Session;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
+use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Catalog\Model\Product;
 use Eadesigndev\Warehouses\Helper\Validations;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
+use Magento\Store\Model\StoreManagerInterface;
 
 
 /**
@@ -34,7 +41,7 @@ use Eadesigndev\Warehouses\Helper\Validations;
  * @method \Magento\CatalogInventory\Api\Data\StockItemExtensionInterface getExtensionAttributes()
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Item extends \Eadesigndev\Warehouses\Model\Stock\Item implements IdentityInterface
+class Item extends ModelStockItem implements IdentityInterface
 {
     /**
      * @var GroupManagementInterface
@@ -43,35 +50,35 @@ class Item extends \Eadesigndev\Warehouses\Model\Stock\Item implements IdentityI
 
     /**
      * Item constructor.
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
+     * @param Context $context
+     * @param Registry $registry
      * @param ExtensionAttributesFactory $extensionFactory
      * @param AttributeValueFactory $customAttributeFactory
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param Session $customerSession
+     * @param StoreManagerInterface $storeManager
      * @param StockConfigurationInterface $stockConfiguration
      * @param StockRegistryInterface $stockRegistry
      * @param StockItemRepositoryInterface $stockItemRepository
      * @param GroupManagementInterface $groupManagement
      * @param Validations $validations
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
+     * @param AbstractResource|null $resource
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
+        Context $context,
+        Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory,
-        \Magento\Customer\Model\Session $customerSession,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        Session $customerSession,
+        StoreManagerInterface $storeManager,
         StockConfigurationInterface $stockConfiguration,
         StockRegistryInterface $stockRegistry,
         StockItemRepositoryInterface $stockItemRepository,
         GroupManagementInterface $groupManagement,
         Validations $validations,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
+        AbstractResource $resource = null,
         array $data = []
     ) {
         parent::__construct(

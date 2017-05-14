@@ -19,23 +19,42 @@
 
 namespace Eadesigndev\Warehouses\Api;
 
+use Eadesigndev\Warehouses\Api\Data\ZoneInterface;
+use Eadesigndev\Warehouses\Model\ZoneRepository;
+
 /**
  * Zone CRUD interface.
  * @api
  */
 interface ZoneRepositoryInterface
 {
-    public function save(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone);
+    /**
+     * @param ZoneInterface $zone
+     * @return ZoneRepository
+     */
+    public function save(ZoneInterface $zone);
 
-    public function get($zoneId, $websiteId = 0);
-
+    /**
+     * @param $stockId
+     * @return int
+     */
     public function getById($stockId);
 
+    /**
+     * @param $zoneId
+     * @return int
+     */
     public function getByEditId($zoneId);
 
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
+    /**
+     * @param ZoneInterface $zone
+     * @return bool
+     */
+    public function delete(ZoneInterface $zone);
 
-    public function delete(\Eadesigndev\Warehouses\Api\Data\ZoneInterface $zone);
-
+    /**
+     * @param $zoneId
+     * @return ZoneRepository
+     */
     public function deleteById($zoneId);
 }

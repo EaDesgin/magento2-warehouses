@@ -21,10 +21,17 @@ namespace Eadesigndev\Warehouses\Model\Stock;
 use Magento\CatalogInventory\Api\StockConfigurationInterface as StockConfigurationInterface;
 use Magento\CatalogInventory\Api\StockItemRepositoryInterface as StockItemRepositoryInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
+use Magento\CatalogInventory\Model\Stock;
+use Magento\Customer\Model\Session;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Eadesigndev\Warehouses\Helper\Validations;
 use Eadesigndev\Warehouses\Api\Data\StockItemsInterface;
+use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Catalog Inventory Stock Item Model extension
@@ -42,39 +49,37 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
      */
     const ENTITY = 'werehaouseinventory_stock_item';
 
-
     /**
      * Item constructor.
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
+     * @param Context $context
+     * @param Registry $registry
      * @param ExtensionAttributesFactory $extensionFactory
      * @param AttributeValueFactory $customAttributeFactory
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param Session $customerSession
+     * @param StoreManagerInterface $storeManager
      * @param StockConfigurationInterface $stockConfiguration
      * @param StockRegistryInterface $stockRegistry
      * @param StockItemRepositoryInterface $stockItemRepository
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
      * @param Validations $validations
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
+        Context $context,
+        Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory,
-        \Magento\Customer\Model\Session $customerSession,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        Session $customerSession,
+        StoreManagerInterface $storeManager,
         StockConfigurationInterface $stockConfiguration,
         StockRegistryInterface $stockRegistry,
         StockItemRepositoryInterface $stockItemRepository,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
         Validations $validations = null,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct(
             $context,
             $registry,
@@ -111,7 +116,7 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
     {
 
         if ($this->validations === null) {
-            return \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID;
+            return Stock::DEFAULT_STOCK_ID;
         }
 
         $stockId = $this->validations->zoneById($this->getStoreId());
@@ -123,12 +128,12 @@ class Item extends \Magento\CatalogInventory\Model\Stock\Item implements StockIt
      * Set stock identifier
      *
      * @param int $stockId
-     * @return $this
+     * @return int|$this
      */
     public function setStockId($stockId)
     {
         if ($this->validations === null) {
-            return \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID;
+            return Stock::DEFAULT_STOCK_ID;
         }
 
         $stockId = $this->validations->zoneById($this->getStoreId());
