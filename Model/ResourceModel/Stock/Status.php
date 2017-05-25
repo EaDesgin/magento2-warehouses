@@ -145,7 +145,7 @@ class Status extends ResourceModelStockStatus
      * @param int $websiteId
      * @return array
      */
-    protected function getProductsStockStatuses($productIds, $websiteId)
+    public function getProductsStockStatuses($productIds, $websiteId, $stockId = Stock::DEFAULT_STOCK_ID)
     {
         if (!is_array($productIds)) {
             $productIds = [$productIds];
