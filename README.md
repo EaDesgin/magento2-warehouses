@@ -1,3 +1,7 @@
+# Multi Location Inventory
+
+Because the Magento community is currently https://github.com/magento-engcom/magento2/wiki/Technical-Vision.-Catalog-Inventory we nare not longer maintaining this module. 
+
 # Magento 2 Warehouses Store View Inventory
 
 Module can be used to separate the stock on different store views based on warehouses with grid for fast stock status editing.
